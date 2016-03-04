@@ -9,7 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.sid.demogdx.AppConfig;
 import com.sid.demogdx.Assets;
 import com.sid.demogdx.DemoGdx;
@@ -32,12 +33,14 @@ public class MainMenuScreen extends AbstractScreen {
         int w = AppConfig.WORLD_WIDTH_PIXEL;
         int h = AppConfig.WORLD_HEIGHT_PIXEL;
 
-        stage = new Stage(new ExtendViewport(w, h), game.batch);
+        stage = new Stage(new FitViewport(w, h), game.batch);
         Gdx.input.setInputProcessor(stage);
 
         final Skin skin = Assets.inst().get("skin.json", Skin.class);
         final Table table = new Table(skin);
         table.setBounds(0, 0 , AppConfig.WORLD_WIDTH_PIXEL, AppConfig.WORLD_HEIGHT_PIXEL);
+        title = new Label("Mover", skin, "gold");
+        title.setAlignment(Align.center);
         playBtn = new Image(skin.getDrawable("play"));
         playBtn.addListener(new ClickListener(){
             @Override
@@ -56,6 +59,8 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
+        table.row().center();
+        table.add(title).center().width(AppConfig.WORLD_WIDTH_PIXEL * 0.6f);
         table.row().center().pad(20.0f);
         table.add(playBtn);
         table.row().center().pad(20.0f);
