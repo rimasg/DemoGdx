@@ -21,7 +21,7 @@ public class MainMenuScreen extends AbstractScreen {
 
     Stage stage;
     Label title;
-    Image playBtn;
+    Image playBtn, exitBtn;
 
     public MainMenuScreen(DemoGdx game) {
         super(game);
@@ -47,8 +47,19 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
-        table.row().center();
+        exitBtn = new Image(skin.getDrawable("exit"));
+        exitBtn.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                Gdx.app.exit();
+            }
+        });
+
+        table.row().center().pad(20.0f);
         table.add(playBtn);
+        table.row().center().pad(20.0f);
+        table.add(exitBtn);
         stage.addActor(table);
     }
 
