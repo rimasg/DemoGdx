@@ -14,4 +14,9 @@ public class MainMenuScreen extends AbstractScreen {
     public void show() {
         super.show();
     }
+
+    @Override
+    public void render(float delta) {
+        super.render(delta);
+    }
 }
