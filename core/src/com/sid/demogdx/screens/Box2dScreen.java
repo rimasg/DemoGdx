@@ -15,7 +15,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.sid.demogdx.Assets;
@@ -27,7 +27,7 @@ import com.sid.demogdx.utils.Box2dUtils;
  * Created by Okis on 2016.03.06 @ 20:22.
  */
 public class Box2dScreen extends AbstractScreen {
-    private static final long delayTime = 100_000_000L;
+    private static final float INTERVAL_SECONDS = 0.2f;
 
     OrthographicCamera cam;
     Viewport viewPort;
@@ -35,7 +35,6 @@ public class Box2dScreen extends AbstractScreen {
     Box2DDebugRenderer renderer;
     Array<Body> bodies = new Array<Body>();
 
-    private long startTime = TimeUtils.nanoTime();
     private TextureAtlas.AtlasRegion starRegion;
 
     public Box2dScreen(DemoGdx game) {
@@ -51,6 +50,7 @@ public class Box2dScreen extends AbstractScreen {
         renderer = new Box2DDebugRenderer();
 
         createGround();
+        spawnBodies();
 
         final Skin skin = Assets.inst().get("skin.json", Skin.class);
         starRegion = skin.getAtlas().findRegion("star");
@@ -76,7 +76,7 @@ public class Box2dScreen extends AbstractScreen {
         Gdx.gl.glClearColor(0.2f, 0.6f, 0.8f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        spawnBodies();
+//        spawnBodies();
         destroyBodiesOutsideWorld();
 
         cam.update();
@@ -93,12 +93,14 @@ public class Box2dScreen extends AbstractScreen {
     private Body tmpBody;
 
     private void spawnBodies() {
-        if (TimeUtils.nanoTime() > (startTime + delayTime)) {
-//            tmpBody = Box2dUtils.createBox2dBody(world, MathUtils.random(AppConfig.VIRTUAL_WORLD_WIDTH), 20);
-            tmpBody = Box2dUtils.createBox2dBody(world, 4.5f, 20);
-            tmpBody.applyAngularImpulse(0.2f, true);
-            startTime = TimeUtils.nanoTime();
-        }
+        new Timer().scheduleTask(new Timer.Task() {
+            @Override
+            public void run() {
+//                tmpBody = Box2dUtils.createBox2dBody(world, MathUtils.random(AppConfig.VIRTUAL_WORLD_WIDTH), 20);
+                tmpBody = Box2dUtils.createBox2dBody(world, 4.5f, 20);
+                tmpBody.applyAngularImpulse(0.2f, true);
+            }
+        }, 0, INTERVAL_SECONDS);
     }
 
     private void destroyBodiesOutsideWorld() {
