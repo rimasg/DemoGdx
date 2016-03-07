@@ -27,7 +27,7 @@ import com.sid.demogdx.utils.Box2dUtils;
  * Created by Okis on 2016.03.06 @ 20:22.
  */
 public class Box2dScreen extends AbstractScreen {
-    private static final float INTERVAL_SECONDS = 0.2f;
+    private static final float SPAWN_BODIES_INTERVAL_SECONDS = 0.2f;
 
     OrthographicCamera cam;
     Viewport viewPort;
@@ -44,13 +44,13 @@ public class Box2dScreen extends AbstractScreen {
     @Override
     public void show() {
         cam = new OrthographicCamera();
-        viewPort = new FitViewport(AppConfig.VIRTUAL_WORLD_WIDTH, AppConfig.VIRTUAL_WORLD_HEIGHT, cam);
+        viewPort = new FitViewport(AppConfig.WORLD_WIDTH_VIRTUAL, AppConfig.WORLD_HEIGHT_VIRTUAL, cam);
         viewPort.apply(true);
         world = new World(new Vector2(0, -9.8f), true);
         renderer = new Box2DDebugRenderer();
 
         createGround();
-        spawnBodies();
+        spawnContinuousBodies();
 
         final Skin skin = Assets.inst().get("skin.json", Skin.class);
         starRegion = skin.getAtlas().findRegion("star");
@@ -62,7 +62,7 @@ public class Box2dScreen extends AbstractScreen {
         ground = world.createBody(bodyDef);
 
         EdgeShape edgeShape = new EdgeShape();
-        edgeShape.set(new Vector2(0, 0), new Vector2(AppConfig.VIRTUAL_WORLD_WIDTH, 0));
+        edgeShape.set(new Vector2(0, 0), new Vector2(AppConfig.WORLD_WIDTH_VIRTUAL, 0));
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = edgeShape;
@@ -76,7 +76,6 @@ public class Box2dScreen extends AbstractScreen {
         Gdx.gl.glClearColor(0.2f, 0.6f, 0.8f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-//        spawnBodies();
         destroyBodiesOutsideWorld();
 
         cam.update();
@@ -89,18 +88,16 @@ public class Box2dScreen extends AbstractScreen {
         game.batch.end();
     }
 
-
     private Body tmpBody;
 
-    private void spawnBodies() {
+    private void spawnContinuousBodies() {
         new Timer().scheduleTask(new Timer.Task() {
             @Override
             public void run() {
-//                tmpBody = Box2dUtils.createBox2dBody(world, MathUtils.random(AppConfig.VIRTUAL_WORLD_WIDTH), 20);
-                tmpBody = Box2dUtils.createBox2dBody(world, 4.5f, 20);
+                tmpBody = Box2dUtils.createBox2dBody(world, AppConfig.WORLD_WIDTH_VIRTUAL / 2, 20);
                 tmpBody.applyAngularImpulse(0.2f, true);
             }
-        }, 0, INTERVAL_SECONDS);
+        }, 0, SPAWN_BODIES_INTERVAL_SECONDS);
     }
 
     private void destroyBodiesOutsideWorld() {
@@ -116,8 +113,15 @@ public class Box2dScreen extends AbstractScreen {
         world.getBodies(bodies);
         for (Body body : bodies) {
             if (body.getType() == BodyDef.BodyType.DynamicBody) {
+                final float radius = body.getFixtureList().get(0).getShape().getRadius();
+/*
                 batch.draw(starRegion, body.getPosition().x - 0.5f, body.getPosition().y - 0.5f,
                         0.5f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f, body.getAngle() * MathUtils.radiansToDegrees);
+*/
+                batch.draw(starRegion,
+                        body.getPosition().x - radius, body.getPosition().y - radius,
+                        radius, radius, radius * 2, radius * 2, 1.0f, 1.0f,
+                        body.getAngle() * MathUtils.radiansToDegrees);
             }
         }
     }

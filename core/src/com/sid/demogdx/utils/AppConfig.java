@@ -13,6 +13,6 @@ public final class AppConfig {
     public static final int WORLD_WIDTH_PIXEL = 540;
     public static final int WORLD_HEIGHT_PIXEL = 960;
     //
-    public static final int VIRTUAL_WORLD_WIDTH = 9;
-    public static final int VIRTUAL_WORLD_HEIGHT = 16;
+    public static final int WORLD_WIDTH_VIRTUAL = 9;
+    public static final int WORLD_HEIGHT_VIRTUAL = 16;
 }
