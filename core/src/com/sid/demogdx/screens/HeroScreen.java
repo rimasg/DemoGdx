@@ -11,7 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RotateToAction;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.sid.demogdx.AppConfig;
 import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.Hero;
 
@@ -32,10 +33,11 @@ public class HeroScreen extends AbstractScreen {
 
     @Override
     public void show() {
-        int w = Gdx.graphics.getWidth();
-        int h = Gdx.graphics.getHeight();
+        int w = AppConfig.WORLD_WIDTH_PIXEL;
+        int h = AppConfig.WORLD_HEIGHT_PIXEL;
 
-        stage = new Stage(new ExtendViewport(w, h), game.batch);
+        stage = new Stage(new FitViewport(w, h), game.batch);
+        Gdx.input.setInputProcessor(stage);
         stage.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -55,7 +57,6 @@ public class HeroScreen extends AbstractScreen {
         });
 
         stage.addActor(actor);
-        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
@@ -65,16 +66,6 @@ public class HeroScreen extends AbstractScreen {
 
         stage.act(delta);
         stage.draw();
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        stage.getViewport().update(width, height, false);
-    }
-
-    @Override
-    public void dispose() {
-        stage.dispose();
     }
 
     private void moveActorToTargetPos(float x, float y) {
@@ -93,5 +84,15 @@ public class HeroScreen extends AbstractScreen {
         moveToAction.setDuration(actionDuration);
         moveToAction.setInterpolation(Interpolation.circleOut);
         actor.addAction(parallel(rotateToAction, moveToAction));
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        stage.getViewport().update(width, height, false);
+    }
+
+    @Override
+    public void hide() {
+        stage.dispose();
     }
 }

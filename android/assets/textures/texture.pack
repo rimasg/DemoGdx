@@ -1,0 +1,91 @@
+
+texture.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+play
+  rotate: false
+  xy: 1, 185
+  size: 128, 64
+  orig: 128, 64
+  offset: 0, 0
+  index: -1
+racket
+  rotate: false
+  xy: 1, 167
+  size: 128, 16
+  orig: 128, 16
+  offset: 0, 0
+  index: -1
+ball
+  rotate: false
+  xy: 131, 185
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+exit
+  rotate: false
+  xy: 1, 101
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+leaderboard
+  rotate: false
+  xy: 1, 35
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+share
+  rotate: false
+  xy: 67, 101
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+sound_off
+  rotate: false
+  xy: 67, 35
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+sound_on
+  rotate: false
+  xy: 133, 119
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+star
+  rotate: false
+  xy: 133, 53
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+button_black
+  rotate: false
+  xy: 1, 1
+  size: 64, 32
+  split: 6, 6, 6, 6
+  orig: 64, 32
+  offset: 0, 0
+  index: -1
+button_gold
+  rotate: false
+  xy: 67, 1
+  size: 64, 32
+  split: 6, 6, 6, 6
+  orig: 64, 32
+  offset: 0, 0
+  index: -1
+line_dot
+  rotate: false
+  xy: 197, 248
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
