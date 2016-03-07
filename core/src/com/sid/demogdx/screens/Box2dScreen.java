@@ -114,10 +114,6 @@ public class Box2dScreen extends AbstractScreen {
         for (Body body : bodies) {
             if (body.getType() == BodyDef.BodyType.DynamicBody) {
                 final float radius = body.getFixtureList().get(0).getShape().getRadius();
-/*
-                batch.draw(starRegion, body.getPosition().x - 0.5f, body.getPosition().y - 0.5f,
-                        0.5f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f, body.getAngle() * MathUtils.radiansToDegrees);
-*/
                 batch.draw(starRegion,
                         body.getPosition().x - radius, body.getPosition().y - radius,
                         radius, radius, radius * 2, radius * 2, 1.0f, 1.0f,
