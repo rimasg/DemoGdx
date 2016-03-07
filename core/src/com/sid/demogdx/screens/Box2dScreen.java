@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
@@ -28,6 +29,7 @@ import com.sid.demogdx.utils.Box2dUtils;
  */
 public class Box2dScreen extends AbstractScreen {
     private static final float SPAWN_BODIES_INTERVAL_SECONDS = 0.2f;
+    private static final Vector2 defaultBodyPos = new Vector2(AppConfig.WORLD_WIDTH_VIRTUAL / 2, 20);
 
     OrthographicCamera cam;
     Viewport viewPort;
@@ -50,6 +52,7 @@ public class Box2dScreen extends AbstractScreen {
         renderer = new Box2DDebugRenderer();
 
         createGround();
+//        createRotatingPlatform();
         spawnContinuousBodies();
 
         final Skin skin = Assets.inst().get("skin.json", Skin.class);
@@ -57,18 +60,40 @@ public class Box2dScreen extends AbstractScreen {
     }
 
     private void createGround() {
-        Body ground;
-        BodyDef bodyDef = new BodyDef();
-        ground = world.createBody(bodyDef);
-
         EdgeShape edgeShape = new EdgeShape();
         edgeShape.set(new Vector2(0, 0), new Vector2(AppConfig.WORLD_WIDTH_VIRTUAL, 0));
+
+        BodyDef bodyDef = new BodyDef();
+        Body ground = world.createBody(bodyDef);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = edgeShape;
         ground.createFixture(fixtureDef);
 
         edgeShape.dispose();
+    }
+
+    private void createRotatingPlatform() {
+        PolygonShape polygonShape = new PolygonShape();
+//        float[] vertices = {0, -1.0f, -0.2f, -0.2f, -1.0f, 0, -0.2f, 0.2f, 0, 1.0f, 0.2f, 0.2f, 1.0f, 0, 0.2f, -0.2f};
+//        polygonShape.set(vertices);
+
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.KinematicBody;
+        bodyDef.position.set(AppConfig.WORLD_WIDTH_VIRTUAL / 2, AppConfig.WORLD_HEIGHT_VIRTUAL * 0.4f);
+        Body platform = world.createBody(bodyDef);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        polygonShape.setAsBox(1.5f, 0.2f);
+        fixtureDef.shape = polygonShape;
+        platform.createFixture(fixtureDef);
+        polygonShape.setAsBox(0.2f, 1.5f);
+        fixtureDef.shape = polygonShape;
+        platform.createFixture(fixtureDef);
+
+        platform.setAngularVelocity(4.0f);
+
+        polygonShape.dispose();
     }
 
     @Override
@@ -94,7 +119,7 @@ public class Box2dScreen extends AbstractScreen {
         new Timer().scheduleTask(new Timer.Task() {
             @Override
             public void run() {
-                tmpBody = Box2dUtils.createBox2dBody(world, AppConfig.WORLD_WIDTH_VIRTUAL / 2, 20);
+                tmpBody = Box2dUtils.createBox2dBody(world, defaultBodyPos.x, defaultBodyPos.y);
                 tmpBody.applyAngularImpulse(0.2f, true);
             }
         }, 0, SPAWN_BODIES_INTERVAL_SECONDS);
