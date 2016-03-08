@@ -11,9 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.sid.demogdx.utils.AppConfig;
 import com.sid.demogdx.Assets;
 import com.sid.demogdx.DemoGdx;
+import com.sid.demogdx.utils.AppConfig;
 
 /**
  * Created by SID on 2016-03-03 @ 18:09.
@@ -21,8 +21,8 @@ import com.sid.demogdx.DemoGdx;
 public class MainMenuScreen extends AbstractScreen {
 
     Stage stage;
-    Label title, box2dBtn;
-    Image playBtn, exitBtn;
+    Label title, playBtn, box2dBtn;
+    Image exitBtn;
 
     public MainMenuScreen(DemoGdx game) {
         super(game);
@@ -41,7 +41,9 @@ public class MainMenuScreen extends AbstractScreen {
         table.setBounds(0, 0 , AppConfig.WORLD_WIDTH_PIXEL, AppConfig.WORLD_HEIGHT_PIXEL);
         title = new Label("Mover", skin, "gold");
         title.setAlignment(Align.center);
-        playBtn = new Image(skin.getDrawable("play"));
+
+        playBtn = new Label("Go to Target", skin, "gold");
+        playBtn.setAlignment(Align.center);
         playBtn.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -49,6 +51,7 @@ public class MainMenuScreen extends AbstractScreen {
                 game.setScreen(game.getHeroScreen());
             }
         });
+
         box2dBtn = new Label("Box2d Mover", skin, "gold");
         box2dBtn.setAlignment(Align.center);
         box2dBtn.addListener(new ClickListener(){
