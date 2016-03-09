@@ -1,6 +1,7 @@
 package com.sid.demogdx.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -48,6 +49,7 @@ public class Box2dScreen extends AbstractScreen {
 
     @Override
     public void show() {
+        Gdx.input.setCatchBackKey(true);
         cam = new OrthographicCamera();
         viewPort = new FitViewport(AppConfig.WORLD_WIDTH_VIRTUAL, AppConfig.WORLD_HEIGHT_VIRTUAL, cam);
         viewPort.apply(true);
@@ -106,6 +108,8 @@ public class Box2dScreen extends AbstractScreen {
         Gdx.gl.glClearColor(0.2f, 0.6f, 0.8f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        handleInput();
+
         destroyBodiesOutsideWorld();
 
         cam.update();
@@ -117,6 +121,12 @@ public class Box2dScreen extends AbstractScreen {
         drawBodies(game.batch);
         drawRotatingPlatform(game.batch);
         game.batch.end();
+    }
+
+    private void handleInput() {
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
+            game.setScreen(game.getMainMenuScreen());
+        }
     }
 
     private Body tmpBody;
@@ -178,6 +188,7 @@ public class Box2dScreen extends AbstractScreen {
 
     @Override
     public void hide() {
+        renderer.dispose();
         world.dispose();
     }
 

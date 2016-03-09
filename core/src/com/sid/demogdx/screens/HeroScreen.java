@@ -1,6 +1,7 @@
 package com.sid.demogdx.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
@@ -32,6 +33,7 @@ public class HeroScreen extends AbstractScreen {
 
     @Override
     public void show() {
+        Gdx.input.setCatchBackKey(true);
         int w = AppConfig.WORLD_WIDTH_PIXEL;
         int h = AppConfig.WORLD_HEIGHT_PIXEL;
 
@@ -63,8 +65,16 @@ public class HeroScreen extends AbstractScreen {
         Gdx.gl.glClearColor(0.2f, 0.6f, 0.8f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        handleInput();
+
         stage.act(delta);
         stage.draw();
+    }
+
+    private void handleInput() {
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
+            game.setScreen(game.getMainMenuScreen());
+        }
     }
 
     private void moveActorToTargetPos(float x, float y) {

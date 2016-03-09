@@ -30,6 +30,7 @@ public class MainMenuScreen extends AbstractScreen {
 
     @Override
     public void show() {
+        Gdx.input.setCatchBackKey(true);
         int w = AppConfig.WORLD_WIDTH_PIXEL;
         int h = AppConfig.WORLD_HEIGHT_PIXEL;
 
