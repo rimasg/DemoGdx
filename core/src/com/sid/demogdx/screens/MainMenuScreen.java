@@ -37,6 +37,7 @@ public class MainMenuScreen extends AbstractScreen {
         Gdx.input.setInputProcessor(stage);
 
         final Skin skin = Assets.inst().get("skin.json", Skin.class);
+
         final Table table = new Table(skin);
         table.setBounds(0, 0 , AppConfig.WORLD_WIDTH_PIXEL, AppConfig.WORLD_HEIGHT_PIXEL);
         title = new Label("Mover", skin, "gold");
