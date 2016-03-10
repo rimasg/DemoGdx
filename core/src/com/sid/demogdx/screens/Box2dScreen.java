@@ -16,6 +16,8 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.joints.DistanceJoint;
+import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
@@ -57,7 +59,8 @@ public class Box2dScreen extends AbstractScreen {
         renderer = new Box2DDebugRenderer();
 
         createGround();
-        createRotatingPlatform();
+//        createRotatingPlatform();
+        createJointBodies();
         spawnContinuousBodies();
 
         final Skin skin = Assets.inst().get("skin.json", Skin.class);
@@ -103,6 +106,35 @@ public class Box2dScreen extends AbstractScreen {
         polygonShape.dispose();
     }
 
+    private void createJointBodies() {
+        PolygonShape polygonShape = new PolygonShape();
+        // TODO: 2016.03.10 to complete this code
+        BodyDef bd = new BodyDef();
+        FixtureDef fd = new FixtureDef();
+
+        bd.type = BodyDef.BodyType.DynamicBody;
+        fd.shape = polygonShape;
+
+        bd.position.set(AppConfig.WORLD_WIDTH_VIRTUAL / 2, AppConfig.WORLD_HEIGHT_VIRTUAL * 0.5f)
+        final Body bodyA = world.createBody(bd);
+        bd.position.set(AppConfig.WORLD_WIDTH_VIRTUAL / 2 + 1.0f, AppConfig.WORLD_HEIGHT_VIRTUAL * 0 .5f)
+        final Body bodyB = world.createBody(bd);
+
+        polygonShape.setAsBox(1.0f, 0.5f);
+        bodyA.createFixture(fd);
+
+        polygonShape.setAsBox(0.5f, 1.0f);
+        bodyB.createFixture(fd);
+
+        polygonShape.dispose();
+
+        // Joints
+        DistanceJoint distanceJoint = new DistanceJoint(); /* Joint between Body and Ground */
+        RevoluteJointDef revoluteJointDef = new RevoluteJointDef(); /* Joint between 2 bodies */
+
+
+    }
+
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0.2f, 0.6f, 0.8f, 1);
@@ -119,7 +151,7 @@ public class Box2dScreen extends AbstractScreen {
         game.batch.setProjectionMatrix(cam.combined);
         game.batch.begin();
         drawBodies(game.batch);
-        drawRotatingPlatform(game.batch);
+//        drawRotatingPlatform(game.batch);
         game.batch.end();
     }
 
