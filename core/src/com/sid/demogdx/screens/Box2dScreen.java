@@ -16,8 +16,6 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.physics.box2d.joints.DistanceJoint;
-import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
@@ -115,9 +113,9 @@ public class Box2dScreen extends AbstractScreen {
         bd.type = BodyDef.BodyType.DynamicBody;
         fd.shape = polygonShape;
 
-        bd.position.set(AppConfig.WORLD_WIDTH_VIRTUAL / 2, AppConfig.WORLD_HEIGHT_VIRTUAL * 0.5f)
+        bd.position.set(AppConfig.WORLD_WIDTH_VIRTUAL / 2, AppConfig.WORLD_HEIGHT_VIRTUAL * 0.5f);
         final Body bodyA = world.createBody(bd);
-        bd.position.set(AppConfig.WORLD_WIDTH_VIRTUAL / 2 + 1.0f, AppConfig.WORLD_HEIGHT_VIRTUAL * 0 .5f)
+        bd.position.set(AppConfig.WORLD_WIDTH_VIRTUAL / 2 + 1.0f, AppConfig.WORLD_HEIGHT_VIRTUAL * 0.5f);
         final Body bodyB = world.createBody(bd);
 
         polygonShape.setAsBox(1.0f, 0.5f);
@@ -129,8 +127,8 @@ public class Box2dScreen extends AbstractScreen {
         polygonShape.dispose();
 
         // Joints
-        DistanceJoint distanceJoint = new DistanceJoint(); /* Joint between Body and Ground */
-        RevoluteJointDef revoluteJointDef = new RevoluteJointDef(); /* Joint between 2 bodies */
+        // DistanceJoint distanceJoint = new DistanceJoint(); /* Joint between Body and Ground */
+        // RevoluteJointDef revoluteJointDef = new RevoluteJointDef(); /* Joint between 2 bodies */
 
 
     }
