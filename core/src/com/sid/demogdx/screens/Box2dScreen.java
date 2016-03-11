@@ -115,7 +115,7 @@ public class Box2dScreen extends AbstractScreen {
         fd.shape = polygonShape;
         fd.density = 10.0f;
 
-        bd.position.set(AppConfig.WORLD_WIDTH_VIRTUAL / 2, AppConfig.WORLD_HEIGHT_VIRTUAL * 0.5f);
+        bd.position.set(AppConfig.WORLD_WIDTH_VIRTUAL / 2, AppConfig.WORLD_HEIGHT_VIRTUAL * 0.4f);
         final Body bodyA = world.createBody(bd);
         bd.position.set(bodyA.getPosition().x + 1.0f, bodyA.getPosition().y - 1.0f);
         final Body bodyB = world.createBody(bd);
