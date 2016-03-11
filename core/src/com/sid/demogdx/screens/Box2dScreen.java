@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
@@ -42,6 +43,7 @@ public class Box2dScreen extends AbstractScreen {
     private TextureAtlas.AtlasRegion starRegion;
     private TextureAtlas.AtlasRegion lineDotRegion;
     private BodyType bodyType;
+    private Body ground;
 
     public Box2dScreen(DemoGdx game) {
         super(game);
@@ -71,7 +73,7 @@ public class Box2dScreen extends AbstractScreen {
         edgeShape.set(new Vector2(0, 0), new Vector2(AppConfig.WORLD_WIDTH_VIRTUAL, 0));
 
         BodyDef bodyDef = new BodyDef();
-        Body ground = world.createBody(bodyDef);
+        ground = world.createBody(bodyDef);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = edgeShape;
@@ -105,17 +107,17 @@ public class Box2dScreen extends AbstractScreen {
     }
 
     private void createJointBodies() {
-        PolygonShape polygonShape = new PolygonShape();
-        // TODO: 2016.03.10 to complete this code
         BodyDef bd = new BodyDef();
         FixtureDef fd = new FixtureDef();
+        PolygonShape polygonShape = new PolygonShape();
 
         bd.type = BodyDef.BodyType.DynamicBody;
         fd.shape = polygonShape;
+        fd.density = 10.0f;
 
         bd.position.set(AppConfig.WORLD_WIDTH_VIRTUAL / 2, AppConfig.WORLD_HEIGHT_VIRTUAL * 0.5f);
         final Body bodyA = world.createBody(bd);
-        bd.position.set(AppConfig.WORLD_WIDTH_VIRTUAL / 2 + 1.0f, AppConfig.WORLD_HEIGHT_VIRTUAL * 0.5f);
+        bd.position.set(bodyA.getPosition().x + 1.0f, bodyA.getPosition().y - 1.0f);
         final Body bodyB = world.createBody(bd);
 
         polygonShape.setAsBox(1.0f, 0.5f);
@@ -127,10 +129,17 @@ public class Box2dScreen extends AbstractScreen {
         polygonShape.dispose();
 
         // Joints
-        // DistanceJoint distanceJoint = new DistanceJoint(); /* Joint between Body and Ground */
-        // RevoluteJointDef revoluteJointDef = new RevoluteJointDef(); /* Joint between 2 bodies */
 
+        RevoluteJointDef revoluteJointDef = new RevoluteJointDef();
+        revoluteJointDef.collideConnected  = false;
 
+        revoluteJointDef.initialize(ground, bodyA, new Vector2(AppConfig.WORLD_WIDTH_VIRTUAL / 2, AppConfig.WORLD_HEIGHT_VIRTUAL * 0.5f));
+        revoluteJointDef.localAnchorB.set(-1.0f, 0);
+        world.createJoint(revoluteJointDef);
+        revoluteJointDef.initialize(bodyA, bodyB, new Vector2());
+        revoluteJointDef.localAnchorA.set(1.0f, 0.0f);
+        revoluteJointDef.localAnchorB.set(0.0f, 1.0f);
+        world.createJoint(revoluteJointDef);
     }
 
     @Override
