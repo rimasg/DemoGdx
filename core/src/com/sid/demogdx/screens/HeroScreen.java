@@ -92,6 +92,7 @@ public class HeroScreen extends AbstractScreen {
         moveToAction.setPosition(x - actor.getOriginX(), y - actor.getOriginY());
         moveToAction.setDuration(actionDuration);
         moveToAction.setInterpolation(Interpolation.circleOut);
+
         actor.addAction(parallel(rotateToAction, moveToAction));
     }
 

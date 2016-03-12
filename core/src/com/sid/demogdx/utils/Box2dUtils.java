@@ -26,7 +26,6 @@ public final class Box2dUtils {
         charFixtureDef.shape = circleShape;
         charFixtureDef.restitution = 0.6f;
         charFixtureDef.density = 0.5f;
-        charFixtureDef.filter.groupIndex = 0;
         characterBody.createFixture(charFixtureDef);
 
         circleShape.dispose();

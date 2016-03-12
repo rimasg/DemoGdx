@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
@@ -27,22 +28,24 @@ import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.utils.AppConfig;
 import com.sid.demogdx.utils.Box2dUtils;
 
+import net.dermetfan.gdx.physics.box2d.Box2DUtils;
+
 /**
  * Created by Okis on 2016.03.06 @ 20:22.
  */
 public class Box2dScreen extends AbstractScreen {
-    private static final float SPAWN_BODIES_INTERVAL_SECONDS = 0.2f;
+    private static final float SPAWN_BODIES_INTERVAL_SECONDS = 0.4f;
     private static final Vector2 defaultBodyPos = new Vector2(AppConfig.WORLD_WIDTH_VIRTUAL / 2, 20);
-
     OrthographicCamera cam;
     Viewport viewPort;
     World world;
-    Box2DDebugRenderer renderer;
+    Box2DDebugRenderer b2dRenderer;
     Array<Body> bodies = new Array<Body>();
+
+    ParticleEffect particleEffect;
 
     private TextureAtlas.AtlasRegion starRegion;
     private TextureAtlas.AtlasRegion lineDotRegion;
-    private BodyType bodyType;
     private Body ground;
 
     public Box2dScreen(DemoGdx game) {
@@ -56,16 +59,20 @@ public class Box2dScreen extends AbstractScreen {
         viewPort = new FitViewport(AppConfig.WORLD_WIDTH_VIRTUAL, AppConfig.WORLD_HEIGHT_VIRTUAL, cam);
         viewPort.apply(true);
         world = new World(new Vector2(0, -9.8f), true);
-        renderer = new Box2DDebugRenderer();
-
+        b2dRenderer = new Box2DDebugRenderer();
         createGround();
 //        createRotatingPlatform();
-        createJointBodies();
+//        createJointBodies();
         spawnContinuousBodies();
 
         final Skin skin = Assets.inst().get("skin.json", Skin.class);
         starRegion = skin.getAtlas().findRegion("star");
         lineDotRegion = skin.getAtlas().findRegion("line_dot");
+        //
+        particleEffect = new ParticleEffect();
+        particleEffect.load(Gdx.files.internal("particles/trail.p"), Gdx.files.internal("textures"));
+        particleEffect.start();
+        //
     }
 
     private void createGround() {
@@ -153,11 +160,11 @@ public class Box2dScreen extends AbstractScreen {
 
         cam.update();
         world.step(delta, 6, 2);
-        renderer.render(world, cam.combined);
+        b2dRenderer.render(world, cam.combined);
 
         game.batch.setProjectionMatrix(cam.combined);
         game.batch.begin();
-        drawBodies(game.batch);
+        drawBodies(delta);
 //        drawRotatingPlatform(game.batch);
         game.batch.end();
     }
@@ -174,7 +181,9 @@ public class Box2dScreen extends AbstractScreen {
         new Timer().scheduleTask(new Timer.Task() {
             @Override
             public void run() {
-                tmpBody = Box2dUtils.createBox2dBody(world, defaultBodyPos.x, defaultBodyPos.y);
+                tmpBody = Box2dUtils.createBox2dBody(world,
+                        defaultBodyPos.x + MathUtils.random(-defaultBodyPos.x * 0.2f, defaultBodyPos.x * 0.2f),
+                        defaultBodyPos.y);
                 tmpBody.applyAngularImpulse(0.2f, true);
             }
         }, 0, SPAWN_BODIES_INTERVAL_SECONDS);
@@ -189,17 +198,23 @@ public class Box2dScreen extends AbstractScreen {
         }
     }
 
-    private void drawBodies(SpriteBatch batch) {
+    private void drawBodies(float delta) {
         world.getBodies(bodies);
         for (Body body : bodies) {
             if (body.getType() == BodyDef.BodyType.DynamicBody) {
                 final float radius = body.getFixtureList().get(0).getShape().getRadius();
-                batch.draw(starRegion,
+                game.batch.draw(starRegion,
                         body.getPosition().x - radius, body.getPosition().y - radius,
                         radius, radius, radius * 2, radius * 2, 1.0f, 1.0f,
                         body.getAngle() * MathUtils.radiansToDegrees);
+                drawParticles(body, delta);
             }
         }
+    }
+
+    private void drawParticles(Body body, float delta) {
+        particleEffect.setPosition(body.getPosition().x, body.getPosition().y);
+        particleEffect.draw(game.batch, delta);
     }
 
     private void drawRotatingPlatform(SpriteBatch batch) {
@@ -207,12 +222,13 @@ public class Box2dScreen extends AbstractScreen {
         for (Body body : bodies) {
             if (BodyType.PLATFORM == (BodyType) body.getUserData()) {
                 final Array<Fixture> fixtureList = body.getFixtureList();
+                int i = 0;
                 for (Fixture fixture : fixtureList) {
-                    final Vector2 position = body.getPosition();
+//                     final Vector2 position = body.getPosition();
                     // TODO: 2016.03.08 find NOT Body angle but Fixture angle
-                    final float radius = fixture.getShape().getRadius();
+                    final Vector2 position = Box2DUtils.position(fixture);
 //                    Gdx.app.log("TAG", "Radius:" + String.valueOf(radius));
-                    batch.draw(lineDotRegion, position.x - 1.0f, position.y - 1.0f,
+                    batch.draw(lineDotRegion, position.x - 1, position.y,
                             1.0f, 0.25f, 2.0f, 0.5f, 1.0f, 1.0f, body.getAngle() * MathUtils.radiansToDegrees);
                 }
 
@@ -227,8 +243,9 @@ public class Box2dScreen extends AbstractScreen {
 
     @Override
     public void hide() {
-        renderer.dispose();
+        b2dRenderer.dispose();
         world.dispose();
+        particleEffect.dispose();
     }
 
     private enum BodyType{
