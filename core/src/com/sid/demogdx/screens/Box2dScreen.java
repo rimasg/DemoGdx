@@ -39,7 +39,7 @@ public class Box2dScreen extends AbstractScreen {
     OrthographicCamera cam;
     Viewport viewPort;
     World world;
-    Box2DDebugRenderer b2dRenderer;
+    Box2DDebugRenderer b2dr;
     Array<Body> bodies = new Array<Body>();
 
     ParticleEffect particleEffect;
@@ -59,7 +59,7 @@ public class Box2dScreen extends AbstractScreen {
         viewPort = new FitViewport(AppConfig.WORLD_WIDTH_VIRTUAL, AppConfig.WORLD_HEIGHT_VIRTUAL, cam);
         viewPort.apply(true);
         world = new World(new Vector2(0, -9.8f), true);
-        b2dRenderer = new Box2DDebugRenderer();
+        b2dr = new Box2DDebugRenderer();
         createGround();
 //        createRotatingPlatform();
 //        createJointBodies();
@@ -160,7 +160,7 @@ public class Box2dScreen extends AbstractScreen {
 
         cam.update();
         world.step(delta, 6, 2);
-        b2dRenderer.render(world, cam.combined);
+        b2dr.render(world, cam.combined);
 
         game.batch.setProjectionMatrix(cam.combined);
         game.batch.begin();
@@ -243,7 +243,7 @@ public class Box2dScreen extends AbstractScreen {
 
     @Override
     public void hide() {
-        b2dRenderer.dispose();
+        b2dr.dispose();
         world.dispose();
         particleEffect.dispose();
     }
