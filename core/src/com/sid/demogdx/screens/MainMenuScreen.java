@@ -2,8 +2,10 @@ package com.sid.demogdx.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -13,6 +15,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.sid.demogdx.Assets;
 import com.sid.demogdx.DemoGdx;
+import com.sid.demogdx.screens.actors.OverlayMenuActor;
 import com.sid.demogdx.utils.AppConfig;
 
 /**
@@ -21,7 +24,7 @@ import com.sid.demogdx.utils.AppConfig;
 public class MainMenuScreen extends AbstractScreen {
 
     Stage stage;
-    Label title, playBtn, box2dBtn;
+    Label title, btnPlay, btnBox2d, btnOverlay;
     Image exitBtn;
 
     public MainMenuScreen(DemoGdx game) {
@@ -44,9 +47,9 @@ public class MainMenuScreen extends AbstractScreen {
         title = new Label("Mover", skin, "gold");
         title.setAlignment(Align.center);
 
-        playBtn = new Label("Go to Target", skin, "gold");
-        playBtn.setAlignment(Align.center);
-        playBtn.addListener(new ClickListener(){
+        btnPlay = new Label("Go to Target", skin, "gold");
+        btnPlay.setAlignment(Align.center);
+        btnPlay.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
@@ -54,13 +57,27 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
-        box2dBtn = new Label("Box2d Mover", skin, "gold");
-        box2dBtn.setAlignment(Align.center);
-        box2dBtn.addListener(new ClickListener(){
+        btnBox2d = new Label("Box2d Mover", skin, "gold");
+        btnBox2d.setAlignment(Align.center);
+        btnBox2d.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 game.setScreen(game.getBox2dScreen());
+            }
+        });
+
+        btnOverlay = new Label("Overlay Menu", skin, "gold");
+        btnOverlay.setAlignment(Align.center);
+        btnOverlay.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                final OverlayMenuActor overlayMenuActor = new OverlayMenuActor();
+                overlayMenuActor.addAction(Actions.sequence(
+                        Actions.moveTo(overlayMenuActor.getX(), AppConfig.WORLD_HEIGHT_PIXEL + 200),
+                        Actions.moveToAligned(AppConfig.WORLD_WIDTH_PIXEL / 2, AppConfig.WORLD_HEIGHT_PIXEL / 2, Align.center, 1.0f,
+                                Interpolation.bounceOut))) ;
+                stage.addActor(overlayMenuActor);
             }
         });
 
@@ -76,9 +93,11 @@ public class MainMenuScreen extends AbstractScreen {
         table.row().center();
         table.add(title).center().width(AppConfig.WORLD_WIDTH_PIXEL * 0.6f);
         table.row().center().pad(20.0f);
-        table.add(playBtn);
+        table.add(btnPlay);
         table.row().center().pad(20.0f);
-        table.add(box2dBtn);
+        table.add(btnBox2d);
+        table.row().center().pad(20.0f);
+        table.add(btnOverlay);
         table.row().center().pad(20.0f);
         table.add(exitBtn);
         stage.addActor(table);
