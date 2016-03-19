@@ -178,10 +178,10 @@ public class Box2dScreen extends AbstractScreen {
     private Body tmpBody;
 
     private void spawnContinuousBodies() {
-        new Timer().scheduleTask(new Timer.Task() {
+        Timer.instance().scheduleTask(new Timer.Task() {
             @Override
             public void run() {
-                tmpBody = Box2dUtils.createBox2dBody(world,
+                tmpBody = Box2dUtils.createBox2dCircleBody(world,
                         defaultBodyPos.x + MathUtils.random(-defaultBodyPos.x * 0.2f, defaultBodyPos.x * 0.2f),
                         defaultBodyPos.y);
                 tmpBody.applyAngularImpulse(0.2f, true);

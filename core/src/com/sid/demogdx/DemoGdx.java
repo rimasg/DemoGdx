@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.sid.demogdx.screens.Box2dScreen;
 import com.sid.demogdx.screens.HeroScreen;
 import com.sid.demogdx.screens.MainMenuScreen;
+import com.sid.demogdx.screens.FallingBallScreen;
 
 public class DemoGdx extends Game {
 
@@ -14,6 +15,7 @@ public class DemoGdx extends Game {
     HeroScreen heroScreen;
     MainMenuScreen mainMenuScreen;
     Box2dScreen box2dScreen;
+    FallingBallScreen fallingBallScreen;
 
     @Override
     public void create() {
@@ -22,6 +24,7 @@ public class DemoGdx extends Game {
         heroScreen = new HeroScreen(this);
         mainMenuScreen = new MainMenuScreen(this);
         box2dScreen = new Box2dScreen(this);
+        fallingBallScreen = new FallingBallScreen(this);
         setScreen(mainMenuScreen);
     }
 
@@ -40,6 +43,10 @@ public class DemoGdx extends Game {
 
     public Box2dScreen getBox2dScreen() {
         return box2dScreen;
+    }
+
+    public FallingBallScreen getFallingBallScreen() {
+        return fallingBallScreen;
     }
 
     @Override

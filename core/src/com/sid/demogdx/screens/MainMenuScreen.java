@@ -24,7 +24,7 @@ import com.sid.demogdx.utils.AppConfig;
 public class MainMenuScreen extends AbstractScreen {
 
     Stage stage;
-    Label title, btnPlay, btnBox2d, btnOverlay;
+    Label title, btnPlay, btnBox2d, btnOverlay, btnFallingBall;
     Image exitBtn;
 
     public MainMenuScreen(DemoGdx game) {
@@ -67,6 +67,16 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
+        btnFallingBall = new Label("Falling Ball", skin, "gold");
+        btnFallingBall.setAlignment(Align.center);
+        btnFallingBall.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                game.setScreen(game.getFallingBallScreen());
+            }
+        });
+
         btnOverlay = new Label("Overlay Menu", skin, "gold");
         btnOverlay.setAlignment(Align.center);
         btnOverlay.addListener(new ClickListener(){
@@ -96,6 +106,8 @@ public class MainMenuScreen extends AbstractScreen {
         table.add(btnPlay);
         table.row().center().pad(20.0f);
         table.add(btnBox2d);
+        table.row().center().pad(20.0f);
+        table.add(btnFallingBall);
         table.row().center().pad(20.0f);
         table.add(btnOverlay);
         table.row().center().pad(20.0f);

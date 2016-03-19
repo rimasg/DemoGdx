@@ -13,7 +13,7 @@ public final class Box2dUtils {
     private Box2dUtils() {
     }
 
-    public static Body createBox2dBody (World world, float posX, float posY) {
+    public static Body createBox2dCircleBody(World world, float posX, float posY) {
         CircleShape circleShape = new CircleShape();
         circleShape.setRadius(0.5f);
 
@@ -24,7 +24,7 @@ public final class Box2dUtils {
 
         FixtureDef charFixtureDef = new FixtureDef();
         charFixtureDef.shape = circleShape;
-        charFixtureDef.restitution = 0.6f;
+        charFixtureDef.restitution = 0.2f;
         charFixtureDef.density = 0.5f;
         characterBody.createFixture(charFixtureDef);
 

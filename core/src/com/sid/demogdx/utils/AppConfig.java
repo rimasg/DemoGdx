@@ -15,4 +15,7 @@ public final class AppConfig {
     //
     public static final int WORLD_WIDTH_VIRTUAL = 9;
     public static final int WORLD_HEIGHT_VIRTUAL = 16;
+    //
+    public static final float unitScale16 = 1 / 16f; /* Box2d world scale */
+    public static final float unitScale32 = 1 / 32f; /* Box2d world scale */
 }

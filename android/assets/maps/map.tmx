@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="9" height="48" tilewidth="32" tileheight="32" nextobjectid="65">
+ <tileset firstgid="1" name="desert" tilewidth="32" tileheight="32" tilecount="48" columns="8">
+  <image source="../tilesets/desert.png" width="265" height="199"/>
+ </tileset>
+ <tileset firstgid="49" source="../tilesets/desert.tsx"/>
+ <objectgroup name="obstacles">
+  <object id="26" name="borders" type="object" x="2" y="30">
+   <polyline points="0,0 -2,1506 286,1506 286,2"/>
+  </object>
+  <object id="41" type="object" x="32" y="1056" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object id="42" type="object" x="64" y="960" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object id="43" name="AnchorCircle" type="object" x="128" y="864" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object id="44" type="object" x="224" y="1056" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object id="45" type="object" x="192" y="960" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object id="46" name="rec" type="object" x="0" y="1152" width="160" height="16"/>
+  <object id="47" name="rec" type="object" x="128" y="1216" width="160" height="16"/>
+  <object id="48" name="rec" type="object" x="128" y="1472" width="160" height="16"/>
+  <object id="49" name="rec" type="object" x="0" y="1408" width="160" height="16"/>
+  <object id="50" name="rec" type="object" x="128" y="1344" width="160" height="16"/>
+  <object id="51" name="rec" type="object" x="0" y="1280" width="160" height="16"/>
+  <object id="52" name="rec" type="object" x="0" y="1216" width="64" height="16"/>
+  <object id="53" name="HangingCircle" type="object" x="128" y="1024" width="32" height="32">
+   <properties>
+    <property name="bodyType" value="DynamicBody"/>
+    <property name="density" value="1"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="63" name="CircleJoint" type="joint" x="143" y="896">
+   <properties>
+    <property name="bodyA" value="AnchorCircle"/>
+    <property name="bodyB" value="HangingCircle"/>
+    <property name="jointType" value="RevoluteJoint"/>
+    <property name="localAnchorAX" value="0.5"/>
+    <property name="localAnchorAY" value="0"/>
+    <property name="localAnchorBX" value="0.5"/>
+    <property name="localAnchorBY" value="7"/>
+   </properties>
+   <polyline points="0,0 0.666667,127.667"/>
+  </object>
+ </objectgroup>
+ <layer name="background" width="9" height="48">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AU0AooEYFHwSgYBeQBAPyNATM=
+  </data>
+ </layer>
+</map>
