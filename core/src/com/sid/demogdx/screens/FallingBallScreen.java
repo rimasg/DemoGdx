@@ -69,9 +69,15 @@ public class FallingBallScreen extends AbstractScreen {
     }
 
     private void createBall() {
+        final float posY;
+        if (map.getProperties().get("height") != null) {
+            posY = (int) map.getProperties().get("height");
+        } else {
+            posY = AppConfig.WORLD_HEIGHT_VIRTUAL * 2;
+        }
         ball = Box2dUtils.createBox2dCircleBody(world,
                 AppConfig.WORLD_WIDTH_VIRTUAL / 2,
-                AppConfig.WORLD_HEIGHT_VIRTUAL * 1.5f);
+                posY);
     }
 
     private void createWorld() {
@@ -145,7 +151,7 @@ public class FallingBallScreen extends AbstractScreen {
     public void hide() {
         b2dr.dispose();
         mapRenderer.dispose();
-        world.dispose();
         map.dispose();
+        world.dispose();
     }
 }
