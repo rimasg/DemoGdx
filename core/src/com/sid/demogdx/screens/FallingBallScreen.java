@@ -24,15 +24,15 @@ import net.dermetfan.gdx.physics.box2d.Box2DMapObjectParser;
  */
 public class FallingBallScreen extends AbstractScreen {
     private final OrthographicCamera cam = new OrthographicCamera();
-    Viewport viewPort;
+    Viewport viewport;
     World world;
     Box2DDebugRenderer b2dr;
-
-    Body ball;
 
     TiledMap map;
     OrthogonalTiledMapRenderer mapRenderer;
     Box2DMapObjectParser box2DMapObjectParser;
+
+    Body ball;
 
     public FallingBallScreen(DemoGdx game) {
         super(game);
@@ -41,14 +41,14 @@ public class FallingBallScreen extends AbstractScreen {
     @Override
     public void show() {
         Gdx.input.setCatchBackKey(true);
-        viewPort = new FitViewport(AppConfig.WORLD_WIDTH_VIRTUAL, AppConfig.WORLD_HEIGHT_VIRTUAL, cam);
-        viewPort.apply(true);
+        viewport = new FitViewport(AppConfig.WORLD_WIDTH_VIRTUAL, AppConfig.WORLD_HEIGHT_VIRTUAL, cam);
+        viewport.apply(true);
         world = new World(new Vector2(0, -9.8f), true);
         b2dr = new Box2DDebugRenderer();
         //
         map = new TmxMapLoader().load("maps/map.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(map, AppConfig.unitScale32, game.batch);
-        box2DMapObjectParser = new Box2DMapObjectParser(AppConfig.unitScale32);
+        box2DMapObjectParser = new Box2DMapObjectParser(mapRenderer.getUnitScale());
         //
         createBall();
         createWorld();
@@ -62,22 +62,6 @@ public class FallingBallScreen extends AbstractScreen {
 
     private void createWorld() {
         box2DMapObjectParser.load(world, map);
-
-/*
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.StaticBody;
-        bodyDef.position.set(viewPort.getWorldWidth() / 2, 0);
-        final Body body = world.createBody(bodyDef);
-
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(4, 4);
-
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
-        body.createFixture(fixtureDef);
-
-        shape.dispose();
-*/
     }
 
     @Override
@@ -86,13 +70,12 @@ public class FallingBallScreen extends AbstractScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         handleInput();
-
+        //
         world.step(delta, 6, 2);
-        //
-        cam.position.set(viewPort.getWorldWidth() / 2, ball.getPosition().y, 0);
+        cam.position.set(viewport.getWorldWidth() / 2, ball.getPosition().y, 0);
         cam.update();
-        b2dr.render(world, cam.combined);
         //
+        b2dr.render(world, cam.combined);
         mapRenderer.setView(cam);
         mapRenderer.render();
     }
@@ -109,7 +92,7 @@ public class FallingBallScreen extends AbstractScreen {
 
     @Override
     public void resize(int width, int height) {
-        viewPort.update(width, height);
+        viewport.update(width, height);
     }
 
     @Override
