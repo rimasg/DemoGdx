@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="9" height="48" tilewidth="32" tileheight="32" nextobjectid="65">
- <tileset firstgid="1" name="desert" tilewidth="32" tileheight="32" tilecount="48" columns="8">
-  <image source="../tilesets/desert.png" width="265" height="199"/>
- </tileset>
- <tileset firstgid="49" source="../tilesets/desert.tsx"/>
+ <tileset firstgid="1" source="../tilesets/desert.tsx"/>
  <objectgroup name="obstacles">
   <object id="26" name="borders" type="object" x="2" y="30">
    <polyline points="0,0 -2,1506 286,1506 286,2"/>
   </object>
-  <object id="41" type="object" x="32" y="1056" width="32" height="32">
+  <object id="41" type="object" x="40" y="1056" width="32" height="32">
    <ellipse/>
   </object>
   <object id="42" type="object" x="64" y="960" width="32" height="32">
@@ -17,7 +14,7 @@
   <object id="43" name="AnchorCircle" type="object" x="128" y="864" width="32" height="32">
    <ellipse/>
   </object>
-  <object id="44" type="object" x="224" y="1056" width="32" height="32">
+  <object id="44" type="object" x="216" y="1056" width="32" height="32">
    <ellipse/>
   </object>
   <object id="45" type="object" x="192" y="960" width="32" height="32">
@@ -34,6 +31,7 @@
    <properties>
     <property name="bodyType" value="DynamicBody"/>
     <property name="density" value="1"/>
+    <property name="userData" value="HangingCircle"/>
    </properties>
    <ellipse/>
   </object>
@@ -52,7 +50,7 @@
  </objectgroup>
  <layer name="background" width="9" height="48">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFo2AU0AooEYFHwSgYBeQBAPyNATM=
+   eJyTY2BgkBvFo3gU0wTzE4FpZbcCHfynQYBPLayHQ1yfyvZwYcGUmEOpudRyD7XMHWzuAQCsMS/R
   </data>
  </layer>
 </map>
