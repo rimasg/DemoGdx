@@ -90,6 +90,7 @@ public class FallingBallScreen extends AbstractBox2dScreen {
         handleInput();
 
 //        cam.position.set(viewport.getWorldWidth() / 2, ball.getPosition().y, 0);
+        // Show only visible part of the Tiled Map on Y-axis - MathUtils.clamp()
         cam.position.set(viewport.getWorldWidth() / 2, MathUtils.clamp(ball.getPosition().y, cam.viewportHeight / 2, cam.viewportHeight * 2), 0);
 
         cam.update();
