@@ -2,7 +2,6 @@ package com.sid.demogdx.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -12,8 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RotateToAction;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.sid.demogdx.utils.AppConfig;
 import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.Hero;
 
@@ -28,16 +25,13 @@ public class HeroScreen extends AbstractScreen {
     Hero actor;
 
     public HeroScreen(DemoGdx game) {
-        super(game);
+        super(game, false);
     }
 
     @Override
     public void show() {
-        Gdx.input.setCatchBackKey(true);
-        int w = AppConfig.WORLD_WIDTH_PIXEL;
-        int h = AppConfig.WORLD_HEIGHT_PIXEL;
-
-        stage = new Stage(new FitViewport(w, h), game.batch);
+        super.show();
+        stage = new Stage(viewport, game.batch);
         Gdx.input.setInputProcessor(stage);
         stage.addListener(new ClickListener() {
             @Override
@@ -62,9 +56,7 @@ public class HeroScreen extends AbstractScreen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0.2f, 0.6f, 0.8f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+        super.render(delta);
         handleInput();
 
         stage.act(delta);
@@ -103,6 +95,7 @@ public class HeroScreen extends AbstractScreen {
 
     @Override
     public void hide() {
+        super.hide();
         stage.dispose();
     }
 }

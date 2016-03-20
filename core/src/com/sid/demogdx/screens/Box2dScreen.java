@@ -2,8 +2,6 @@ package com.sid.demogdx.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -11,19 +9,13 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import com.sid.demogdx.Assets;
 import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.utils.AppConfig;
 import com.sid.demogdx.utils.Box2dUtils;
@@ -33,14 +25,9 @@ import net.dermetfan.gdx.physics.box2d.Box2DUtils;
 /**
  * Created by Okis on 2016.03.06 @ 20:22.
  */
-public class Box2dScreen extends AbstractScreen {
+public class Box2dScreen extends AbstractBox2dScreen {
     private static final float SPAWN_BODIES_INTERVAL_SECONDS = 0.4f;
-    private static final Vector2 defaultBodyPos = new Vector2(AppConfig.WORLD_WIDTH_VIRTUAL / 2, 20);
-    OrthographicCamera cam;
-    Viewport viewPort;
-    World world;
-    Box2DDebugRenderer b2dr;
-    Array<Body> bodies = new Array<Body>();
+    private static final Vector2 defaultBodyPos = new Vector2(AppConfig.WWV / 2, 20);
 
     ParticleEffect particleEffect;
 
@@ -54,30 +41,23 @@ public class Box2dScreen extends AbstractScreen {
 
     @Override
     public void show() {
-        Gdx.input.setCatchBackKey(true);
-        cam = new OrthographicCamera();
-        viewPort = new FitViewport(AppConfig.WORLD_WIDTH_VIRTUAL, AppConfig.WORLD_HEIGHT_VIRTUAL, cam);
-        viewPort.apply(true);
-        world = new World(new Vector2(0, -9.8f), true);
-        b2dr = new Box2DDebugRenderer();
+        super.show();
         createGround();
 //        createRotatingPlatform();
 //        createJointBodies();
         spawnContinuousBodies();
 
-        final Skin skin = Assets.inst().get("skin.json", Skin.class);
         starRegion = skin.getAtlas().findRegion("star");
         lineDotRegion = skin.getAtlas().findRegion("line_dot");
-        //
+
         particleEffect = new ParticleEffect();
         particleEffect.load(Gdx.files.internal("particles/trail.p"), Gdx.files.internal("textures"));
         particleEffect.start();
-        //
     }
 
     private void createGround() {
         EdgeShape edgeShape = new EdgeShape();
-        edgeShape.set(new Vector2(0, 0), new Vector2(AppConfig.WORLD_WIDTH_VIRTUAL, 0));
+        edgeShape.set(new Vector2(0, 0), new Vector2(AppConfig.WWV, 0));
 
         BodyDef bodyDef = new BodyDef();
         ground = world.createBody(bodyDef);
@@ -96,7 +76,7 @@ public class Box2dScreen extends AbstractScreen {
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.KinematicBody;
-        bodyDef.position.set(AppConfig.WORLD_WIDTH_VIRTUAL / 2, AppConfig.WORLD_HEIGHT_VIRTUAL * 0.2f);
+        bodyDef.position.set(AppConfig.WWV / 2, AppConfig.WHV * 0.2f);
         Body platform = world.createBody(bodyDef);
 
         FixtureDef fixtureDef = new FixtureDef();
@@ -122,7 +102,7 @@ public class Box2dScreen extends AbstractScreen {
         fd.shape = polygonShape;
         fd.density = 10.0f;
 
-        bd.position.set(AppConfig.WORLD_WIDTH_VIRTUAL / 2, AppConfig.WORLD_HEIGHT_VIRTUAL * 0.4f);
+        bd.position.set(AppConfig.WWV / 2, AppConfig.WHV * 0.4f);
         final Body bodyA = world.createBody(bd);
         bd.position.set(bodyA.getPosition().x + 1.0f, bodyA.getPosition().y - 1.0f);
         final Body bodyB = world.createBody(bd);
@@ -140,7 +120,7 @@ public class Box2dScreen extends AbstractScreen {
         RevoluteJointDef revoluteJointDef = new RevoluteJointDef();
         revoluteJointDef.collideConnected  = false;
 
-        revoluteJointDef.initialize(ground, bodyA, new Vector2(AppConfig.WORLD_WIDTH_VIRTUAL / 2, AppConfig.WORLD_HEIGHT_VIRTUAL * 0.5f));
+        revoluteJointDef.initialize(ground, bodyA, new Vector2(AppConfig.WWV / 2, AppConfig.WHV * 0.5f));
         revoluteJointDef.localAnchorB.set(-1.0f, 0);
         world.createJoint(revoluteJointDef);
         revoluteJointDef.initialize(bodyA, bodyB, new Vector2());
@@ -151,15 +131,12 @@ public class Box2dScreen extends AbstractScreen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0.2f, 0.6f, 0.8f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+        super.render(delta);
         handleInput();
 
         destroyBodiesOutsideWorld();
 
         cam.update();
-        world.step(delta, 6, 2);
         b2dr.render(world, cam.combined);
 
         game.batch.setProjectionMatrix(cam.combined);
@@ -222,7 +199,6 @@ public class Box2dScreen extends AbstractScreen {
         for (Body body : bodies) {
             if (BodyType.PLATFORM == (BodyType) body.getUserData()) {
                 final Array<Fixture> fixtureList = body.getFixtureList();
-                int i = 0;
                 for (Fixture fixture : fixtureList) {
 //                     final Vector2 position = body.getPosition();
                     // TODO: 2016.03.08 find NOT Body angle but Fixture angle
@@ -238,13 +214,12 @@ public class Box2dScreen extends AbstractScreen {
 
     @Override
     public void resize(int width, int height) {
-        viewPort.update(width, height, true);
+        super.resize(width, height);
     }
 
     @Override
     public void hide() {
-        b2dr.dispose();
-        world.dispose();
+        super.hide();
         particleEffect.dispose();
     }
 
