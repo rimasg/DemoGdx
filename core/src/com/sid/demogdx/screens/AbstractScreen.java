@@ -44,7 +44,7 @@ public abstract class AbstractScreen implements Screen {
     }
 
     private void loadAssets() {
-        final Skin skin = assets.get("skin.json", Skin.class);
+        skin = assets.get("skin.json", Skin.class);
     }
 
     @Override

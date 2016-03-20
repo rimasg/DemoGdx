@@ -4,17 +4,17 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.sid.demogdx.screens.Box2dScreen;
+import com.sid.demogdx.screens.FallingBallScreen;
+import com.sid.demogdx.screens.FallingStarsScreen;
 import com.sid.demogdx.screens.HeroScreen;
 import com.sid.demogdx.screens.MainMenuScreen;
-import com.sid.demogdx.screens.FallingBallScreen;
 
 public class DemoGdx extends Game {
 
     public SpriteBatch batch;
     HeroScreen heroScreen;
     MainMenuScreen mainMenuScreen;
-    Box2dScreen box2dScreen;
+    FallingStarsScreen fallingStarsScreen;
     FallingBallScreen fallingBallScreen;
 
     @Override
@@ -23,7 +23,7 @@ public class DemoGdx extends Game {
         loadAssets();
         heroScreen = new HeroScreen(this);
         mainMenuScreen = new MainMenuScreen(this);
-        box2dScreen = new Box2dScreen(this);
+        fallingStarsScreen = new FallingStarsScreen(this);
         fallingBallScreen = new FallingBallScreen(this);
         setScreen(mainMenuScreen);
     }
@@ -41,8 +41,8 @@ public class DemoGdx extends Game {
         return mainMenuScreen;
     }
 
-    public Box2dScreen getBox2dScreen() {
-        return box2dScreen;
+    public FallingStarsScreen getFallingStarsScreen() {
+        return fallingStarsScreen;
     }
 
     public FallingBallScreen getFallingBallScreen() {

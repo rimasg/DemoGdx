@@ -67,11 +67,12 @@ public class FallingBallScreen extends AbstractBox2dScreen {
 
         cam.position.set(viewport.getWorldWidth() / 2, ball.getPosition().y, 0);
         cam.update();
-        game.batch.setProjectionMatrix(cam.combined);
 
         b2dr.render(world, cam.combined);
         mapRenderer.setView(cam);
         mapRenderer.render();
+
+        game.batch.setProjectionMatrix(cam.combined);
         game.batch.begin();
         drawBall();
         drawBodies();
@@ -102,14 +103,14 @@ public class FallingBallScreen extends AbstractBox2dScreen {
     private void drawBodies() {
         world.getBodies(bodies);
         for (Body body : bodies) {
-            if ((body.getUserData() != null) && ((String) body.getUserData()).equals("HangingCircle")) {
+            if ((body.getUserData() != null) && "HangingCircle".equals((String) body.getUserData())) {
                 final float radius = body.getFixtureList().get(0).getShape().getRadius();
                 game.batch.draw(ballRegion,
                         body.getPosition().x,
                         body.getPosition().y,
-                        radius,
-                        radius,
-                        radius * 2, radius * 2, 1, 1,
+                        0.5f,
+                        0.5f,
+                        1f, 1f, 1, 1,
                         body.getAngle() * MathUtils.radiansToDegrees);
             }
         }

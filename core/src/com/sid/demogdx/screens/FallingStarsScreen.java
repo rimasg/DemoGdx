@@ -25,8 +25,8 @@ import net.dermetfan.gdx.physics.box2d.Box2DUtils;
 /**
  * Created by Okis on 2016.03.06 @ 20:22.
  */
-public class Box2dScreen extends AbstractBox2dScreen {
-    private static final float SPAWN_BODIES_INTERVAL_SECONDS = 0.4f;
+public class FallingStarsScreen extends AbstractBox2dScreen {
+    private static final float SPAWN_BODIES_INTERVAL_SECONDS = 0.2f;
     private static final Vector2 defaultBodyPos = new Vector2(AppConfig.WWV / 2, 20);
 
     ParticleEffect particleEffect;
@@ -35,7 +35,7 @@ public class Box2dScreen extends AbstractBox2dScreen {
     private TextureAtlas.AtlasRegion lineDotRegion;
     private Body ground;
 
-    public Box2dScreen(DemoGdx game) {
+    public FallingStarsScreen(DemoGdx game) {
         super(game);
     }
 
@@ -162,6 +162,7 @@ public class Box2dScreen extends AbstractBox2dScreen {
                         defaultBodyPos.x + MathUtils.random(-defaultBodyPos.x * 0.2f, defaultBodyPos.x * 0.2f),
                         defaultBodyPos.y);
                 tmpBody.applyAngularImpulse(0.2f, true);
+//                Gdx.app.log(TAG, "Number of bodies: " + bodies.size);
             }
         }, 0, SPAWN_BODIES_INTERVAL_SECONDS);
     }
@@ -200,10 +201,8 @@ public class Box2dScreen extends AbstractBox2dScreen {
             if (BodyType.PLATFORM == (BodyType) body.getUserData()) {
                 final Array<Fixture> fixtureList = body.getFixtureList();
                 for (Fixture fixture : fixtureList) {
-//                     final Vector2 position = body.getPosition();
                     // TODO: 2016.03.08 find NOT Body angle but Fixture angle
                     final Vector2 position = Box2DUtils.position(fixture);
-//                    Gdx.app.log("TAG", "Radius:" + String.valueOf(radius));
                     batch.draw(lineDotRegion, position.x - 1, position.y,
                             1.0f, 0.25f, 2.0f, 0.5f, 1.0f, 1.0f, body.getAngle() * MathUtils.radiansToDegrees);
                 }

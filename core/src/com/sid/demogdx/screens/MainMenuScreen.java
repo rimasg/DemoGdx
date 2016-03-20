@@ -51,13 +51,13 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
-        btnBox2d = new Label("Box2d Mover", skin, "gold");
+        btnBox2d = new Label("Falling Stars", skin, "gold");
         btnBox2d.setAlignment(Align.center);
         btnBox2d.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                game.setScreen(game.getBox2dScreen());
+                game.setScreen(game.getFallingStarsScreen());
             }
         });
 
