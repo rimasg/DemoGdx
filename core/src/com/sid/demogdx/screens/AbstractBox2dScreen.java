@@ -16,7 +16,7 @@ public abstract class AbstractBox2dScreen extends AbstractScreen {
     Array<Body> bodies = new Array<Body>();
 
     public AbstractBox2dScreen(DemoGdx game) {
-        super(game, true);
+        super(game);
     }
 
     @Override

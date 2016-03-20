@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RotateToAction;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -21,17 +20,15 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.parallel;
  * Created by SID on 2016-03-03 @ 17:18 @ 17:19.
  */
 public class HeroScreen extends AbstractScreen {
-    Stage stage;
     Hero actor;
 
     public HeroScreen(DemoGdx game) {
-        super(game, false);
+        super(game);
     }
 
     @Override
     public void show() {
         super.show();
-        stage = new Stage(viewport, game.batch);
         Gdx.input.setInputProcessor(stage);
         stage.addListener(new ClickListener() {
             @Override
@@ -96,6 +93,5 @@ public class HeroScreen extends AbstractScreen {
     @Override
     public void hide() {
         super.hide();
-        stage.dispose();
     }
 }

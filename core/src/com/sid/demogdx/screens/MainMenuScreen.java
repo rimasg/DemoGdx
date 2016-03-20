@@ -3,7 +3,6 @@ package com.sid.demogdx.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -21,19 +20,19 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
  * Created by SID on 2016-03-03 @ 18:09.
  */
 public class MainMenuScreen extends AbstractScreen {
-    Stage stage;
+//    Stage stage;
     Label title, btnPlay, btnBox2d, btnOverlay, btnFallingBall;
     Image exitBtn;
 
     public MainMenuScreen(DemoGdx game) {
-        super(game, false);
+        super(game);
     }
 
     @Override
     public void show() {
         super.show();
 
-        stage = new Stage(viewport);
+//        stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
 
         final Table table = new Table(skin);
@@ -124,6 +123,5 @@ public class MainMenuScreen extends AbstractScreen {
     @Override
     public void hide() {
         super.hide();
-        stage.dispose();
     }
 }

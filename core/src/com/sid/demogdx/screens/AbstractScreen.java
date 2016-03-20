@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -20,25 +21,20 @@ public abstract class AbstractScreen implements Screen {
     final DemoGdx game;
     final OrthographicCamera cam;
     final Viewport viewport;
+    final Stage stage;
     final Assets assets = Assets.inst();
 
     Skin skin;
 
-    /**
-     *
-     * @param game Game
-     * @param virtualWorld World in Pixels or Virtual
-     */
-    public AbstractScreen(final DemoGdx game, boolean virtualWorld) {
+    public AbstractScreen(final DemoGdx game) {
         this.TAG = getClass().getSimpleName();
         this.game = game;
         this.cam = new OrthographicCamera();
-        if (virtualWorld) {
-            this.viewport = new FitViewport(AppConfig.WWV, AppConfig.WHV, cam);
-        } else {
-            this.viewport = new FitViewport(AppConfig.WWP, AppConfig.WHP, cam);
-        }
+        this.viewport = new FitViewport(AppConfig.WWV, AppConfig.WHV, cam);
         this.viewport.apply(true);
+
+        this.stage = new Stage(new FitViewport(AppConfig.WWP, AppConfig.WHP), game.batch);
+        Gdx.input.setInputProcessor(stage);
 
         loadAssets();
     }
@@ -61,6 +57,7 @@ public abstract class AbstractScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height, true);
+        stage.getViewport().update(width, height, true);
     }
 
     @Override
@@ -75,7 +72,7 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void hide() {
-
+        stage.dispose();
     }
 
     @Override

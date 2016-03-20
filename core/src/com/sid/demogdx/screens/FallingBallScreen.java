@@ -8,6 +8,8 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.utils.AppConfig;
 import com.sid.demogdx.utils.Box2dUtils;
@@ -40,6 +42,7 @@ public class FallingBallScreen extends AbstractBox2dScreen {
 
         createBall();
         createWorld();
+        createHUD();
     }
 
     private void loadAssets() {
@@ -60,6 +63,20 @@ public class FallingBallScreen extends AbstractBox2dScreen {
         box2DMapObjectParser.load(world, map);
     }
 
+    private void createHUD() {
+        final Table table = new Table(skin);
+        table.setFillParent(true);
+        stage.addActor(table);
+
+        final Label labelLeft = new Label("Left", skin, "gold");
+        final Label labelRight = new Label("Right", skin, "gold");
+
+        table.row().expand();
+        table.add(labelLeft).top().left();
+        table.add(labelRight).top().right();
+        table.setDebug(true);
+    }
+
     @Override
     public void render(float delta) {
         super.render(delta);
@@ -77,6 +94,9 @@ public class FallingBallScreen extends AbstractBox2dScreen {
         drawBall();
         drawBodies();
         game.batch.end();
+
+        stage.act();
+        stage.draw();
     }
 
     private void handleInput() {
