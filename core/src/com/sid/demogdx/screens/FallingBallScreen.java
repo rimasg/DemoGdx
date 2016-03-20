@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Align;
 import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.utils.AppConfig;
 import com.sid.demogdx.utils.Box2dUtils;
@@ -50,13 +51,18 @@ public class FallingBallScreen extends AbstractBox2dScreen {
     }
 
     private void createBall() {
+        final float posY = getMapHeight();
+        ball = Box2dUtils.createBox2dCircleBody(world, AppConfig.WWV / 2, posY);
+    }
+
+    private float getMapHeight() {
         final float posY;
         if (map.getProperties().get("height") != null) {
             posY = (int) map.getProperties().get("height");
         } else {
             posY = AppConfig.WHV * 2;
         }
-        ball = Box2dUtils.createBox2dCircleBody(world, AppConfig.WWV / 2, posY);
+        return posY;
     }
 
     private void createWorld() {
@@ -69,12 +75,13 @@ public class FallingBallScreen extends AbstractBox2dScreen {
         stage.addActor(table);
 
         final Label labelLeft = new Label("Left", skin, "gold");
+        labelLeft.setAlignment(Align.left);
         final Label labelRight = new Label("Right", skin, "gold");
+        labelRight.setAlignment(Align.right);
 
         table.row().expand();
-        table.add(labelLeft).top().left();
-        table.add(labelRight).top().right();
-        table.setDebug(true);
+        table.add(labelLeft).top().left().width(200f);
+        table.add(labelRight).top().right().width(200f);
     }
 
     @Override
@@ -82,7 +89,9 @@ public class FallingBallScreen extends AbstractBox2dScreen {
         super.render(delta);
         handleInput();
 
-        cam.position.set(viewport.getWorldWidth() / 2, ball.getPosition().y, 0);
+//        cam.position.set(viewport.getWorldWidth() / 2, ball.getPosition().y, 0);
+        cam.position.set(viewport.getWorldWidth() / 2, MathUtils.clamp(ball.getPosition().y, cam.viewportHeight / 2, cam.viewportHeight * 2), 0);
+
         cam.update();
 
         b2dr.render(world, cam.combined);
