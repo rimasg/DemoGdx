@@ -124,9 +124,8 @@ public class FallingBallScreen extends AbstractBox2dScreen {
         game.batch.draw(ballRegion,
                 ball.getPosition().x - radius,
                 ball.getPosition().y - radius,
-                radius,
-                radius,
-                radius * 2, radius * 2, 1, 1,
+                radius, radius,
+                radius * 2f, radius * 2f, 1f, 1f,
                 ball.getAngle() * MathUtils.radiansToDegrees);
     }
 
@@ -140,7 +139,7 @@ public class FallingBallScreen extends AbstractBox2dScreen {
                         body.getPosition().y,
                         0.5f,
                         0.5f,
-                        1f, 1f, 1, 1,
+                        1f, 1f, 1f, 1f,
                         body.getAngle() * MathUtils.radiansToDegrees);
             }
         }
