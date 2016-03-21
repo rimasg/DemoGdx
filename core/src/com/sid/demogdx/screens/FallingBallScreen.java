@@ -3,9 +3,15 @@ package com.sid.demogdx.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.maps.objects.CircleMapObject;
+import com.badlogic.gdx.maps.objects.EllipseMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Ellipse;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -24,6 +30,7 @@ public class FallingBallScreen extends AbstractBox2dScreen {
     TiledMap map;
     OrthogonalTiledMapRenderer mapRenderer;
     Box2DMapObjectParser box2DMapObjectParser;
+    Box2DMapObjectParser.Listener.Adapter listenerAdapter;
 
     private Body ball;
     private TextureAtlas.AtlasRegion ballRegion;
@@ -38,6 +45,32 @@ public class FallingBallScreen extends AbstractBox2dScreen {
         map = new TmxMapLoader().load("maps/map.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(map, AppConfig.unitScale32, game.batch);
         box2DMapObjectParser = new Box2DMapObjectParser(mapRenderer.getUnitScale());
+        box2DMapObjectParser.setListener(new Box2DMapObjectParser.Listener.Adapter(){
+            @Override
+            public MapObject createObject(MapObject mapObject) {
+                // TODO: 2016.03.21 complete method
+                if(mapObject instanceof CircleMapObject || mapObject instanceof EllipseMapObject) {
+                    // get dimensions
+                    float width, height;
+                    if(mapObject instanceof CircleMapObject) {
+                        Circle circle = ((CircleMapObject) mapObject).getCircle();
+                        width = circle.radius * 2;
+                        height = circle.radius * 2;
+                    } else {
+                        Ellipse ellipse = ((EllipseMapObject) mapObject).getEllipse();
+                        width = ellipse.width;
+                        height = ellipse.height;
+                    }
+
+                    // adjust body position
+                    Box2DMapObjectParser.Aliases aliases = box2DMapObjectParser.getAliases();
+                    MapProperties props = mapObject.getProperties();
+                    props.put(aliases.x, props.get(aliases.x, Float.class) + width / 2);
+                    props.put(aliases.y, props.get(aliases.y, Float.class) + height / 2);
+                }
+                return super.createObject(mapObject);
+            }
+        });
 
         loadAssets();
 
@@ -97,7 +130,8 @@ public class FallingBallScreen extends AbstractBox2dScreen {
 
         b2dr.render(world, cam.combined);
         mapRenderer.setView(cam);
-        mapRenderer.render();
+        // TODO: 2016.03.21 uncomment
+//        mapRenderer.render();
 
         game.batch.setProjectionMatrix(cam.combined);
         game.batch.begin();
@@ -125,7 +159,7 @@ public class FallingBallScreen extends AbstractBox2dScreen {
                 ball.getPosition().x - radius,
                 ball.getPosition().y - radius,
                 radius, radius,
-                radius * 2f, radius * 2f, 1f, 1f,
+                radius * 2, radius * 2, 1, 1,
                 ball.getAngle() * MathUtils.radiansToDegrees);
     }
 
@@ -135,11 +169,11 @@ public class FallingBallScreen extends AbstractBox2dScreen {
             if ((body.getUserData() != null) && "HangingCircle".equals((String) body.getUserData())) {
                 final float radius = body.getFixtureList().get(0).getShape().getRadius();
                 game.batch.draw(ballRegion,
-                        body.getPosition().x,
-                        body.getPosition().y,
-                        0.5f,
-                        0.5f,
-                        1f, 1f, 1f, 1f,
+                        body.getPosition().x - radius,
+                        body.getPosition().y - radius,
+                        radius,
+                        radius,
+                        radius * 2, radius * 2, 1, 1,
                         body.getAngle() * MathUtils.radiansToDegrees);
             }
         }

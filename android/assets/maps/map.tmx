@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="9" height="48" tilewidth="32" tileheight="32" nextobjectid="90">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="9" height="48" tilewidth="32" tileheight="32" nextobjectid="91">
  <tileset firstgid="1" source="../tilesets/desert.tsx"/>
  <layer name="background" width="9" height="48">
   <data encoding="base64" compression="zlib">
@@ -69,13 +69,14 @@
    <polygon points="-124,0 0,64 -24.8,64"/>
   </object>
   <object id="82" name="rec" type="object" x="128" y="1088" width="160" height="16"/>
-  <object id="83" name="ObstacleBox" type="object" x="128" y="1184" width="32" height="32">
+  <object id="90" name="HangingCircle" type="object" x="82" y="1084" width="32" height="32">
    <properties>
     <property name="awake" value="false"/>
     <property name="bodyType" value="DynamicBody"/>
     <property name="density" value="1"/>
     <property name="userData" value="HangingCircle"/>
    </properties>
+   <ellipse/>
   </object>
  </objectgroup>
 </map>
