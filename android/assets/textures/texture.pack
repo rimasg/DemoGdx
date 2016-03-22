@@ -5,70 +5,70 @@ filter: Nearest,Nearest
 repeat: none
 play
   rotate: false
-  xy: 1, 185
+  xy: 1, 201
   size: 128, 64
   orig: 128, 64
   offset: 0, 0
   index: -1
 racket
   rotate: false
-  xy: 1, 167
+  xy: 1, 183
   size: 128, 16
   orig: 128, 16
   offset: 0, 0
   index: -1
 ball
   rotate: false
-  xy: 131, 185
+  xy: 131, 201
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 exit
   rotate: false
-  xy: 1, 101
+  xy: 1, 117
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 leaderboard
   rotate: false
-  xy: 1, 35
+  xy: 1, 51
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 share
   rotate: false
-  xy: 67, 101
+  xy: 67, 117
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 sound_off
   rotate: false
-  xy: 67, 35
+  xy: 67, 51
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 sound_on
   rotate: false
-  xy: 133, 119
+  xy: 133, 135
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 star
   rotate: false
-  xy: 133, 53
+  xy: 133, 69
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 bg_gold
   rotate: false
-  xy: 1, 1
+  xy: 1, 17
   size: 64, 32
   split: 5, 5, 5, 5
   orig: 64, 32
@@ -76,7 +76,7 @@ bg_gold
   index: -1
 button_black
   rotate: false
-  xy: 67, 1
+  xy: 67, 17
   size: 64, 32
   split: 6, 6, 6, 6
   orig: 64, 32
@@ -84,15 +84,22 @@ button_black
   index: -1
 button_gold
   rotate: false
-  xy: 133, 19
+  xy: 133, 35
   size: 64, 32
   split: 6, 6, 6, 6
   orig: 64, 32
   offset: 0, 0
   index: -1
+circle_rainbow
+  rotate: false
+  xy: 133, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 line_dot
   rotate: false
-  xy: 197, 248
+  xy: 197, 264
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
