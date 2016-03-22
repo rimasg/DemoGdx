@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="9" height="48" tilewidth="32" tileheight="32" nextobjectid="106">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="9" height="48" tilewidth="32" tileheight="32" nextobjectid="112">
  <tileset firstgid="1" source="../tilesets/desert.tsx"/>
  <layer name="background" width="9" height="48">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFo2AUoAO5YYAV6GCHBgE+JVifRPV6SGwuLJgYM8jVh8ucweIeapk72NwDAMAFGMA=
+   eJyTY2BgkBvFo3gUDzusQAc7NAjwKcH6JKrXQ2JzYcHEmEGuPlzmDBb3UMvcweYeALAUL/Q=
   </data>
  </layer>
  <objectgroup name="obstacles">
@@ -54,27 +54,12 @@
    </properties>
    <polyline points="0,0 0.666667,127.667"/>
   </object>
-  <object id="69" name="poly" type="object" x="0" y="294.72">
-   <polygon points="0,-9.92 128,89.28 102.4,89.28"/>
-  </object>
-  <object id="71" name="poly" type="object" x="0" y="547.52">
-   <polygon points="0,-6.72 128,60.48 102.4,60.48"/>
-  </object>
-  <object id="76" name="poly" type="object" x="288" y="384">
-   <polygon points="0,0 -96,128 -76.8,128"/>
-  </object>
-  <object id="77" name="poly" type="object" x="288" y="640">
-   <polygon points="0,0 -124,64 -99.2,64"/>
-  </object>
-  <object id="79" name="poly" type="object" x="124" y="640">
-   <polygon points="-124,0 0,64 -24.8,64"/>
-  </object>
   <object id="82" name="rec" type="object" x="128" y="1088" width="160" height="16"/>
-  <object id="90" name="HangingCircle" type="object" x="82" y="1084" width="32" height="32">
+  <object id="90" name="HangingCircle" type="object" x="96" y="1120" width="32" height="32">
    <properties>
     <property name="awake" value="false"/>
     <property name="bodyType" value="DynamicBody"/>
-    <property name="density" value="1"/>
+    <property name="isSensor" value="true"/>
     <property name="userData" value="HangingCircle"/>
    </properties>
    <ellipse/>
@@ -103,6 +88,60 @@
    <properties>
     <property name="body" value="PlatformBody"/>
    </properties>
+  </object>
+  <object id="106" name="HangingCircle" type="object" x="128" y="1184" width="32" height="32">
+   <properties>
+    <property name="awake" value="false"/>
+    <property name="bodyType" value="DynamicBody"/>
+    <property name="isSensor" value="true"/>
+    <property name="userData" value="HangingCircle"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="107" name="HangingCircle" type="object" x="128" y="1184" width="32" height="32">
+   <properties>
+    <property name="awake" value="false"/>
+    <property name="bodyType" value="DynamicBody"/>
+    <property name="isSensor" value="true"/>
+    <property name="userData" value="HangingCircle"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="108" name="HangingCircle" type="object" x="128" y="1248" width="32" height="32">
+   <properties>
+    <property name="awake" value="false"/>
+    <property name="bodyType" value="DynamicBody"/>
+    <property name="isSensor" value="true"/>
+    <property name="userData" value="HangingCircle"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="109" name="HangingCircle" type="object" x="128" y="1312" width="32" height="32">
+   <properties>
+    <property name="awake" value="false"/>
+    <property name="bodyType" value="DynamicBody"/>
+    <property name="isSensor" value="true"/>
+    <property name="userData" value="HangingCircle"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="110" name="HangingCircle" type="object" x="128" y="1376" width="32" height="32">
+   <properties>
+    <property name="awake" value="false"/>
+    <property name="bodyType" value="DynamicBody"/>
+    <property name="isSensor" value="true"/>
+    <property name="userData" value="HangingCircle"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="111" name="HangingCircle" type="object" x="128" y="1440" width="32" height="32">
+   <properties>
+    <property name="awake" value="false"/>
+    <property name="bodyType" value="DynamicBody"/>
+    <property name="isSensor" value="true"/>
+    <property name="userData" value="HangingCircle"/>
+   </properties>
+   <ellipse/>
   </object>
  </objectgroup>
 </map>

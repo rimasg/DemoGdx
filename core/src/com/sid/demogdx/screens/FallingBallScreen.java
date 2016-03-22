@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.Align;
 import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.interfaces.ListenerClass;
 import com.sid.demogdx.utils.AppConfig;
+import com.sid.demogdx.utils.Box2dUtils;
 
 import net.dermetfan.gdx.physics.box2d.Box2DMapObjectParser;
 
@@ -56,17 +57,16 @@ public class FallingBallScreen extends AbstractBox2dScreen {
                 if ((isPlayer(bodyA) || isPlayer(bodyB))
                         && ((bodyA.getType() == BodyDef.BodyType.DynamicBody) && bodyB.getType() == BodyDef.BodyType.DynamicBody)) {
                     if (isPlayer(bodyA)) {
-//                        particleEffect.setPosition(bodyB.getPosition().x, bodyB.getPosition().y);
+                        setParticleToStart(bodyB.getPosition().x, bodyB.getPosition().y);
                         deadBodies.add(bodyB);
-//                        world.destroyBody(bodyB);
                     } else if (isPlayer(bodyB)) {
-//                        particleEffect.setPosition(bodyA.getPosition().x, bodyA.getPosition().y);
+                        setParticleToStart(bodyA.getPosition().x, bodyA.getPosition().y);
                         deadBodies.add(bodyA);
-//                        world.destroyBody(bodyA);
                     }
                 }
             }
         });
+
         loadAssets();
         loadParticles();
 
@@ -81,14 +81,27 @@ public class FallingBallScreen extends AbstractBox2dScreen {
     }
 
     private void loadParticles() {
-//        particleEffect = new ParticleEffect();
-//        particleEffect.load(Gdx.files.internal("particles/explosion.p"), Gdx.files.internal("textures"));
-//        particleEffect.start();
+        particleEffect = new ParticleEffect();
+        particleEffect.load(Gdx.files.internal("particles/explosion.p"), Gdx.files.internal("textures"));
+        particleEffect.start();
+    }
+
+    private void setParticleToStart(float x, float y) {
+        particleEffect.setPosition(x, y);
+        particleEffect.start();
     }
 
     private void createWorld() {
         box2DMapObjectParser.load(world, map);
+//        spawnBalls(20, viewport.getWorldWidth() / 2, viewport.getWorldHeight() * 2.0f);
         world.getBodies(bodies);
+    }
+
+    private void spawnBalls(int qty, float posX, float posY) {
+        for (int i = 0; i < qty; i++) {
+            final Body body = Box2dUtils.createBox2dCircleBody(world, MathUtils.random(posX), posY);
+            body.setUserData("HangingCircle");
+        }
     }
 
     private void createPlayer() {
@@ -134,7 +147,7 @@ public class FallingBallScreen extends AbstractBox2dScreen {
         super.render(delta);
         handleInput();
 
-//        particleEffect.update(delta);
+        particleEffect.update(delta);
         removedDeadBodies();
         // Show only visible part of the Tiled Map on Y-axis - MathUtils.clamp()
         cam.position.set(viewport.getWorldWidth() / 2, MathUtils.clamp(ball.getPosition().y, cam.viewportHeight / 2, cam.viewportHeight * 2), 0);
@@ -147,7 +160,7 @@ public class FallingBallScreen extends AbstractBox2dScreen {
         game.batch.setProjectionMatrix(cam.combined);
         game.batch.begin();
         drawBodies();
-//        drawParticles();
+        drawParticles();
         game.batch.end();
 
         stage.act();
@@ -164,13 +177,25 @@ public class FallingBallScreen extends AbstractBox2dScreen {
     }
 
     private void handleInput() {
-        if (Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer)) {
-            ball.applyForceToCenter(-Gdx.input.getAccelerometerX(), 0, true);
-        }
-
         if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
             game.setScreen(game.getMainMenuScreen());
         }
+
+        if (Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer)) {
+//            ball.applyForceToCenter(-Gdx.input.getAccelerometerX(), 0, true);
+            moveBallOnXAxis(-Gdx.input.getAccelerometerX());
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            moveBallOnXAxis(-3.0f);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            moveBallOnXAxis(3.0f);
+        }
+    }
+
+    private void moveBallOnXAxis(float x) {
+        ball.applyForceToCenter(x, 0, true);
     }
 
     private void drawBodies() {
