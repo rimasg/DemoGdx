@@ -9,6 +9,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -26,7 +27,6 @@ public class FallingBallScreen extends AbstractBox2dScreen {
     TiledMap map;
     OrthogonalTiledMapRenderer mapRenderer;
     Box2DMapObjectParser box2DMapObjectParser;
-    Box2DMapObjectParser.Listener.Adapter listenerAdapter;
 
     private Body ball;
     private TextureAtlas.AtlasRegion bodyRegion;
@@ -52,16 +52,19 @@ public class FallingBallScreen extends AbstractBox2dScreen {
                 super.beginContact(contact);
                 final Body bodyA = contact.getFixtureA().getBody();
                 final Body bodyB = contact.getFixtureB().getBody();
-                if (isPlayer(bodyA) || isPlayer(bodyB)) {
+
+                if ((isPlayer(bodyA) || isPlayer(bodyB))
+                        && ((bodyA.getType() == BodyDef.BodyType.DynamicBody) && bodyB.getType() == BodyDef.BodyType.DynamicBody)) {
                     if (isPlayer(bodyA)) {
-                        particleEffect.setPosition(bodyB.getPosition().x, bodyB.getPosition().y);
-                        world.destroyBody(bodyB);
+//                        particleEffect.setPosition(bodyB.getPosition().x, bodyB.getPosition().y);
+                        deadBodies.add(bodyB);
+//                        world.destroyBody(bodyB);
                     } else if (isPlayer(bodyB)) {
-                        particleEffect.setPosition(bodyA.getPosition().x, bodyA.getPosition().y);
-                        world.destroyBody(bodyA);
+//                        particleEffect.setPosition(bodyA.getPosition().x, bodyA.getPosition().y);
+                        deadBodies.add(bodyA);
+//                        world.destroyBody(bodyA);
                     }
                 }
-                // TODO: 2016.03.22 Complete method to destroy bodies which collide with "Player" body
             }
         });
         loadAssets();
@@ -78,9 +81,9 @@ public class FallingBallScreen extends AbstractBox2dScreen {
     }
 
     private void loadParticles() {
-        particleEffect = new ParticleEffect();
-        particleEffect.load(Gdx.files.internal("particles/explosion.p"), Gdx.files.internal("textures"));
-        particleEffect.start();
+//        particleEffect = new ParticleEffect();
+//        particleEffect.load(Gdx.files.internal("particles/explosion.p"), Gdx.files.internal("textures"));
+//        particleEffect.start();
     }
 
     private void createWorld() {
@@ -131,7 +134,8 @@ public class FallingBallScreen extends AbstractBox2dScreen {
         super.render(delta);
         handleInput();
 
-        particleEffect.update(delta);
+//        particleEffect.update(delta);
+        removedDeadBodies();
         // Show only visible part of the Tiled Map on Y-axis - MathUtils.clamp()
         cam.position.set(viewport.getWorldWidth() / 2, MathUtils.clamp(ball.getPosition().y, cam.viewportHeight / 2, cam.viewportHeight * 2), 0);
         cam.update();
@@ -143,11 +147,20 @@ public class FallingBallScreen extends AbstractBox2dScreen {
         game.batch.setProjectionMatrix(cam.combined);
         game.batch.begin();
         drawBodies();
-        drawParticles();
+//        drawParticles();
         game.batch.end();
 
         stage.act();
         stage.draw();
+    }
+
+    private void removedDeadBodies() {
+        if (deadBodies.size > 0) {
+            for (Body deadBody : deadBodies) {
+                world.destroyBody(deadBody);
+            }
+            deadBodies.clear();
+        }
     }
 
     private void handleInput() {

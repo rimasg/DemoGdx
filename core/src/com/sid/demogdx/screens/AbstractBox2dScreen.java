@@ -14,6 +14,7 @@ public abstract class AbstractBox2dScreen extends AbstractScreen {
     World world;
     Box2DDebugRenderer b2dr;
     Array<Body> bodies = new Array<Body>();
+    Array<Body> deadBodies = new Array<Body>();
 
     public AbstractBox2dScreen(DemoGdx game) {
         super(game);
