@@ -203,7 +203,8 @@ public class FallingBallScreen extends AbstractBox2dScreen {
             if ((body.getUserData() != null) && (body.getUserData() instanceof String)) {
                 final String userData = (String) body.getUserData();
                 switch (userData) {
-                    case "HangingCircle": bodyRegion = starRegion;
+                    case "HangingCircle":
+                        bodyRegion = starRegion;
                         break;
                     case "Player":
                         bodyRegion = circleRainbowRegion;
@@ -237,5 +238,4 @@ public class FallingBallScreen extends AbstractBox2dScreen {
         mapRenderer.dispose();
         map.dispose();
     }
-
 }
