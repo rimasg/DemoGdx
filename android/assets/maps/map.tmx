@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="9" height="48" tilewidth="32" tileheight="32" nextobjectid="112">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="9" height="48" tilewidth="32" tileheight="32" nextobjectid="116">
  <tileset firstgid="1" source="../tilesets/desert.tsx"/>
  <layer name="background" width="9" height="48">
   <data encoding="base64" compression="zlib">
-   eJyTY2BgkBvFo3gUDzusQAc7NAjwKcH6JKrXQ2JzYcHEmEGuPlzmDBb3UMvcweYeALAUL/Q=
+   eJyTY2BgkBvFo3gEYS4seDCbSy5WIFGcHKxBgE8J1idRvR4V4oJacYiud6DdQy1zB5t7AOa/Ly4=
   </data>
  </layer>
  <objectgroup name="obstacles">
-  <object id="26" name="borders" type="object" x="2" y="30">
-   <polyline points="0,0 -2,1506 286,1506 286,2"/>
-  </object>
   <object id="41" type="object" x="39" y="1083" width="32" height="32">
    <ellipse/>
   </object>
@@ -25,13 +22,6 @@
   <object id="45" type="object" x="192" y="960" width="32" height="32">
    <ellipse/>
   </object>
-  <object id="46" name="rec" type="object" x="0" y="1152" width="160" height="16"/>
-  <object id="47" name="rec" type="object" x="128" y="1216" width="160" height="16"/>
-  <object id="48" name="rec" type="object" x="128" y="1472" width="160" height="16"/>
-  <object id="49" name="rec" type="object" x="0" y="1408" width="160" height="16"/>
-  <object id="50" name="rec" type="object" x="128" y="1344" width="160" height="16"/>
-  <object id="51" name="rec" type="object" x="0" y="1280" width="160" height="16"/>
-  <object id="52" name="rec" type="object" x="0" y="1216" width="64" height="16"/>
   <object id="53" name="HangingCircle" type="object" x="128" y="1024" width="32" height="32">
    <properties>
     <property name="awake" value="false"/>
@@ -54,7 +44,6 @@
    </properties>
    <polyline points="0,0 0.666667,127.667"/>
   </object>
-  <object id="82" name="rec" type="object" x="128" y="1088" width="160" height="16"/>
   <object id="90" name="HangingCircle" type="object" x="96" y="1120" width="32" height="32">
    <properties>
     <property name="awake" value="false"/>
@@ -143,5 +132,32 @@
    </properties>
    <ellipse/>
   </object>
+  <object id="114" type="object" x="38" y="901" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object id="115" name="HangingCircle" type="object" x="128" y="704" width="32" height="32">
+   <properties>
+    <property name="awake" value="false"/>
+    <property name="bodyType" value="DynamicBody"/>
+    <property name="isSensor" value="true"/>
+    <property name="userData" value="HangingCircle"/>
+   </properties>
+   <ellipse/>
+  </object>
+ </objectgroup>
+ <objectgroup name="platforms">
+  <object id="46" name="rec" type="object" x="0" y="1152" width="160" height="16"/>
+  <object id="82" name="rec" type="object" x="128" y="1088" width="160" height="16"/>
+  <object id="47" name="rec" type="object" x="128" y="1216" width="160" height="16"/>
+  <object id="48" name="rec" type="object" x="128" y="1472" width="160" height="16"/>
+  <object id="49" name="rec" type="object" x="0" y="1408" width="160" height="16"/>
+  <object id="50" name="rec" type="object" x="128" y="1344" width="160" height="16"/>
+  <object id="51" name="rec" type="object" x="0" y="1280" width="160" height="16"/>
+  <object id="52" name="rec" type="object" x="0" y="1216" width="64" height="16"/>
+  <object id="26" name="borders" type="object" x="2" y="30">
+   <polyline points="0,0 -2,1506 286,1506 286,2"/>
+  </object>
+  <object id="112" name="rec" type="object" x="0" y="672" width="160" height="16"/>
+  <object id="113" name="rec" type="object" x="128" y="736" width="160" height="16"/>
  </objectgroup>
 </map>

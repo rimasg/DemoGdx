@@ -2,6 +2,7 @@ package com.sid.demogdx.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -35,6 +36,7 @@ public class FallingBallScreen extends AbstractBox2dScreen {
     private TextureAtlas.AtlasRegion circleRainbowRegion;
 
     private ParticleEffect particleEffect;
+    private Sound collisionSound;
 
     public FallingBallScreen(DemoGdx game) {
         super(game);
@@ -63,6 +65,7 @@ public class FallingBallScreen extends AbstractBox2dScreen {
                         setParticleToStart(bodyA.getPosition().x, bodyA.getPosition().y);
                         deadBodies.add(bodyA);
                     }
+                    playCollisionSound();
                 }
             }
         });
@@ -78,6 +81,7 @@ public class FallingBallScreen extends AbstractBox2dScreen {
     private void loadAssets() {
         starRegion = skin.getAtlas().findRegion("star");
         circleRainbowRegion = skin.getAtlas().findRegion("circle_rainbow");
+        collisionSound = Gdx.audio.newSound(Gdx.files.internal("sounds/click.ogg"));
     }
 
     private void loadParticles() {
@@ -225,6 +229,10 @@ public class FallingBallScreen extends AbstractBox2dScreen {
         if (!particleEffect.isComplete()) {
             particleEffect.draw(game.batch);
         }
+    }
+
+    private void playCollisionSound() {
+        collisionSound.play();
     }
 
     @Override
