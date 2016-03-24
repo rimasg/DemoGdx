@@ -1,5 +1,6 @@
 package com.sid.demogdx.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -36,7 +37,16 @@ public abstract class AbstractBox2dScreen extends AbstractScreen {
     @Override
     public void hide() {
         super.hide();
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
         b2dr.dispose();
         world.dispose();
+
+        b2dr = null;
+        world = null;
+        Gdx.app.log(TAG, "dispose: Called");
     }
 }

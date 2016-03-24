@@ -21,8 +21,8 @@ public class DemoGdx extends Game {
     public void create() {
         batch = new SpriteBatch();
         loadAssets();
-        heroScreen = new HeroScreen(this);
         mainMenuScreen = new MainMenuScreen(this);
+        heroScreen = new HeroScreen(this);
         fallingStarsScreen = new FallingStarsScreen(this);
         fallingBallScreen = new FallingBallScreen(this);
         setScreen(mainMenuScreen);
@@ -52,5 +52,10 @@ public class DemoGdx extends Game {
     @Override
     public void render() {
         super.render();
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
     }
 }

@@ -94,4 +94,9 @@ public class HeroScreen extends AbstractScreen {
     public void hide() {
         super.hide();
     }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+    }
 }

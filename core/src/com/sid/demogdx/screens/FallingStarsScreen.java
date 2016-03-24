@@ -26,7 +26,7 @@ import net.dermetfan.gdx.physics.box2d.Box2DUtils;
  * Created by Okis on 2016.03.06 @ 20:22.
  */
 public class FallingStarsScreen extends AbstractBox2dScreen {
-    private static final float SPAWN_BODIES_INTERVAL_SECONDS = 0.2f;
+    private static final float SPAWN_BODIES_INTERVAL_SECONDS = 0.4f;
     private static final Vector2 defaultBodyPos = new Vector2(AppConfig.WWV / 2, 20);
 
     ParticleEffect particleEffect;
@@ -137,7 +137,8 @@ public class FallingStarsScreen extends AbstractBox2dScreen {
         destroyBodiesOutsideWorld();
 
         cam.update();
-        b2dr.render(world, cam.combined);
+        // TODO: 2016.03.24 uncomment
+//        b2dr.render(world, cam.combined);
 
         game.batch.setProjectionMatrix(cam.combined);
         game.batch.begin();
@@ -220,6 +221,11 @@ public class FallingStarsScreen extends AbstractBox2dScreen {
     public void hide() {
         super.hide();
         particleEffect.dispose();
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
     }
 
     private enum BodyType{
