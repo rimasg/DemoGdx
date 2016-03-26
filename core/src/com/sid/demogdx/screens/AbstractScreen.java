@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.sid.demogdx.Assets;
@@ -25,6 +26,9 @@ public abstract class AbstractScreen implements Screen {
     final Assets assets = Assets.inst();
 
     Skin skin;
+
+    private long secondsTime = 0L;
+    private Timer.Task secondsTimer;
 
     public AbstractScreen(final DemoGdx game) {
         this.TAG = getClass().getSimpleName();
@@ -46,6 +50,30 @@ public abstract class AbstractScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setCatchBackKey(true);
+        startTimer();
+    }
+
+    private void startTimer() {
+        secondsTimer = new Timer().scheduleTask(new Timer.Task() {
+            @Override
+            public void run() {
+                secondsTime++;
+            }
+        }, 0, 1f);
+    }
+
+    public String getScreenTime() {
+        int seconds = (int) (secondsTime % 60);
+        int minutes = (int) ((secondsTime / 60) % 60);
+        int hours = (int) ((secondsTime / 3600) % 24);
+        String secondsStr = (seconds < 10 ? "0" : "") + seconds;
+        String minutesStr = (minutes < 10 ? "0" : "") + minutes;
+        String hoursStr = (hours < 10 ? "0" : "") + hours;
+        return hoursStr + ":" + minutesStr + ":" + secondsStr;
+    }
+
+    private void resetVars() {
+        secondsTime = 0;
     }
 
     @Override
@@ -72,11 +100,12 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void hide() {
-        stage.dispose();
+        secondsTimer.cancel();
+        resetVars();
     }
 
     @Override
     public void dispose() {
-
+        stage.dispose();
     }
 }

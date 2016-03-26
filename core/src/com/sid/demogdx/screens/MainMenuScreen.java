@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.sid.demogdx.DemoGdx;
@@ -21,7 +22,7 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
  */
 public class MainMenuScreen extends AbstractScreen {
 //    Stage stage;
-    Label title, btnPlay, btnBox2d, btnOverlay, btnFallingBall;
+    Label title, btnPlay, btnBox2d, btnOverlay, btnFallingBall, btnBTree;
     Image exitBtn;
 
     public MainMenuScreen(DemoGdx game) {
@@ -37,6 +38,8 @@ public class MainMenuScreen extends AbstractScreen {
 
         final Table table = new Table(skin);
         table.setBounds(0, 0 , AppConfig.WWP, AppConfig.WHP);
+        stage.addActor(table);
+
         title = new Label("Mover", skin, "gold");
         title.setAlignment(Align.center);
 
@@ -70,6 +73,16 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
+        btnBTree = new Label("BehaviorTree", skin, "gold");
+        btnBTree.setAlignment(Align.center);
+        btnBTree.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                game.setScreen(game.getBehaviorTreeScreen());
+            }
+        });
+
         btnOverlay = new Label("Overlay Menu", skin, "gold");
         btnOverlay.setAlignment(Align.center);
         btnOverlay.addListener(new ClickListener(){
@@ -93,19 +106,23 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
-        table.row().center();
-        table.add(title).center().width(AppConfig.WWP * 0.6f);
-        table.row().center().pad(20.0f);
+        table.setDebug(false);
+        table.row().expandX().fillX();
+        table.add(title);
+        table.row().pad(10.0f);
+        table.columnDefaults(0).width(Value.percentWidth(0.8f, table));
         table.add(btnPlay);
-        table.row().center().pad(20.0f);
+        table.row().pad(10.0f);
         table.add(btnBox2d);
-        table.row().center().pad(20.0f);
+        table.row().pad(10.0f);
         table.add(btnFallingBall);
-        table.row().center().pad(20.0f);
+        table.row().pad(10.0f);
+        table.add(btnBTree);
+        table.row().pad(10.0f);
         table.add(btnOverlay);
-        table.row().center().pad(20.0f);
+        table.row().pad(10.0f);
+        table.columnDefaults(0).reset();
         table.add(exitBtn);
-        stage.addActor(table);
     }
 
     @Override

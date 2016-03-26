@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.utils.Align;
 import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.interfaces.ListenerClass;
@@ -37,6 +38,9 @@ public class FallingBallScreen extends AbstractBox2dScreen {
 
     private ParticleEffect particleEffect;
     private Sound collisionSound;
+
+    private Label scoreLabel;
+    private Label timeLabel;
 
     public FallingBallScreen(DemoGdx game) {
         super(game);
@@ -66,6 +70,9 @@ public class FallingBallScreen extends AbstractBox2dScreen {
                         deadBodies.add(bodyA);
                     }
                     playCollisionSound();
+                }
+                if (isFinish(bodyA) || isFinish(bodyB)) {
+//                    show();
                 }
             }
         });
@@ -121,19 +128,24 @@ public class FallingBallScreen extends AbstractBox2dScreen {
         return body.getUserData() != null && body.getUserData().equals("Player");
     }
 
+    private boolean isFinish(Body body) {
+        return body.getUserData() != null && body.getUserData().equals("Finish");
+    }
+
     private void createHUD() {
         final Table table = new Table(skin);
         table.setFillParent(true);
         stage.addActor(table);
 
-        final Label labelLeft = new Label("Left", skin, "gold");
-        labelLeft.setAlignment(Align.left);
-        final Label labelRight = new Label("Right", skin, "gold");
-        labelRight.setAlignment(Align.right);
+        scoreLabel = new Label("", skin, "gold");
+        scoreLabel.setAlignment(Align.left);
+        timeLabel = new Label("", skin, "gold");
+        timeLabel.setAlignment(Align.right);
 
-        table.row().expand();
-        table.add(labelLeft).top().left().width(200f);
-        table.add(labelRight).top().right().width(200f);
+        table.row().expand().top();
+        table.columnDefaults(0).width(Value.percentWidth(0.25f, table));
+        table.add(scoreLabel).left();
+        table.add(timeLabel).right();
     }
 
     private float getMapHeight() {
@@ -153,6 +165,7 @@ public class FallingBallScreen extends AbstractBox2dScreen {
 
         particleEffect.update(delta);
         removedDeadBodies();
+        updateHUD();
         // Show only visible part of the Tiled Map on Y-axis - MathUtils.clamp()
         cam.position.set(viewport.getWorldWidth() / 2, MathUtils.clamp(ball.getPosition().y, cam.viewportHeight / 2, cam.viewportHeight * 2), 0);
         cam.update();
@@ -178,6 +191,10 @@ public class FallingBallScreen extends AbstractBox2dScreen {
             }
             deadBodies.clear();
         }
+    }
+
+    private void updateHUD() {
+        timeLabel.setText(getScreenTime());
     }
 
     private void handleInput() {
@@ -245,6 +262,7 @@ public class FallingBallScreen extends AbstractBox2dScreen {
         super.hide();
         mapRenderer.dispose();
         map.dispose();
+        collisionSound.dispose();
     }
 
     @Override
