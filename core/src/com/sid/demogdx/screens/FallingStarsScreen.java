@@ -3,6 +3,7 @@ package com.sid.demogdx.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
@@ -29,7 +30,9 @@ public class FallingStarsScreen extends AbstractBox2dScreen {
     private static final float SPAWN_BODIES_INTERVAL_SECONDS = 0.4f;
     private static final Vector2 defaultBodyPos = new Vector2(AppConfig.WWV / 2, 20);
 
-    ParticleEffect particleEffect;
+    private ParticleEffect particleEffect;
+    private ParticleEffectPool particleEffectPool;
+    private ParticleEffectPool.PooledEffect pooledEffect;
 
     private TextureAtlas.AtlasRegion starRegion;
     private TextureAtlas.AtlasRegion lineDotRegion;
@@ -52,7 +55,7 @@ public class FallingStarsScreen extends AbstractBox2dScreen {
 
         particleEffect = new ParticleEffect();
         particleEffect.load(Gdx.files.internal("particles/trail.p"), Gdx.files.internal("textures"));
-        particleEffect.start();
+        particleEffectPool = new ParticleEffectPool(particleEffect, 20, 100);
     }
 
     private void createGround() {
@@ -163,17 +166,28 @@ public class FallingStarsScreen extends AbstractBox2dScreen {
                         defaultBodyPos.x + MathUtils.random(-defaultBodyPos.x * 0.2f, defaultBodyPos.x * 0.2f),
                         defaultBodyPos.y);
                 tmpBody.applyAngularImpulse(0.2f, true);
-//                Gdx.app.log(TAG, "Number of bodies: " + bodies.size);
+                addParticleEffectToBody(tmpBody);
             }
         }, 0, SPAWN_BODIES_INTERVAL_SECONDS);
+    }
+
+    private void addParticleEffectToBody(Body body) {
+        body.setUserData(particleEffectPool.obtain());
     }
 
     private void destroyBodiesOutsideWorld() {
         world.getBodies(bodies);
         for (Body body : bodies) {
-            if (body.getPosition().y < -1.0f) {
+            if (body.getPosition().y < -2.0f) {
+                removeParticleEffectFromBody(body);
                 world.destroyBody(body);
             }
+        }
+    }
+
+    private void removeParticleEffectFromBody(Body body) {
+        if (body.getUserData() instanceof ParticleEffectPool.PooledEffect) {
+            ((ParticleEffectPool.PooledEffect) body.getUserData()).free();
         }
     }
 
@@ -192,8 +206,11 @@ public class FallingStarsScreen extends AbstractBox2dScreen {
     }
 
     private void drawParticles(Body body, float delta) {
-        particleEffect.setPosition(body.getPosition().x, body.getPosition().y);
-        particleEffect.draw(game.batch, delta);
+        if (body.getUserData() instanceof ParticleEffectPool.PooledEffect) {
+            pooledEffect = (ParticleEffectPool.PooledEffect) body.getUserData();
+            pooledEffect.setPosition(body.getPosition().x, body.getPosition().y);
+            pooledEffect.draw(game.batch, delta);
+        }
     }
 
     private void drawRotatingPlatform(SpriteBatch batch) {
@@ -220,12 +237,12 @@ public class FallingStarsScreen extends AbstractBox2dScreen {
     @Override
     public void hide() {
         super.hide();
-        particleEffect.dispose();
     }
 
     @Override
     public void dispose() {
         super.dispose();
+        particleEffect.dispose();
     }
 
     private enum BodyType{
