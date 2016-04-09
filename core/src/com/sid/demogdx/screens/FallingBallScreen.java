@@ -64,10 +64,10 @@ public class FallingBallScreen extends AbstractBox2dScreen {
                         && ((bodyA.getType() == BodyDef.BodyType.DynamicBody) && bodyB.getType() == BodyDef.BodyType.DynamicBody)) {
                     if (isPlayer(bodyA)) {
                         setParticleToStart(bodyB.getPosition().x, bodyB.getPosition().y);
-                        deadBodies.add(bodyB);
+                        bodiesToRemove.add(bodyB);
                     } else if (isPlayer(bodyB)) {
                         setParticleToStart(bodyA.getPosition().x, bodyA.getPosition().y);
-                        deadBodies.add(bodyA);
+                        bodiesToRemove.add(bodyA);
                     }
                     playCollisionSound();
                 }
@@ -185,11 +185,11 @@ public class FallingBallScreen extends AbstractBox2dScreen {
     }
 
     private void removedDeadBodies() {
-        if (deadBodies.size > 0) {
-            for (Body deadBody : deadBodies) {
+        if (bodiesToRemove.size > 0) {
+            for (Body deadBody : bodiesToRemove) {
                 world.destroyBody(deadBody);
             }
-            deadBodies.clear();
+            bodiesToRemove.clear();
         }
     }
 

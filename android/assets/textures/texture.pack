@@ -3,72 +3,65 @@ texture.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+blue_ball_border
+  rotate: false
+  xy: 1, 67
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+cyan_ball_border
+  rotate: false
+  xy: 153, 67
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+green_ball_border
+  rotate: false
+  xy: 305, 67
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+magenta_ball_border
+  rotate: false
+  xy: 457, 67
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+red_ball_border
+  rotate: false
+  xy: 609, 67
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+yellow_ball_border
+  rotate: false
+  xy: 761, 67
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
 play
   rotate: false
-  xy: 1, 201
+  xy: 1, 1
   size: 128, 64
   orig: 128, 64
   offset: 0, 0
   index: -1
 racket
   rotate: false
-  xy: 1, 183
+  xy: 131, 49
   size: 128, 16
   orig: 128, 16
   offset: 0, 0
   index: -1
-ball
-  rotate: false
-  xy: 131, 201
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-exit
-  rotate: false
-  xy: 1, 117
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-leaderboard
-  rotate: false
-  xy: 1, 51
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-share
-  rotate: false
-  xy: 67, 117
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-sound_off
-  rotate: false
-  xy: 67, 51
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-sound_on
-  rotate: false
-  xy: 133, 135
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-star
-  rotate: false
-  xy: 133, 69
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
 bg_gold
   rotate: false
-  xy: 1, 17
+  xy: 131, 15
   size: 64, 32
   split: 5, 5, 5, 5
   orig: 64, 32
@@ -76,15 +69,64 @@ bg_gold
   index: -1
 button_black
   rotate: false
-  xy: 67, 17
+  xy: 197, 15
   size: 64, 32
   split: 6, 6, 6, 6
   orig: 64, 32
   offset: 0, 0
   index: -1
+ball
+  rotate: false
+  xy: 263, 1
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+exit
+  rotate: false
+  xy: 329, 1
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+leaderboard
+  rotate: false
+  xy: 395, 1
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+share
+  rotate: false
+  xy: 461, 1
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+sound_off
+  rotate: false
+  xy: 527, 1
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+sound_on
+  rotate: false
+  xy: 593, 1
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+star
+  rotate: false
+  xy: 659, 1
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 button_gold
   rotate: false
-  xy: 133, 35
+  xy: 725, 33
   size: 64, 32
   split: 6, 6, 6, 6
   orig: 64, 32
@@ -92,14 +134,21 @@ button_gold
   index: -1
 circle_rainbow
   rotate: false
-  xy: 133, 1
+  xy: 791, 33
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+particle
+  rotate: false
+  xy: 825, 33
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 line_dot
   rotate: false
-  xy: 197, 264
+  xy: 131, 12
   size: 1, 1
   orig: 1, 1
   offset: 0, 0

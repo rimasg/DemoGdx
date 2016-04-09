@@ -22,7 +22,7 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
  */
 public class MainMenuScreen extends AbstractScreen {
 //    Stage stage;
-    Label title, btnPlay, btnBox2d, btnOverlay, btnFallingBall, btnBTree;
+    Label title, btnPlay, btnBox2d, btnOverlay, btnFallingBall, btnGravityBalls, btnBTree;
     Image exitBtn;
 
     public MainMenuScreen(DemoGdx game) {
@@ -73,6 +73,16 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
+        btnGravityBalls = new Label("Gravity Ball", skin, "gold");
+        btnGravityBalls.setAlignment(Align.center);
+        btnGravityBalls.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                game.setScreen(game.getGravityBallsScreen());
+            }
+        });
+
         btnBTree = new Label("BehaviorTree", skin, "gold");
         btnBTree.setAlignment(Align.center);
         btnBTree.addListener(new ClickListener(){
@@ -116,6 +126,8 @@ public class MainMenuScreen extends AbstractScreen {
         table.add(btnBox2d);
         table.row().pad(10.0f);
         table.add(btnFallingBall);
+        table.row().pad(10.0f);
+        table.add(btnGravityBalls);
         table.row().pad(10.0f);
         table.add(btnBTree);
         table.row().pad(10.0f);

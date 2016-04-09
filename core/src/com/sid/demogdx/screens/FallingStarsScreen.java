@@ -59,17 +59,17 @@ public class FallingStarsScreen extends AbstractBox2dScreen {
     }
 
     private void createGround() {
-        EdgeShape edgeShape = new EdgeShape();
-        edgeShape.set(new Vector2(0, 0), new Vector2(AppConfig.WWV, 0));
+        EdgeShape floor = new EdgeShape();
+        floor.set(new Vector2(0, 0), new Vector2(AppConfig.WWV, 0));
 
         BodyDef bodyDef = new BodyDef();
         ground = world.createBody(bodyDef);
 
         FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = edgeShape;
+        fixtureDef.shape = floor;
         ground.createFixture(fixtureDef);
 
-        edgeShape.dispose();
+        floor.dispose();
     }
 
     private void createRotatingPlatform() {
