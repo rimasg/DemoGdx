@@ -93,7 +93,7 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
                     if (visited.contains(neighbourBall)) continue;
                     if (neighbourBall.getType() != BodyDef.BodyType.DynamicBody) continue;
 
-                    final double radiusSum = 0.52 + 0.52;
+                    final float radiusSum = 0.52f + 0.52f;
                     if (neighbourBall.getPosition().dst2(currentBall.getPosition()) < radiusSum * radiusSum) {
                         if (ballType == (int) neighbourBall.getUserData()) {
                             bodiesToRemove.add(neighbourBall);
