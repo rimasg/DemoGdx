@@ -50,7 +50,7 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
         createWorld();
         createHUD();
         //
-        spawnBalls(50, AppConfig.WWV, AppConfig.WHV);
+        spawnBalls(70, AppConfig.WWV, AppConfig.WHV);
         world.getBodies(bodies);
         //
 
@@ -82,21 +82,22 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
         Body currentBall;
         int ballType = (int) hitBody.getUserData();
 
+        bodiesToRemove.add(hitBody);
         toExplore.add(hitBody);
         while (!toExplore.isEmpty()) {
             currentBall = toExplore.poll();
             if (!visited.contains(currentBall)) {
                 visited.add(currentBall);
-                bodiesToRemove.add(currentBall);
-                for (Body body : bodies) {
-                    if (body.getType() != BodyDef.BodyType.DynamicBody) continue;
-                    if (body == currentBall) continue;
-                    if (visited.contains(body)) continue;
+                for (Body neighbourBall : bodies) {
+                    if (neighbourBall == currentBall) continue;
+                    if (visited.contains(neighbourBall)) continue;
+                    if (neighbourBall.getType() != BodyDef.BodyType.DynamicBody) continue;
 
                     final double radiusSum = 0.52 + 0.52;
-                    if (body.getPosition().dst2(currentBall.getPosition()) < radiusSum * radiusSum) {
-                        if (ballType == (int) body.getUserData()) {
-                            bodiesToRemove.add(body);
+                    if (neighbourBall.getPosition().dst2(currentBall.getPosition()) < radiusSum * radiusSum) {
+                        if (ballType == (int) neighbourBall.getUserData()) {
+                            bodiesToRemove.add(neighbourBall);
+                            toExplore.add(neighbourBall);
                         }
                     }
                 }
