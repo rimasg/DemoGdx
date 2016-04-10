@@ -21,6 +21,11 @@ import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.utils.AppConfig;
 import com.sid.demogdx.utils.Box2dUtils;
 
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Set;
+
 /**
  * Created by Okis on 2016.03.19 @ 10:05.
  */
@@ -61,16 +66,42 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
                 }
 
                 if (hitBody.getType() == BodyDef.BodyType.DynamicBody) {
-                    // FIXME: 2016.04.09 fix code to react to force
-                    Gdx.app.log(TAG, "touchDown: DynamicBody: " + hitBody);
-                    hitBody.applyForceToCenter(0, -10.0f, true);
-                    return true;
+//                    hitBody.applyForceToCenter(0, 200.0f, true);
+                    markBodiesForRemoval();
                 }
                 return false;
             }
         };
 
         Gdx.input.setInputProcessor(inputProcessor);
+    }
+
+    private void markBodiesForRemoval() {
+        final Queue<Body> toExplore = new LinkedList<>();
+        final Set<Body> visited = new HashSet<>();
+        Body currentBall;
+        int ballType = (int) hitBody.getUserData();
+
+        toExplore.add(hitBody);
+        while (!toExplore.isEmpty()) {
+            currentBall = toExplore.poll();
+            if (!visited.contains(currentBall)) {
+                visited.add(currentBall);
+                bodiesToRemove.add(currentBall);
+                for (Body body : bodies) {
+                    if (body.getType() != BodyDef.BodyType.DynamicBody) continue;
+                    if (body == currentBall) continue;
+                    if (visited.contains(body)) continue;
+
+                    final double radiusSum = 0.52 + 0.52;
+                    if (body.getPosition().dst2(currentBall.getPosition()) < radiusSum * radiusSum) {
+                        if (ballType == (int) body.getUserData()) {
+                            bodiesToRemove.add(body);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private void loadAssets() {
@@ -121,7 +152,7 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
         for (int i = 0; i < qty; i++) {
             final Body body = Box2dUtils.createBox2dCircleBody(world, MathUtils.random(posX), posY);
 
-            final int randomBall = (int) (Math.random() * ballsRegions.size);
+            final int randomBall = MathUtils.random(ballsRegions.size - 1);
             body.setUserData(randomBall);
         }
     }
@@ -138,7 +169,7 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
         handleInput();
 
         particleEffect.update(delta);
-        removedDeadBodies();
+        removeDeadBodies();
         // Show only visible part of the Tiled Map on Y-axis - MathUtils.clamp()
         cam.update();
 
@@ -153,7 +184,7 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
         stage.draw();
     }
 
-    private void removedDeadBodies() {
+    private void removeDeadBodies() {
         if (bodiesToRemove.size > 0) {
             for (Body deadBody : bodiesToRemove) {
                 world.destroyBody(deadBody);
