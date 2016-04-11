@@ -66,8 +66,11 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
                 }
 
                 if (hitBody.getType() == BodyDef.BodyType.DynamicBody) {
-//                    hitBody.applyForceToCenter(0, 200.0f, true);
-                    markBodiesForRemoval();
+                    // TODO: 2016.04.11 do we need to check world.isLocked()?
+                    if (!world.isLocked()) {
+                        Gdx.app.log(TAG, "touchDown: Mark bodies for removal");
+                        markBodiesForRemoval();
+                    }
                 }
                 return false;
             }
@@ -93,7 +96,7 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
                     if (visited.contains(neighbourBall)) continue;
                     if (neighbourBall.getType() != BodyDef.BodyType.DynamicBody) continue;
 
-                    final float radiusSum = 0.52f + 0.52f;
+                    final float radiusSum = 0.54f + 0.54f;
                     if (neighbourBall.getPosition().dst2(currentBall.getPosition()) < radiusSum * radiusSum) {
                         if (ballType == (int) neighbourBall.getUserData()) {
                             bodiesToRemove.add(neighbourBall);
@@ -171,7 +174,6 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
 
         particleEffect.update(delta);
         removeDeadBodies();
-        // Show only visible part of the Tiled Map on Y-axis - MathUtils.clamp()
         cam.update();
 
         b2dr.render(world, cam.combined);
