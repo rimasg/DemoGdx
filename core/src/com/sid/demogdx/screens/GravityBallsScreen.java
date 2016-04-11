@@ -96,6 +96,8 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
                         if (ballType == (int) neighbourBall.getUserData()) {
                             bodiesToRemove.add(neighbourBall);
                             toExplore.add(neighbourBall);
+                        } else {
+                            visited.add(neighbourBall);
                         }
                     }
                 }
