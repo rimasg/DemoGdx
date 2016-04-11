@@ -24,7 +24,8 @@ public final class Box2dUtils {
 
         FixtureDef charFixtureDef = new FixtureDef();
         charFixtureDef.shape = circleShape;
-        charFixtureDef.restitution = 0.1f;
+        charFixtureDef.friction = 0;
+        charFixtureDef.restitution = 0;
         charFixtureDef.density = 5.0f;
         characterBody.createFixture(charFixtureDef);
 
