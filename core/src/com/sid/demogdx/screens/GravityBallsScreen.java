@@ -58,17 +58,16 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
             @Override
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {
                 // return super.touchDown(screenX, screenY, pointer, button);
-                cam.unproject(touchPos.set(screenX, screenY, 0));
-                hitBody = null;
-                world.QueryAABB(callback, touchPos.x - 0.0001f, touchPos.y - 0.0001f, touchPos.x + 0.0001f, touchPos.y + 0.0001f);
-                if (hitBody == null) {
-                    return false;
-                }
+                // TODO: 2016.04.11 do we need to check world.isLocked()?
+                if (!world.isLocked()) {
+                    cam.unproject(touchPos.set(screenX, screenY, 0));
+                    hitBody = null;
+                    world.QueryAABB(callback, touchPos.x - 0.0001f, touchPos.y - 0.0001f, touchPos.x + 0.0001f, touchPos.y + 0.0001f);
+                    if (hitBody == null) {
+                        return false;
+                    }
 
-                if (hitBody.getType() == BodyDef.BodyType.DynamicBody) {
-                    // TODO: 2016.04.11 do we need to check world.isLocked()?
-                    if (!world.isLocked()) {
-                        Gdx.app.log(TAG, "touchDown: Mark bodies for removal");
+                    if (hitBody.getType() == BodyDef.BodyType.DynamicBody) {
                         markBodiesForRemoval();
                     }
                 }
