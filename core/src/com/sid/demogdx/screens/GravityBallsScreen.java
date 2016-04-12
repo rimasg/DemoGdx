@@ -44,6 +44,8 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
     public void show() {
         super.show();
 
+        world.setGravity(new Vector2(-2.0f, -30.0f));
+
         loadAssets();
         loadParticles();
 
@@ -94,7 +96,9 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
                     final float radiusSum = 0.54f + 0.54f;
                     if (neighbourBall.getPosition().dst2(currentBall.getPosition()) < radiusSum * radiusSum) {
                         if (ballType == (int) neighbourBall.getUserData()) {
-                            bodiesToRemove.add(neighbourBall);
+                            if (!bodiesToRemove.contains(neighbourBall, true)) {
+                                bodiesToRemove.add(neighbourBall);
+                            }
                             toExplore.add(neighbourBall);
                         } else {
                             visited.add(neighbourBall);
@@ -138,6 +142,8 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
+        fixtureDef.friction = 0;
+        fixtureDef.restitution = 0;
 
         shape.set(new Vector2(0, 0), new Vector2(AppConfig.WWV, 0)); /* ground */
         body.createFixture(fixtureDef);

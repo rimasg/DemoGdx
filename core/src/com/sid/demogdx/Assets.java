@@ -8,8 +8,7 @@ import com.badlogic.gdx.assets.AssetManager;
 public class Assets extends AssetManager {
     private static Assets instance;
 
-    private Assets() {
-    }
+    private Assets() { }
 
     public static Assets inst() {
         if (instance == null) instance = new Assets();
