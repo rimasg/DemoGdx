@@ -55,7 +55,6 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
         spawnBalls(70, AppConfig.WWV, AppConfig.WHV);
         world.getBodies(bodies);
         //
-
         InputProcessor inputProcessor = new InputAdapter(){
             @Override
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {
