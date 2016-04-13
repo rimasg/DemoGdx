@@ -44,7 +44,7 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
     public void show() {
         super.show();
 
-        world.setGravity(new Vector2(-2.0f, -30.0f));
+        world.setGravity(new Vector2(-3.0f, -30.0f));
 
         loadAssets();
         loadParticles();
