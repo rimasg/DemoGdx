@@ -61,7 +61,6 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
                 cam.unproject(touchPos.set(screenX, screenY, 0));
                 hitBody = null;
                 world.QueryAABB(callback, touchPos.x - 0.0001f, touchPos.y - 0.0001f, touchPos.x + 0.0001f, touchPos.y + 0.0001f);
-                // TODO: 2016-04-13 remove line
                 System.out.println("touchPos: " + touchPos);
                 if (hitBody == null) {
                     return false;
