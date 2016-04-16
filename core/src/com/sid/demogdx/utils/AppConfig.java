@@ -4,8 +4,7 @@ package com.sid.demogdx.utils;
  * Created by Okis on 2015.07.08.
  */
 public final class AppConfig {
-    private AppConfig() {
-    }
+    private AppConfig() { }
 
     public static final boolean DEBUG = false;
     public static final String DEBUG_TEXT = "Running Circle";
@@ -18,4 +17,6 @@ public final class AppConfig {
     //
     public static final float unitScale16 = 1 / 16f; /* Box2d world scale */
     public static final float unitScale32 = 1 / 32f; /* Box2d world scale */
+    //
+    public static final float BALL_RADIUS = 0.5f;
 }

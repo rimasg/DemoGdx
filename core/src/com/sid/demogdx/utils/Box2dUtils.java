@@ -10,12 +10,11 @@ import com.badlogic.gdx.physics.box2d.World;
  * Created by Okis on 2016.03.06 @ 20:28.
  */
 public final class Box2dUtils {
-    private Box2dUtils() {
-    }
+    private Box2dUtils() { }
 
     public static Body createBox2dCircleBody(World world, float posX, float posY) {
         CircleShape circleShape = new CircleShape();
-        circleShape.setRadius(0.5f);
+        circleShape.setRadius(AppConfig.BALL_RADIUS);
 
         BodyDef characterBodyDef = new BodyDef();
         characterBodyDef.type = BodyDef.BodyType.DynamicBody;

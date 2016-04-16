@@ -44,7 +44,7 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
     public void show() {
         super.show();
 
-        world.setGravity(new Vector2(-3.0f, -30.0f));
+        world.setGravity(new Vector2(-2.0f, -30.0f));
 
         loadAssets();
         loadParticles();
@@ -52,7 +52,7 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
         createWorld();
         createHUD();
         //
-        spawnBalls(70, AppConfig.WWV, AppConfig.WHV);
+        spawnBalls(94);
         world.getBodies(bodies);
         //
         InputProcessor inputProcessor = new InputAdapter(){
@@ -61,8 +61,6 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
                 cam.unproject(touchPos.set(screenX, screenY, 0));
                 hitBody = null;
                 world.QueryAABB(callback, touchPos.x - 0.0001f, touchPos.y - 0.0001f, touchPos.x + 0.0001f, touchPos.y + 0.0001f);
-                // TODO: 2016-04-13 remove line when not needed
-                System.out.println("touchPos: " + touchPos);
                 if (hitBody == null) {
                     return false;
                 }
@@ -94,7 +92,7 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
                     if (visited.contains(neighbourBall)) continue;
                     if (neighbourBall.getType() != BodyDef.BodyType.DynamicBody) continue;
 
-                    final float radiusSum = 0.54f + 0.54f;
+                    final float radiusSum = (AppConfig.BALL_RADIUS + AppConfig.BALL_RADIUS) + 0.1f; /* overlap proximity  */
                     if (neighbourBall.getPosition().dst2(currentBall.getPosition()) < radiusSum * radiusSum) {
                         if (ballType == (int) neighbourBall.getUserData()) {
                             if (!bodiesToRemove.contains(neighbourBall, true)) {
@@ -116,6 +114,7 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
     }
 
     private void loadBallsRegions() {
+        if (ballsRegions.size > 0) return; /* skip loading assets if they're loaded */
         ballsRegions.add(skin.getAtlas().findRegion("red_ball_border"));
         ballsRegions.add(skin.getAtlas().findRegion("green_ball_border"));
         ballsRegions.add(skin.getAtlas().findRegion("blue_ball_border"));
@@ -156,9 +155,30 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
         shape.dispose();
     }
 
-    private void spawnBalls(int qty, float posX, float posY) {
+    private void spawnBalls(int qty) {
+        final float ballRadius = AppConfig.BALL_RADIUS;
+        final float ballSize = ballRadius * 2;
+        int cols = MathUtils.floor(cam.viewportWidth / ballSize);
+        float col = ballRadius;
+        float row = ballRadius;
+
         for (int i = 0; i < qty; i++) {
-            final Body body = Box2dUtils.createBox2dCircleBody(world, MathUtils.random(posX), posY);
+//            final Body body = Box2dUtils.createBox2dCircleBody(world, MathUtils.random(posX), posY);
+            if (col > cols) {
+//                col = ballRadius;
+                if ((row - ballRadius) % 2 == 0) {
+                    col = ballSize;
+                    cols--;
+                } else {
+                    col = ballRadius;
+                    cols++;
+                }
+//                col = (row - ballRadius) % 2 == 0 ? ballSize: ballRadius;
+//                cols = (row - ballRadius) % 2 == 0 ? cols - 1: cols + 1;
+                row += ballSize;
+            }
+            final Body body = Box2dUtils.createBox2dCircleBody(world, col, row);
+            col += ballSize;
 
             final int randomBall = MathUtils.random(ballsRegions.size - 1);
             body.setUserData(randomBall);
@@ -219,6 +239,10 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
         }
     }
 
+    private void resetVars() {
+
+    }
+
     QueryCallback callback = new QueryCallback() {
         @Override
         public boolean reportFixture(Fixture fixture) {
@@ -238,6 +262,7 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
     @Override
     public void hide() {
         super.hide();
+        resetVars();
         collisionSound.dispose();
     }
 
