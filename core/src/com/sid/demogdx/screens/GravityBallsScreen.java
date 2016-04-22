@@ -6,6 +6,7 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -32,6 +33,9 @@ import java.util.Set;
 public class GravityBallsScreen extends AbstractBox2dScreen {
 
     private ParticleEffect particleEffect;
+    private ParticleEffectPool particleEffectPool;
+    private ParticleEffectPool.PooledEffect pooledEffect;
+
     private Sound collisionSound;
 
     private Array<TextureAtlas.AtlasRegion> ballsRegions = new Array<>();
@@ -126,7 +130,8 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
     private void loadParticles() {
         particleEffect = new ParticleEffect();
         particleEffect.load(Gdx.files.internal("particles/explosion.p"), Gdx.files.internal("textures"));
-        particleEffect.start();
+//        particleEffect.start();
+        particleEffectPool = new ParticleEffectPool(particleEffect, 20, 100);
     }
 
     private void setParticleToStart(float x, float y) {
@@ -197,7 +202,6 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
         handleInput();
 
         particleEffect.update(delta);
-        removeDeadBodies();
         cam.update();
 
         b2dr.render(world, cam.combined);
@@ -209,6 +213,8 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
 
         stage.act();
         stage.draw();
+
+        removeDeadBodies(); /* draw Particles first of the removed bodies */
     }
 
     private void removeDeadBodies() {
