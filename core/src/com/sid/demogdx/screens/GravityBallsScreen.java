@@ -19,6 +19,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
+import com.sid.demogdx.Assets;
 import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.utils.AppConfig;
 import com.sid.demogdx.utils.Box2dUtils;
@@ -36,8 +37,6 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
     private ParticleEffect particleEffect;
     private ParticleEffectPool particleEffectPool;
     private Array<ParticleEffectPool.PooledEffect> effects = new Array<>();
-
-    private Sound collisionSound;
 
     private Array<TextureAtlas.AtlasRegion> ballsRegions = new Array<>();
 
@@ -113,11 +112,11 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
                 }
             }
         }
+        playCollisionSound();
     }
 
     private void loadAssets() {
         loadBallsRegions();
-        collisionSound = Gdx.audio.newSound(Gdx.files.internal("sounds/click.ogg"));
     }
 
     private void loadBallsRegions() {
@@ -259,6 +258,10 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
         }
     }
 
+    private void playCollisionSound() {
+        Assets.inst().get(Assets.COLLISION_SOUND, Sound.class).play();
+    }
+
     private void resetVars() {
 
     }
@@ -283,7 +286,6 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
     public void hide() {
         super.hide();
         resetVars();
-        collisionSound.dispose();
     }
 
     @Override
