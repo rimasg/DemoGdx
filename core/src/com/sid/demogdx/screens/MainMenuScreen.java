@@ -33,7 +33,6 @@ public class MainMenuScreen extends AbstractScreen {
     public void show() {
         super.show();
 
-//        stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
 
         final Table table = new Table(skin);

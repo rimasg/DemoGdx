@@ -7,6 +7,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -34,7 +35,7 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
 
     private ParticleEffect particleEffect;
     private ParticleEffectPool particleEffectPool;
-    private ParticleEffectPool.PooledEffect pooledEffect;
+    private Array<ParticleEffectPool.PooledEffect> effects = new Array<>();
 
     private Sound collisionSound;
 
@@ -86,6 +87,7 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
         int ballType = (int) hitBody.getUserData();
 
         bodiesToRemove.add(hitBody);
+        setParticleToStart(hitBody); /* set particles */
         toExplore.add(hitBody);
         while (!toExplore.isEmpty()) {
             currentBall = toExplore.poll();
@@ -101,6 +103,7 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
                         if (ballType == (int) neighbourBall.getUserData()) {
                             if (!bodiesToRemove.contains(neighbourBall, true)) {
                                 bodiesToRemove.add(neighbourBall);
+                                setParticleToStart(neighbourBall); /* set particles */
                             }
                             toExplore.add(neighbourBall);
                         } else {
@@ -129,14 +132,25 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
 
     private void loadParticles() {
         particleEffect = new ParticleEffect();
-        particleEffect.load(Gdx.files.internal("particles/explosion.p"), Gdx.files.internal("textures"));
-//        particleEffect.start();
+        particleEffect.load(Gdx.files.internal("particles/gravity_explosion.p"), Gdx.files.internal("textures"));
         particleEffectPool = new ParticleEffectPool(particleEffect, 20, 100);
     }
 
-    private void setParticleToStart(float x, float y) {
-        particleEffect.setPosition(x, y);
-        particleEffect.start();
+    private void setParticleToStart(Body body) {
+        final ParticleEffectPool.PooledEffect pooledEffect = particleEffectPool.obtain();
+        pooledEffect.setPosition(body.getPosition().x, body.getPosition().y);
+        effects.add(pooledEffect);
+    }
+
+    private void drawParticles(SpriteBatch batch, float delta) {
+        for (int i = effects.size - 1; i >= 0; i--) {
+            final ParticleEffectPool.PooledEffect pooledEffect = effects.get(i);
+            pooledEffect.draw(batch, delta);
+            if (pooledEffect.isComplete()) {
+                pooledEffect.free();
+                effects.removeIndex(i);
+            }
+        }
     }
 
     private void createWorld() {
@@ -166,11 +180,14 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
         int cols = MathUtils.floor(cam.viewportWidth / ballSize);
         float col = ballRadius;
         float row = ballRadius;
-
+        //
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.friction = 0;
+        fixtureDef.restitution = 0;
+        fixtureDef.density = 1.0f;
+        //
         for (int i = 0; i < qty; i++) {
-//            final Body body = Box2dUtils.createBox2dCircleBody(world, MathUtils.random(posX), posY);
             if (col > cols) {
-//                col = ballRadius;
                 if ((row - ballRadius) % 2 == 0) {
                     col = ballSize;
                     cols--;
@@ -178,15 +195,13 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
                     col = ballRadius;
                     cols++;
                 }
-//                col = (row - ballRadius) % 2 == 0 ? ballSize: ballRadius;
-//                cols = (row - ballRadius) % 2 == 0 ? cols - 1: cols + 1;
                 row += ballSize;
             }
-            final Body body = Box2dUtils.createBox2dCircleBody(world, col, row);
+            final Body body = Box2dUtils.createBox2dCircleBody(world, col, row, fixtureDef);
             col += ballSize;
 
-            final int randomBall = MathUtils.random(ballsRegions.size - 1);
-            body.setUserData(randomBall);
+            final int randomBallColor = MathUtils.random(ballsRegions.size - 1);
+            body.setUserData(randomBallColor);
         }
     }
 
@@ -201,7 +216,7 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
         super.render(delta);
         handleInput();
 
-        particleEffect.update(delta);
+        removeDeadBodies();
         cam.update();
 
         b2dr.render(world, cam.combined);
@@ -209,12 +224,11 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
         game.batch.setProjectionMatrix(cam.combined);
         game.batch.begin();
         drawBodies();
+        drawParticles(game.batch, delta);
         game.batch.end();
 
         stage.act();
         stage.draw();
-
-        removeDeadBodies(); /* draw Particles first of the removed bodies */
     }
 
     private void removeDeadBodies() {

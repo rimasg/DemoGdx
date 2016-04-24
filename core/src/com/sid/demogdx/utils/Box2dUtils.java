@@ -13,6 +13,10 @@ public final class Box2dUtils {
     private Box2dUtils() { }
 
     public static Body createBox2dCircleBody(World world, float posX, float posY) {
+        return createBox2dCircleBody(world, posX, posY, null);
+    }
+
+    public static Body createBox2dCircleBody(World world, float posX, float posY, FixtureDef fixtureDef) {
         CircleShape circleShape = new CircleShape();
         circleShape.setRadius(AppConfig.BALL_RADIUS);
 
@@ -21,12 +25,18 @@ public final class Box2dUtils {
         characterBodyDef.position.set(posX, posY);
         Body characterBody = world.createBody(characterBodyDef);
 
-        FixtureDef charFixtureDef = new FixtureDef();
-        charFixtureDef.shape = circleShape;
-        charFixtureDef.friction = 0;
-        charFixtureDef.restitution = 0;
-        charFixtureDef.density = 1.0f;
-        characterBody.createFixture(charFixtureDef);
+        FixtureDef ballFixtureDef;
+        if (fixtureDef != null) {
+            ballFixtureDef = fixtureDef;
+            ballFixtureDef.shape = circleShape;
+        } else {
+            ballFixtureDef = new FixtureDef();
+            ballFixtureDef.shape = circleShape;
+            ballFixtureDef.friction = 0.4f;
+            ballFixtureDef.restitution = 0.4f;
+            ballFixtureDef.density = 1.0f;
+        }
+        characterBody.createFixture(ballFixtureDef);
 
         circleShape.dispose();
 
