@@ -1,9 +1,7 @@
 package com.sid.demogdx;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.sid.demogdx.screens.BehaviorTreeScreen;
 import com.sid.demogdx.screens.FallingBallScreen;
 import com.sid.demogdx.screens.FallingStarsScreen;
@@ -35,7 +33,7 @@ public class DemoGdx extends Game {
     }
 
     private void loadAssets() {
-        Assets.inst().load("skin.json", Skin.class, new SkinLoader.SkinParameter("textures/texture.pack"));
+        Assets.inst();
         Assets.inst().finishLoading();
     }
 
