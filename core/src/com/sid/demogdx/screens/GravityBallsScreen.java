@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -259,7 +258,7 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
     }
 
     private void playCollisionSound() {
-        Assets.inst().get(Assets.COLLISION_SOUND, Sound.class).play();
+        Assets.inst().get(Assets.COLLISION_SOUND, Assets.SOUND_CLASS).play();
     }
 
     private void resetVars() {
