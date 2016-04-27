@@ -51,7 +51,7 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
 
         loadAssets();
         loadParticles();
-
+//
         createWorld();
         createHUD();
         //
