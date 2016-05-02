@@ -100,7 +100,7 @@ public class MainMenuScreen extends AbstractScreen {
                 final OverlayMenuActor overlayMenuActor = new OverlayMenuActor();
                 overlayMenuActor.addAction(sequence(
                         moveTo(overlayMenuActor.getX(), AppConfig.WHP + 200),
-                        moveToAligned(AppConfig.WWP / 2, AppConfig.WHP / 2, Align.center, 1.0f,
+                        moveToAligned(AppConfig.WWP / 2, AppConfig.WHP / 2, Align.center, 1.5f,
                                 Interpolation.bounceOut))) ;
                 stage.addActor(overlayMenuActor);
             }
@@ -116,6 +116,7 @@ public class MainMenuScreen extends AbstractScreen {
         });
 
         table.setDebug(false);
+        table.setBackground(skin.getDrawable("button_black"));
         table.row().expandX().fillX();
         table.add(title);
         table.row().pad(10.0f);

@@ -146,6 +146,14 @@ particle
   orig: 32, 32
   offset: 0, 0
   index: -1
+popup_bg
+  rotate: false
+  xy: 859, 33
+  size: 32, 32
+  split: 5, 5, 5, 5
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 line_dot
   rotate: false
   xy: 131, 12

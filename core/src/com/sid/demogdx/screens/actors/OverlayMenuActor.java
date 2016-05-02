@@ -15,12 +15,12 @@ public class OverlayMenuActor extends Table {
     public OverlayMenuActor() {
         final Skin skin = Assets.inst().get("skin.json", Skin.class);
         setSkin(skin);
-        background(skin.getDrawable("bg_gold"));
+        background(skin.getDrawable("popup_bg"));
         setSize(400.0f, 200.0f);
         center();
 
-        final Label label = new Label("Overlay menu", skin);
-        final Label btnExit = new Label("EXIT", skin);
+        final Label label = new Label("Overlay menu", skin, "gold");
+        final Label btnExit = new Label("EXIT", skin, "gold");
         btnExit.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
