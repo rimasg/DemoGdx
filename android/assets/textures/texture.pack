@@ -96,37 +96,45 @@ leaderboard
   orig: 64, 64
   offset: 0, 0
   index: -1
-share
+line_segment
   rotate: false
   xy: 461, 1
   size: 64, 64
+  split: 30, 30, 30, 29
   orig: 64, 64
   offset: 0, 0
   index: -1
-sound_off
+share
   rotate: false
   xy: 527, 1
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-sound_on
+sound_off
   rotate: false
   xy: 593, 1
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-star
+sound_on
   rotate: false
   xy: 659, 1
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
+star
+  rotate: false
+  xy: 725, 1
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 button_gold
   rotate: false
-  xy: 725, 33
+  xy: 791, 33
   size: 64, 32
   split: 6, 6, 6, 6
   orig: 64, 32
@@ -134,21 +142,21 @@ button_gold
   index: -1
 circle_rainbow
   rotate: false
-  xy: 791, 33
+  xy: 913, 185
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 particle
   rotate: false
-  xy: 825, 33
+  xy: 857, 33
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 popup_bg
   rotate: false
-  xy: 859, 33
+  xy: 913, 151
   size: 32, 32
   split: 5, 5, 5, 5
   orig: 32, 32

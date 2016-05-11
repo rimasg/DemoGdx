@@ -1,4 +1,4 @@
-package com.sid.demogdx;
+package com.sid.demogdx.entities;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;

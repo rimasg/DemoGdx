@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Timer;
@@ -24,6 +25,7 @@ public abstract class AbstractScreen implements Screen {
     final Viewport viewport;
     final Stage stage;
     final Assets assets = Assets.inst();
+    final Vector3 touchPos = new Vector3();
 
     Skin skin;
 

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sid.demogdx.screens.BehaviorTreeScreen;
 import com.sid.demogdx.screens.FallingBallScreen;
 import com.sid.demogdx.screens.FallingStarsScreen;
+import com.sid.demogdx.screens.FollowTheLineScreen;
 import com.sid.demogdx.screens.GravityBallsScreen;
 import com.sid.demogdx.screens.HeroScreen;
 import com.sid.demogdx.screens.MainMenuScreen;
@@ -18,6 +19,7 @@ public class DemoGdx extends Game {
     FallingBallScreen fallingBallScreen;
     BehaviorTreeScreen behaviorTreeScreen;
     GravityBallsScreen gravityBallsScreen;
+    FollowTheLineScreen followTheLineScreen;
 
     @Override
     public void create() {
@@ -29,6 +31,7 @@ public class DemoGdx extends Game {
         fallingBallScreen = new FallingBallScreen(this);
         gravityBallsScreen = new GravityBallsScreen(this);
         behaviorTreeScreen = new BehaviorTreeScreen(this);
+        followTheLineScreen = new FollowTheLineScreen(this);
         setScreen(mainMenuScreen);
     }
 
@@ -59,6 +62,10 @@ public class DemoGdx extends Game {
 
     public BehaviorTreeScreen getBehaviorTreeScreen() {
         return behaviorTreeScreen;
+    }
+
+    public FollowTheLineScreen getFollowTheLineScreen() {
+        return followTheLineScreen;
     }
 
     @Override

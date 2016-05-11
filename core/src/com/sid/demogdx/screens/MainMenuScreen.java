@@ -22,7 +22,7 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
  */
 public class MainMenuScreen extends AbstractScreen {
 //    Stage stage;
-    Label title, btnPlay, btnBox2d, btnOverlay, btnFallingBall, btnGravityBalls, btnBTree;
+    Label title, btnOverlay, btnGoToTarget, btnFallingStars, btnFallingBall, btnGravityBalls, btnBTree, btnFollowTheLIne;
     Image exitBtn;
 
     public MainMenuScreen(DemoGdx game) {
@@ -42,9 +42,9 @@ public class MainMenuScreen extends AbstractScreen {
         title = new Label("Mover", skin, "gold");
         title.setAlignment(Align.center);
 
-        btnPlay = new Label("Go to Target", skin, "gold");
-        btnPlay.setAlignment(Align.center);
-        btnPlay.addListener(new ClickListener(){
+        btnGoToTarget = new Label("Go to Target", skin, "gold");
+        btnGoToTarget.setAlignment(Align.center);
+        btnGoToTarget.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
@@ -52,9 +52,9 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
-        btnBox2d = new Label("Falling Stars", skin, "gold");
-        btnBox2d.setAlignment(Align.center);
-        btnBox2d.addListener(new ClickListener(){
+        btnFallingStars = new Label("Falling Stars", skin, "gold");
+        btnFallingStars.setAlignment(Align.center);
+        btnFallingStars.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
@@ -92,6 +92,16 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
+        btnFollowTheLIne = new Label("Follow the Line", skin, "gold");
+        btnFollowTheLIne.setAlignment(Align.center);
+        btnFollowTheLIne.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                game.setScreen(game.getFollowTheLineScreen());
+            }
+        });
+
         btnOverlay = new Label("Overlay Menu", skin, "gold");
         btnOverlay.setAlignment(Align.center);
         btnOverlay.addListener(new ClickListener(){
@@ -121,15 +131,17 @@ public class MainMenuScreen extends AbstractScreen {
         table.add(title);
         table.row().pad(10.0f);
         table.columnDefaults(0).width(Value.percentWidth(0.8f, table));
-        table.add(btnPlay);
+        table.add(btnGoToTarget);
         table.row().pad(10.0f);
-        table.add(btnBox2d);
+        table.add(btnFallingStars);
         table.row().pad(10.0f);
         table.add(btnFallingBall);
         table.row().pad(10.0f);
         table.add(btnGravityBalls);
         table.row().pad(10.0f);
         table.add(btnBTree);
+        table.row().pad(10.0f);
+        table.add(btnFollowTheLIne);
         table.row().pad(10.0f);
         table.add(btnOverlay);
         table.row().pad(10.0f);

@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.RotateToAction;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.sid.demogdx.DemoGdx;
-import com.sid.demogdx.Hero;
+import com.sid.demogdx.entities.Hero;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.action;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.parallel;
@@ -87,7 +87,7 @@ public class HeroScreen extends AbstractScreen {
 
     @Override
     public void resize(int width, int height) {
-        stage.getViewport().update(width, height, false);
+        super.resize(width, height);
     }
 
     @Override
