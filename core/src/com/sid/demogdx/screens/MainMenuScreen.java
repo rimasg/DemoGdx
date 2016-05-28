@@ -22,7 +22,8 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
  */
 public class MainMenuScreen extends AbstractScreen {
 //    Stage stage;
-    Label title, btnOverlay, btnGoToTarget, btnFallingStars, btnFallingBall, btnGravityBalls, btnBTree, btnFollowTheLIne;
+    Label title, btnOverlay, btnGoToTarget, btnFallingStars, btnFallingBall, btnGravityBalls,
+    btnBTree, btnFollowTheLIne, btnCircleAroundScreen;
     Image exitBtn;
 
     public MainMenuScreen(DemoGdx game) {
@@ -102,6 +103,16 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
+        btnCircleAroundScreen = new Label("Circle Around", skin, "gold");
+        btnCircleAroundScreen.setAlignment(Align.center);
+        btnCircleAroundScreen.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                game.setScreen(game.getCircleAroundScreen());
+            }
+        });
+
         btnOverlay = new Label("Overlay Menu", skin, "gold");
         btnOverlay.setAlignment(Align.center);
         btnOverlay.addListener(new ClickListener(){
@@ -142,6 +153,8 @@ public class MainMenuScreen extends AbstractScreen {
         table.add(btnBTree);
         table.row().pad(10.0f);
         table.add(btnFollowTheLIne);
+        table.row().pad(10.0f);
+        table.add(btnCircleAroundScreen);
         table.row().pad(10.0f);
         table.add(btnOverlay);
         table.row().pad(10.0f);
