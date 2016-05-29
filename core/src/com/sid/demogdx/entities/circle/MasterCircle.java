@@ -24,7 +24,7 @@ public class MasterCircle extends AbstractCircle {
 
     public boolean isCollision(AbstractCircle circle) {
         for (AbstractCircle child : children) {
-            if (child.overlaps(circle.boundingCircle)) {
+            if (child.overlaps(circle)) {
                 return true;
             }
         }

@@ -1,8 +1,6 @@
 package com.sid.demogdx.entities.circle;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
@@ -15,12 +13,11 @@ import com.badlogic.gdx.utils.Align;
  */
 public abstract class AbstractCircle {
     protected static final String TAG = AbstractCircle.class.getSimpleName();
-    public static final float VELOCITY = 600f;
+    public static final float VELOCITY = 500f;
     public static final float RADIUS = 15f;
     private Vector2 pos = new Vector2();
     private Vector2 vel = new Vector2();
     private Vector2 targetPos = new Vector2();
-    private AbstractCircle targetCircle;
     private boolean arrivedToTarget = true;
     private BitmapFont font;
     private int score;
@@ -38,8 +35,8 @@ public abstract class AbstractCircle {
         this(circle.pos.x, circle.pos.y, circle.boundingCircle.radius, circle.score);
     }
 
-    public boolean overlaps(Circle c) {
-        return boundingCircle.overlaps(c);
+    public boolean overlaps(AbstractCircle c) {
+        return boundingCircle.overlaps(c.boundingCircle);
     }
 
     private Vector2 rotationVec = new Vector2();
@@ -59,9 +56,9 @@ public abstract class AbstractCircle {
 
     public void moveTo(Vector2 targetPos, float delta) {
         if (arrivedToTarget) return;
-        if (!MathUtils.isZero(pos.dst2(targetPos), 25f)) {
-            Gdx.app.log(TAG, "moveTo: dst2: " + pos.dst2(targetPos));
-
+        // FIXME: 2016.05.29 need to fix accurate movement
+        if (!MathUtils.isZero(pos.dst2(targetPos), 16f)) {
+//            Gdx.app.log(TAG, "moveTo: dst2: " + pos.dst2(targetPos));
             vel.set(targetPos);
             vel.sub(pos).nor().scl(VELOCITY);
             pos.mulAdd(vel, delta);
@@ -93,10 +90,10 @@ public abstract class AbstractCircle {
         drawScore(batch);
     }
 
-    private GlyphLayout drawScore(SpriteBatch batch) {
+    private void drawScore(SpriteBatch batch) {
         final float width = boundingCircle.radius * 2;
         final float height = font.getCapHeight();
-        return font.draw(batch, String.valueOf(score),
+        font.draw(batch, String.valueOf(score),
                 pos.x - width / 2,
                 pos.y,
                 width,
