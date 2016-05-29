@@ -1,5 +1,6 @@
 package com.sid.demogdx.entities.circle;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -10,16 +11,27 @@ import com.badlogic.gdx.utils.Array;
 public class SatelliteSpawner {
     private Vector2 pos = new Vector2();
     private AbstractCircle target;
+    private AbstractCircle spawned;
     private Array<AbstractCircle> children = new Array<>();
+    private int initialNoOfSatellites = 4;
+    private int distanceBetweenSatellites = 50;
 
     public SatelliteSpawner(float x, float y, AbstractCircle target) {
         pos.set(x, y);
         this.target = target;
+        initSatellites();
+    }
+
+    private void initSatellites() {
+        for (int i = initialNoOfSatellites - 1; i >= 0; i--) {
+            children.add(new SateliteCircle(pos.x, pos.y + distanceBetweenSatellites * i, AbstractCircle.RADIUS, initialNoOfSatellites - i));
+        }
     }
 
     public void update(float delta) {
         for (AbstractCircle child : children) {
-            child.moveTo(target, delta);
+//            child.moveTo(target, delta);
+            child.moveTo(delta);
         }
     }
 
@@ -29,8 +41,25 @@ public class SatelliteSpawner {
         }
     }
 
+    public void draw(SpriteBatch batch) {
+        for (AbstractCircle child : children) {
+            child.draw(batch);
+        }
+    }
+
     public void spawnSatelite() {
-        children.add(new SateliteCircle(pos.x, pos.y, AbstractCircle.RADIUS));
+        if (!children.contains(spawned, true)) {
+            spawned = children.first();
+            spawned.setTargetCircle(target);
+            children.add(new SateliteCircle(pos.x, pos.y, AbstractCircle.RADIUS, children.peek().getScore() + 1));
+            updatesSatellitesPos();
+        }
+    }
+
+    private void updatesSatellitesPos() {
+        for (int i = children.size - 1; i > 0; i--) {
+            children.get(i).setTargetCircle(new SateliteCircle(children.get(i - 1)));
+        }
     }
 
     public void removeSatelite(AbstractCircle spawned) {

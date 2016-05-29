@@ -1,5 +1,6 @@
 package com.sid.demogdx.entities.circle;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
 
@@ -7,13 +8,13 @@ import com.badlogic.gdx.utils.Array;
  * Created by Okis on 2016.05.27 @ 15:33.
  */
 public class MasterCircle extends AbstractCircle {
-    private float rotationAnglePerSec = 60f;
+    private float rotationAnglePerSec = 75f;
     private float outerRadius;
 
     private Array<AbstractCircle> children = new Array<>();
 
     public MasterCircle(float x, float y, float radius, float outerRadius) {
-        super(x, y, radius);
+        super(x, y, radius, 0);
         this.outerRadius = outerRadius;
     }
 
@@ -23,7 +24,7 @@ public class MasterCircle extends AbstractCircle {
 
     public boolean isCollision(AbstractCircle circle) {
         for (AbstractCircle child : children) {
-            if (child.overlaps(circle.getBoundingCircle())) {
+            if (child.overlaps(circle.boundingCircle)) {
                 return true;
             }
         }
@@ -48,6 +49,15 @@ public class MasterCircle extends AbstractCircle {
         super.draw(renderer);
         for (AbstractCircle child : children) {
             child.draw(renderer);
+            renderer.line(getPos(), child.getPos());
+        }
+    }
+
+    @Override
+    public void draw(SpriteBatch batch) {
+        super.draw(batch);
+        for (AbstractCircle child : children) {
+            child.draw(batch);
         }
     }
 

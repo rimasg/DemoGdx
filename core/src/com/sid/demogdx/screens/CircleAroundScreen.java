@@ -67,14 +67,14 @@ public class CircleAroundScreen extends AbstractScreen {
         shapeRenderer.setAutoShapeType(true);
         shapeRenderer.begin();
         shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
-        // TODO: 2016.05.27 draw dots
         master.draw(shapeRenderer);
         satelliteSpawner.draw(shapeRenderer);
         shapeRenderer.end();
 
         game.batch.setProjectionMatrix(stage.getCamera().combined);
         game.batch.begin();
-        // TODO: 2016.05.09 draw other
+        master.draw(game.batch);
+        satelliteSpawner.draw(game.batch);
         game.batch.end();
 
     }
@@ -90,17 +90,18 @@ public class CircleAroundScreen extends AbstractScreen {
                     changeColorOnCollision();
                 }
                 master.addChild(spawnedSatellite);
+                master.incrementScore();
                 satelliteSpawner.removeSatelite(spawnedSatellite);
             }
         }
     }
 
     private void changeColorOnCollision() {
-        shapeRenderer.setColor(MathUtils.random(), MathUtils.random(), MathUtils.random(), 1f);
+        shapeRenderer.setColor(MathUtils.random(0.2f, 0.8f), MathUtils.random(0.2f, 0.8f), MathUtils.random(0.2f, 0.8f), 1f);
     }
 
     private void handleInput() {
-        if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK) || Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             game.setScreen(game.getMainMenuScreen());
         }
     }
@@ -113,11 +114,11 @@ public class CircleAroundScreen extends AbstractScreen {
     @Override
     public void hide() {
         super.hide();
-        shapeRenderer.dispose();
     }
 
     @Override
     public void dispose() {
         super.dispose();
+        shapeRenderer.dispose();
     }
 }
