@@ -1,5 +1,6 @@
 package com.sid.demogdx.entities.circle;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,7 +19,9 @@ public abstract class AbstractCircle {
     public static final float RADIUS = 15f;
     private Vector2 pos = new Vector2();
     private Vector2 vel = new Vector2();
+    private Vector2 targetPos = new Vector2();
     private AbstractCircle targetCircle;
+    private boolean arrivedToTarget = true;
     private BitmapFont font;
     private int score;
     protected Circle boundingCircle = new Circle();
@@ -54,21 +57,23 @@ public abstract class AbstractCircle {
         updateBoundingCircle();
     }
 
-    public void moveTo(AbstractCircle targetCircle, float delta) {
-        if (targetCircle == null) return;
-        if (!MathUtils.isZero(pos.dst2(targetCircle.pos), 0.01f)) {
-            vel.set(targetCircle.getPos());
+    public void moveTo(Vector2 targetPos, float delta) {
+        if (arrivedToTarget) return;
+        if (!MathUtils.isZero(pos.dst2(targetPos), 25f)) {
+            Gdx.app.log(TAG, "moveTo: dst2: " + pos.dst2(targetPos));
+
+            vel.set(targetPos);
             vel.sub(pos).nor().scl(VELOCITY);
             pos.mulAdd(vel, delta);
             updateBoundingCircle();
         } else {
-            this.targetCircle = null;
+            arrivedToTarget = true;
         }
     }
 
     public void moveTo(float delta) {
-        if (targetCircle != null) {
-            moveTo(targetCircle, delta);
+        if (!arrivedToTarget) {
+            moveTo(targetPos, delta);
         }
     }
 
@@ -137,8 +142,13 @@ public abstract class AbstractCircle {
         return ++score;
     }
 
-    public void setTargetCircle(AbstractCircle targetCircle) {
-        this.targetCircle = targetCircle;
+    public void setTargetPos(Vector2 targetPos) {
+        this.targetPos.set(targetPos);
+        arrivedToTarget = false;
+    }
+
+    public void setTargetPos(AbstractCircle targetCircle) {
+        setTargetPos(targetCircle.pos);
     }
 
     private void updateBoundingCircle() {

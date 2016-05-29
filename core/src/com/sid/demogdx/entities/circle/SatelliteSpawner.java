@@ -30,7 +30,6 @@ public class SatelliteSpawner {
 
     public void update(float delta) {
         for (AbstractCircle child : children) {
-//            child.moveTo(target, delta);
             child.moveTo(delta);
         }
     }
@@ -50,7 +49,7 @@ public class SatelliteSpawner {
     public void spawnSatelite() {
         if (!children.contains(spawned, true)) {
             spawned = children.first();
-            spawned.setTargetCircle(target);
+            spawned.setTargetPos(target.getPos());
             children.add(new SateliteCircle(pos.x, pos.y, AbstractCircle.RADIUS, children.peek().getScore() + 1));
             updatesSatellitesPos();
         }
@@ -58,7 +57,7 @@ public class SatelliteSpawner {
 
     private void updatesSatellitesPos() {
         for (int i = children.size - 1; i > 0; i--) {
-            children.get(i).setTargetCircle(new SateliteCircle(children.get(i - 1)));
+            children.get(i).setTargetPos(children.get(i - 1).getPos());
         }
     }
 
