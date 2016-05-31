@@ -80,16 +80,16 @@ public class CircleAroundScreen extends AbstractScreen {
     }
 
     private void spawnNewSatellite() {
-        satelliteSpawner.spawnSatelite();
+        satelliteSpawner.spawnSatellite();
     }
 
     private void checkForCollision() {
         for (AbstractCircle spawnedSatellite : spawnedSatellites) {
-            if ((master.getPos().dst2(spawnedSatellite.getPos()) < master.getOuterRadius() * master.getOuterRadius())) {
+            if (master.isInOuterCircle(spawnedSatellite)) {
                 if (master.isCollision(spawnedSatellite)) {
                     changeColorOnCollision();
                 }
-                master.addChild(spawnedSatellite);
+                master.addSatellite(spawnedSatellite);
                 master.incrementScore();
                 satelliteSpawner.removeSatellite(spawnedSatellite);
             }

@@ -46,16 +46,16 @@ public class SatelliteSpawner {
         }
     }
 
-    public void spawnSatelite() {
+    public void spawnSatellite() {
         if (!children.contains(spawned, true)) {
             spawned = children.first();
             spawned.setTarget(target);
             children.add(new SateliteCircle(pos.x, pos.y, AbstractCircle.RADIUS, children.peek().getScore() + 1));
-            updatesSatellitesPos();
+            updateSatellitesTarget();
         }
     }
 
-    private void updatesSatellitesPos() {
+    private void updateSatellitesTarget() {
         for (int i = children.size - 1; i > 0; i--) {
             children.get(i).setTarget(children.get(i - 1));
         }
@@ -63,6 +63,7 @@ public class SatelliteSpawner {
 
     public void removeSatellite(AbstractCircle spawned) {
         children.removeValue(spawned, true);
+        spawned.setArrivedToTarget(true);
     }
 
     public Array<AbstractCircle> getSatellites() {

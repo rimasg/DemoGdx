@@ -18,7 +18,7 @@ public class MasterCircle extends AbstractCircle {
         this.outerRadius = outerRadius;
     }
 
-    public void addChild(AbstractCircle circle) {
+    public void addSatellite(AbstractCircle circle) {
         children.add(circle);
     }
 
@@ -29,6 +29,10 @@ public class MasterCircle extends AbstractCircle {
             }
         }
         return false;
+    }
+
+    public boolean isInOuterCircle(AbstractCircle satelliteCircle) {
+        return getPos().dst2(satelliteCircle.getPos()) < outerRadius * outerRadius;
     }
 
     private void rotateChildren(float delta) {
@@ -59,21 +63,5 @@ public class MasterCircle extends AbstractCircle {
         for (AbstractCircle child : children) {
             child.draw(batch);
         }
-    }
-
-    public float getOuterRadius() {
-        return outerRadius;
-    }
-
-    public void setOuterRadius(float outerRadius) {
-        this.outerRadius = outerRadius;
-    }
-
-    public float getRotationAnglePerSec() {
-        return rotationAnglePerSec;
-    }
-
-    public void setRotationAnglePerSec(float rotationAnglePerSec) {
-        this.rotationAnglePerSec = rotationAnglePerSec;
     }
 }

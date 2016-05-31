@@ -1,6 +1,5 @@
 package com.sid.demogdx.entities.circle;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -62,14 +61,12 @@ public abstract class AbstractCircle {
     private void moveTo(Vector2 targetPos, float delta) {
         if (arrivedToTarget) return;
         // FIXME: 2016.05.29 need to fix accurate movement
-        if (!MathUtils.isZero(pos.dst2(targetPos), 20f)) {
-//            Gdx.app.log(TAG, "moveTo: dst2: " + pos.dst2(targetPos));
+        if (!MathUtils.isZero(pos.dst2(targetPos), 32f)) {
             vel.set(targetPos);
             vel.sub(pos).nor().scl(VELOCITY);
             pos.mulAdd(vel, delta);
             updateBoundingCircle();
         } else {
-            Gdx.app.log(TAG, "moveTo: arrivedToTarget: " + arrivedToTarget);
             arrivedToTarget = true;
         }
     }
