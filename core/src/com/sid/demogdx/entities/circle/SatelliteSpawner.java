@@ -13,8 +13,8 @@ public class SatelliteSpawner {
     private AbstractCircle target;
     private AbstractCircle spawned;
     private Array<AbstractCircle> children = new Array<>();
-    private int initialNoOfSatellites = 4;
-    private int distanceBetweenSatellites = 50;
+    private int initialNoOfSatellites = 3;
+    private int distanceBetweenSatellites = 70;
 
     public SatelliteSpawner(float x, float y, AbstractCircle target) {
         pos.set(x, y);
@@ -30,7 +30,7 @@ public class SatelliteSpawner {
 
     public void update(float delta) {
         for (AbstractCircle child : children) {
-            child.moveTo(delta);
+            child.update(delta);
         }
     }
 
@@ -49,7 +49,7 @@ public class SatelliteSpawner {
     public void spawnSatelite() {
         if (!children.contains(spawned, true)) {
             spawned = children.first();
-            spawned.setTargetPos(target.getPos());
+            spawned.setTarget(target);
             children.add(new SateliteCircle(pos.x, pos.y, AbstractCircle.RADIUS, children.peek().getScore() + 1));
             updatesSatellitesPos();
         }
@@ -57,15 +57,15 @@ public class SatelliteSpawner {
 
     private void updatesSatellitesPos() {
         for (int i = children.size - 1; i > 0; i--) {
-            children.get(i).setTargetPos(children.get(i - 1).getPos());
+            children.get(i).setTarget(children.get(i - 1));
         }
     }
 
-    public void removeSatelite(AbstractCircle spawned) {
+    public void removeSatellite(AbstractCircle spawned) {
         children.removeValue(spawned, true);
     }
 
-    public Array<AbstractCircle> getSatelites() {
+    public Array<AbstractCircle> getSatellites() {
         return children;
     }
 

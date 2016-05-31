@@ -40,14 +40,14 @@ public class CircleAroundScreen extends AbstractScreen {
         int masterPosY = worldH - masterPosX;
         master = new MasterCircle(masterPosX, masterPosY, AbstractCircle.RADIUS * 2, masterPosX * 0.8f);
         satelliteSpawner = new SatelliteSpawner(masterPosX, worldH * 0.1f, master);
-        spawnedSatellites = satelliteSpawner.getSatelites();
+        spawnedSatellites = satelliteSpawner.getSatellites();
 
         InputProcessor inputProcessor = new InputAdapter(){
             @Override
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {
                 // return super.touchDown(screenX, screenY, pointer, button);
                 stage.getCamera().unproject(touchPos.set(screenX, screenY, 0));
-                spawnNewChild();
+                spawnNewSatellite();
                 return false;
             }
         };
@@ -79,7 +79,7 @@ public class CircleAroundScreen extends AbstractScreen {
 
     }
 
-    private void spawnNewChild() {
+    private void spawnNewSatellite() {
         satelliteSpawner.spawnSatelite();
     }
 
@@ -91,7 +91,7 @@ public class CircleAroundScreen extends AbstractScreen {
                 }
                 master.addChild(spawnedSatellite);
                 master.incrementScore();
-                satelliteSpawner.removeSatelite(spawnedSatellite);
+                satelliteSpawner.removeSatellite(spawnedSatellite);
             }
         }
     }

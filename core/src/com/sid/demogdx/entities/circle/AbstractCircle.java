@@ -1,5 +1,6 @@
 package com.sid.demogdx.entities.circle;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -54,28 +55,23 @@ public abstract class AbstractCircle {
         updateBoundingCircle();
     }
 
-    public void moveTo(Vector2 targetPos, float delta) {
+    public void update(float delta){
+        moveTo(targetPos, delta);
+    }
+
+    private void moveTo(Vector2 targetPos, float delta) {
         if (arrivedToTarget) return;
         // FIXME: 2016.05.29 need to fix accurate movement
-        if (!MathUtils.isZero(pos.dst2(targetPos), 16f)) {
+        if (!MathUtils.isZero(pos.dst2(targetPos), 20f)) {
 //            Gdx.app.log(TAG, "moveTo: dst2: " + pos.dst2(targetPos));
             vel.set(targetPos);
             vel.sub(pos).nor().scl(VELOCITY);
             pos.mulAdd(vel, delta);
             updateBoundingCircle();
         } else {
+            Gdx.app.log(TAG, "moveTo: arrivedToTarget: " + arrivedToTarget);
             arrivedToTarget = true;
         }
-    }
-
-    public void moveTo(float delta) {
-        if (!arrivedToTarget) {
-            moveTo(targetPos, delta);
-        }
-    }
-
-    public void update(float delta){
-
     }
 
     public void draw(ShapeRenderer renderer) {
@@ -139,13 +135,17 @@ public abstract class AbstractCircle {
         return ++score;
     }
 
-    public void setTargetPos(Vector2 targetPos) {
-        this.targetPos.set(targetPos);
+    public void setTarget(AbstractCircle targetCircle) {
+        targetPos.set(targetCircle.pos);
         arrivedToTarget = false;
     }
 
-    public void setTargetPos(AbstractCircle targetCircle) {
-        setTargetPos(targetCircle.pos);
+    public boolean isArrivedToTarget() {
+        return arrivedToTarget;
+    }
+
+    public void setArrivedToTarget(boolean arrivedToTarget) {
+        this.arrivedToTarget = arrivedToTarget;
     }
 
     private void updateBoundingCircle() {
