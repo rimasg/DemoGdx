@@ -1,6 +1,7 @@
 package com.sid.demogdx.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
@@ -95,7 +96,9 @@ public class FollowTheLineScreen extends AbstractScreen {
     }
 
     private void handleInput() {
-
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK) || Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+            game.setScreen(game.getMainMenuScreen());
+        }
     }
 
     private void drawLineSegments() {
