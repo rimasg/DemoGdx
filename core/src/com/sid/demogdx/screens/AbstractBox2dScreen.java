@@ -13,7 +13,7 @@ import com.sid.demogdx.DemoGdx;
  * Created by Okis on 2016.03.20 @ 07:43.
  */
 public abstract class AbstractBox2dScreen extends AbstractScreen {
-    static final float STEP_TIME = 1f / 60f;
+    static final float TIME_STEP = 1f / 60f;
     static final int VELOCITY_ITERATIONS = 6;
     static final int POSITION_ITERATIONS = 2;
     float accumulator = 0;
@@ -45,10 +45,9 @@ public abstract class AbstractBox2dScreen extends AbstractScreen {
     private void stepWorld(float delta) {
         accumulator += Math.min(delta, 0.25f);
 
-        if (accumulator >= STEP_TIME) {
-            accumulator -= STEP_TIME;
-
-            world.step(STEP_TIME, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+        while (accumulator >= TIME_STEP) {
+            world.step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+            accumulator -= TIME_STEP;
         }
     }
 
