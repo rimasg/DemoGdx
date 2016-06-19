@@ -12,10 +12,10 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.sid.demogdx.Assets;
@@ -52,7 +52,7 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
         loadAssets();
         loadParticles();
 
-        createWorld();
+        Box2dUtils.createWorldBoundaries(world);
         createHUD();
         //
         spawnBalls(94);
@@ -151,27 +151,6 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
         }
     }
 
-    private void createWorld() {
-        EdgeShape shape = new EdgeShape();
-
-        BodyDef bodyDef = new BodyDef();
-        Body body = world.createBody(bodyDef);
-
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
-        fixtureDef.friction = 0;
-        fixtureDef.restitution = 0;
-
-        shape.set(new Vector2(0, 0), new Vector2(AppConfig.WWV, 0)); /* ground */
-        body.createFixture(fixtureDef);
-        shape.set(new Vector2(0.0001f, 0), new Vector2(0, AppConfig.WHV)); /* left side */
-        body.createFixture(fixtureDef);
-        shape.set(new Vector2(AppConfig.WWV, 0), new Vector2(AppConfig.WWV, AppConfig.WHV)); /* right side */
-        body.createFixture(fixtureDef);
-
-        shape.dispose();
-    }
-
     private void spawnBalls(int qty) {
         final float ballRadius = AppConfig.BALL_RADIUS;
         final float ballSize = ballRadius * 2;
@@ -195,7 +174,7 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
                 }
                 row += ballSize;
             }
-            final Body body = Box2dUtils.createBox2dCircleBody(world, col, row, fixtureDef);
+            final Body body = Box2dUtils.createBox2dBody(world, col, row, fixtureDef, Shape.Type.Circle);
             col += ballSize;
 
             final int randomBallColor = MathUtils.random(ballsRegions.size - 1);
@@ -239,7 +218,7 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
     }
 
     private void handleInput() {
-        if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK) || Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             game.setScreen(game.getMainMenuScreen());
         }
     }

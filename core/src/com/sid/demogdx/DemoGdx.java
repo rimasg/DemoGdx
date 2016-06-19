@@ -10,6 +10,7 @@ import com.sid.demogdx.screens.FollowTheLineScreen;
 import com.sid.demogdx.screens.GravityBallsScreen;
 import com.sid.demogdx.screens.HeroScreen;
 import com.sid.demogdx.screens.MainMenuScreen;
+import com.sid.demogdx.screens.DropStackScreen;
 
 public class DemoGdx extends Game {
 
@@ -22,6 +23,7 @@ public class DemoGdx extends Game {
     GravityBallsScreen gravityBallsScreen;
     FollowTheLineScreen followTheLineScreen;
     CircleAroundScreen circleAroundScreen;
+    DropStackScreen dropStackScreen;
 
     @Override
     public void create() {
@@ -35,6 +37,7 @@ public class DemoGdx extends Game {
         behaviorTreeScreen = new BehaviorTreeScreen(this);
         followTheLineScreen = new FollowTheLineScreen(this);
         circleAroundScreen = new CircleAroundScreen(this);
+        dropStackScreen = new DropStackScreen(this);
         setScreen(mainMenuScreen);
     }
 
@@ -73,6 +76,10 @@ public class DemoGdx extends Game {
 
     public CircleAroundScreen getCircleAroundScreen() {
         return circleAroundScreen;
+    }
+
+    public DropStackScreen getDropStackScreen() {
+        return dropStackScreen;
     }
 
     @Override

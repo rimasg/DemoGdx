@@ -162,8 +162,7 @@ public class FallingStarsScreen extends AbstractBox2dScreen {
         Timer.instance().scheduleTask(new Timer.Task() {
             @Override
             public void run() {
-                tmpBody = Box2dUtils.createBox2dCircleBody(world, defaultBodyPos.x + MathUtils.random(-defaultBodyPos.x * 0.2f, defaultBodyPos.x * 0.2f), defaultBodyPos.y
-                );
+                tmpBody = Box2dUtils.createBox2dCircleBody(world, defaultBodyPos.x + MathUtils.random(-defaultBodyPos.x * 0.2f, defaultBodyPos.x * 0.2f), defaultBodyPos.y);
                 tmpBody.applyAngularImpulse(0.2f, true);
                 addParticleEffectToBody(tmpBody);
             }

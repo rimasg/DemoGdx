@@ -23,7 +23,7 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 public class MainMenuScreen extends AbstractScreen {
 //    Stage stage;
     Label title, btnOverlay, btnGoToTarget, btnFallingStars, btnFallingBall, btnGravityBalls,
-    btnBTree, btnFollowTheLIne, btnCircleAroundScreen;
+    btnBTree, btnFollowTheLIne, btnCircleAroundScreen, btnDropStackScreen;
     Image exitBtn;
 
     public MainMenuScreen(DemoGdx game) {
@@ -113,6 +113,16 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
+        btnDropStackScreen = new Label("Drop Stack", skin, "gold");
+        btnDropStackScreen.setAlignment(Align.center);
+        btnDropStackScreen.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                game.setScreen(game.getDropStackScreen());
+            }
+        });
+
         btnOverlay = new Label("Overlay Menu", skin, "gold");
         btnOverlay.setAlignment(Align.center);
         btnOverlay.addListener(new ClickListener(){
@@ -156,6 +166,8 @@ public class MainMenuScreen extends AbstractScreen {
         table.row().pad(10.0f);
         table.add(btnCircleAroundScreen);
         table.row().pad(10.0f);
+        table.add(btnDropStackScreen);
+        table.row().pad(10.0f);
         table.add(btnOverlay);
         table.row().pad(10.0f);
         table.columnDefaults(0).reset();
@@ -177,5 +189,7 @@ public class MainMenuScreen extends AbstractScreen {
     @Override
     public void hide() {
         super.hide();
+        Gdx.input.setInputProcessor(null); /* We need this to avoid Menu click during the game
+        play */
     }
 }
