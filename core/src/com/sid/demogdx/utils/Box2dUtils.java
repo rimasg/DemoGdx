@@ -25,37 +25,15 @@ public final class Box2dUtils {
         return createBox2dBody(world, posX, posY, null, Shape.Type.Polygon);
     }
 
-    public static Body createBox2dBody(World world, float posX, float posY, FixtureDef fixtureDef, Shape.Type type) {
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(posX, posY);
-        Body body = world.createBody(bodyDef);
-
+    public static Body createBox2dBody(World world, float posX, float posY, FixtureDef fixtureDef, Shape.Type shapeType) {
+        Body body = world.createBody(createBodyDef(posX, posY));
+        Shape shape = createShape(shapeType);
         FixtureDef localFixtureDef;
         if (fixtureDef != null) {
             localFixtureDef = fixtureDef;
         } else {
-            localFixtureDef = new FixtureDef();
-            localFixtureDef.friction = 0.4f;
-            localFixtureDef.restitution = 0.4f;
-            localFixtureDef.density = 1.0f;
-        }
-
-        Shape shape;
-        switch (type) {
-            case Circle:
-                shape = new CircleShape();
-                shape.setRadius(AppConfig.BALL_RADIUS);
-                localFixtureDef.shape = shape;
-                break;
-            case Polygon:
-                shape = new PolygonShape();
-                ((PolygonShape) shape).setAsBox(0.8f, 0.4f);
-                localFixtureDef.shape = shape;
-                break;
-            default:
-                shape = new EdgeShape();
-                break;
+            localFixtureDef = createFixture();
+            localFixtureDef.shape = shape;
         }
 
         body.createFixture(localFixtureDef);
@@ -63,12 +41,48 @@ public final class Box2dUtils {
         return body;
     }
 
-    public static void createWorldBoundaries(World world) {
-        EdgeShape shape = new EdgeShape();
+    private static BodyDef createBodyDef(float posX, float posY) {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.position.set(posX, posY);
+        return bodyDef;
+    }
 
+    private static Shape createShape(Shape.Type shapeType) {
+        Shape shape = null;
+        switch (shapeType) {
+            case Circle:
+                shape = new CircleShape();
+                shape.setRadius(AppConfig.BALL_RADIUS);
+                break;
+            case Polygon:
+                shape = new PolygonShape();
+                ((PolygonShape) shape).setAsBox(0.8f, 0.4f);
+                break;
+            case Chain:
+                shape = new EdgeShape();
+                break;
+            case Edge:
+                shape = new EdgeShape();
+                break;
+        }
+        return shape;
+    }
+
+    private static FixtureDef createFixture() {
+        FixtureDef fixtureDef;
+        fixtureDef = new FixtureDef();
+        fixtureDef.friction = 0.2f;
+        fixtureDef.restitution = 0.2f;
+        fixtureDef.density = 1.0f;
+        return fixtureDef;
+    }
+
+    public static void createWorldBoundaries(World world) {
         BodyDef bodyDef = new BodyDef();
         Body body = world.createBody(bodyDef);
 
+        EdgeShape shape = new EdgeShape();
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         fixtureDef.friction = 1.0f;

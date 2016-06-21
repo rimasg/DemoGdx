@@ -15,7 +15,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
-import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.sid.demogdx.Assets;
@@ -174,7 +173,8 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
                 }
                 row += ballSize;
             }
-            final Body body = Box2dUtils.createBox2dBody(world, col, row, fixtureDef, Shape.Type.Circle);
+            final Body body = Box2dUtils.createBox2dCircleBody(world, col, row);
+//            final Body body = Box2dUtils.createBox2dBody(world, col, row, fixtureDef, Shape.Type.Circle);
             col += ballSize;
 
             final int randomBallColor = MathUtils.random(ballsRegions.size - 1);
@@ -194,8 +194,8 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
         handleInput();
 
         removeDeadBodies();
-        cam.update();
 
+        cam.update();
         b2dr.render(world, cam.combined);
 
         game.batch.setProjectionMatrix(cam.combined);
