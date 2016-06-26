@@ -78,7 +78,7 @@ public final class Box2dUtils {
         return fixtureDef;
     }
 
-    public static void createWorldBoundaries(World world) {
+    public static Body createWorldBoundaries(World world) {
         BodyDef bodyDef = new BodyDef();
         Body body = world.createBody(bodyDef);
 
@@ -96,5 +96,6 @@ public final class Box2dUtils {
         body.createFixture(fixtureDef);
 
         shape.dispose();
+        return body;
     }
 }
