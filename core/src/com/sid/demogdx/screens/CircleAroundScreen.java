@@ -6,7 +6,6 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.entities.circle.AbstractCircle;
@@ -60,8 +59,7 @@ public class CircleAroundScreen extends AbstractScreen {
         super.render(delta);
         handleInput();
         master.update(delta);
-        satelliteSpawner.update(delta);
-        checkForCollision();
+        satelliteSpawner.update(delta, shapeRenderer);
 
         shapeRenderer.setProjectionMatrix(stage.getCamera().combined);
         shapeRenderer.setAutoShapeType(true);
@@ -81,23 +79,6 @@ public class CircleAroundScreen extends AbstractScreen {
 
     private void spawnNewSatellite() {
         satelliteSpawner.spawnSatellite();
-    }
-
-    private void checkForCollision() {
-        for (AbstractCircle spawnedSatellite : spawnedSatellites) {
-            if (master.isInOuterCircle(spawnedSatellite)) {
-                if (master.isCollision(spawnedSatellite)) {
-                    changeColorOnCollision();
-                }
-                master.addSatellite(spawnedSatellite);
-                master.incrementScore();
-                satelliteSpawner.removeSatellite(spawnedSatellite);
-            }
-        }
-    }
-
-    private void changeColorOnCollision() {
-        shapeRenderer.setColor(MathUtils.random(0.2f, 0.8f), MathUtils.random(0.2f, 0.8f), MathUtils.random(0.2f, 0.8f), 1f);
     }
 
     private void handleInput() {

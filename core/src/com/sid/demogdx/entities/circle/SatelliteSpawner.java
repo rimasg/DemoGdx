@@ -9,14 +9,14 @@ import com.badlogic.gdx.utils.Array;
  * Created by Okis on 2016.05.28 @ 14:02.
  */
 public class SatelliteSpawner {
+    private static int initialNoOfSatellites = 3;
+    private static int distanceBetweenSatellites = 70;
     private Vector2 pos = new Vector2();
-    private AbstractCircle target;
+    private MasterCircle target;
     private AbstractCircle spawned;
     private Array<AbstractCircle> children = new Array<>();
-    private int initialNoOfSatellites = 3;
-    private int distanceBetweenSatellites = 70;
 
-    public SatelliteSpawner(float x, float y, AbstractCircle target) {
+    public SatelliteSpawner(float x, float y, MasterCircle target) {
         pos.set(x, y);
         this.target = target;
         initSatellites();
@@ -28,9 +28,21 @@ public class SatelliteSpawner {
         }
     }
 
-    public void update(float delta) {
+    public void update(float delta, ShapeRenderer shapeRenderer) {
         for (AbstractCircle child : children) {
             child.update(delta);
+            checkForCollision(child, shapeRenderer);
+        }
+    }
+
+    private void checkForCollision(AbstractCircle child, ShapeRenderer shapeRenderer) {
+        if (target.hasInInnerCircle(child)) {
+            if (target.isCollision(child)) {
+                target.changeColorOnCollision(shapeRenderer);
+            }
+            target.addChildSatellite(child);
+            target.incrementScore();
+            removeSatellite(child);
         }
     }
 

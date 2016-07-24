@@ -41,11 +41,16 @@ public abstract class AbstractCircle {
 
     private Vector2 rotationVec = new Vector2();
 
+    public void update(float delta){
+        moveTo(targetPos, delta);
+    }
+
     /**
      *
      * @param targetCircle to rotate around
      * @param degrees angle in degrees
      */
+/*
     public void rotateAround(AbstractCircle targetCircle, float degrees) {
         rotationVec.set(pos.x, pos.y);
         rotationVec.sub(targetCircle.pos.x, targetCircle.pos.y);
@@ -53,9 +58,13 @@ public abstract class AbstractCircle {
         pos.set(targetCircle.pos.x + rotationVec.x, targetCircle.pos.y + rotationVec.y);
         updateBoundingCircle();
     }
-
-    public void update(float delta){
-        moveTo(targetPos, delta);
+*/
+    public void rotateAround(AbstractCircle targetCircle, float degrees) {
+        rotationVec.set(pos.x, pos.y);
+        rotationVec.sub(targetCircle.pos.x, targetCircle.pos.y);
+        rotationVec.rotate(degrees);
+        pos.set(targetCircle.pos.x + rotationVec.x, targetCircle.pos.y + rotationVec.y);
+        updateBoundingCircle();
     }
 
     private void moveTo(Vector2 targetPos, float delta) {
