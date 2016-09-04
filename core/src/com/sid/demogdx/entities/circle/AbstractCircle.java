@@ -21,7 +21,7 @@ public abstract class AbstractCircle {
     private boolean arrivedToTarget = true;
     private BitmapFont font;
     private int score;
-    protected Circle boundingCircle = new Circle();
+    private Circle boundingCircle = new Circle();
 
     public AbstractCircle(float x, float y, float radius, int score) {
         this.pos.set(x, y);
@@ -39,26 +39,17 @@ public abstract class AbstractCircle {
         return boundingCircle.overlaps(c.boundingCircle);
     }
 
-    private Vector2 rotationVec = new Vector2();
-
     public void update(float delta){
         moveTo(targetPos, delta);
     }
+
+    private Vector2 rotationVec = new Vector2();
 
     /**
      *
      * @param targetCircle to rotate around
      * @param degrees angle in degrees
      */
-/*
-    public void rotateAround(AbstractCircle targetCircle, float degrees) {
-        rotationVec.set(pos.x, pos.y);
-        rotationVec.sub(targetCircle.pos.x, targetCircle.pos.y);
-        rotationVec.rotate(degrees);
-        pos.set(targetCircle.pos.x + rotationVec.x, targetCircle.pos.y + rotationVec.y);
-        updateBoundingCircle();
-    }
-*/
     public void rotateAround(AbstractCircle targetCircle, float degrees) {
         rotationVec.set(pos.x, pos.y);
         rotationVec.sub(targetCircle.pos.x, targetCircle.pos.y);
@@ -70,14 +61,18 @@ public abstract class AbstractCircle {
     private void moveTo(Vector2 targetPos, float delta) {
         if (arrivedToTarget) return;
         // FIXME: 2016.05.29 need to fix accurate movement
-        if (!MathUtils.isZero(pos.dst2(targetPos), 32f)) {
+        if (isZeroDistance(targetPos)) {
+            arrivedToTarget = true;
+        } else {
             vel.set(targetPos);
             vel.sub(pos).nor().scl(VELOCITY);
             pos.mulAdd(vel, delta);
             updateBoundingCircle();
-        } else {
-            arrivedToTarget = true;
         }
+    }
+
+    private boolean isZeroDistance(Vector2 targetPos) {
+        return MathUtils.isZero(pos.dst2(targetPos), 32f);
     }
 
     public void draw(ShapeRenderer renderer) {
@@ -146,7 +141,7 @@ public abstract class AbstractCircle {
         arrivedToTarget = false;
     }
 
-    public boolean isArrivedToTarget() {
+    public boolean hasArrivedToTarget() {
         return arrivedToTarget;
     }
 
