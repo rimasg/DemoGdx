@@ -52,7 +52,7 @@ gwt-unitCache/
 www-test/
 .gwt-tmp/
 
-## Gradle
+## Gradle files
 .gradle
 gradle-app.setting
 build/
