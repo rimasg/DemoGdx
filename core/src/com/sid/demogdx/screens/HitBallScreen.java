@@ -19,14 +19,13 @@ import com.badlogic.gdx.utils.Align;
 import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.interfaces.ListenerClass;
 import com.sid.demogdx.utils.AppConfig;
-import com.sid.demogdx.utils.Box2dUtils;
 
 import net.dermetfan.gdx.physics.box2d.Box2DMapObjectParser;
 
 /**
  * Created by Okis on 2016.03.19 @ 10:05.
  */
-public class FallingBallScreen extends AbstractBox2dScreen {
+public class HitBallScreen extends AbstractBox2dScreen {
     TiledMap map;
     OrthogonalTiledMapRenderer mapRenderer;
     Box2DMapObjectParser box2DMapObjectParser;
@@ -34,6 +33,7 @@ public class FallingBallScreen extends AbstractBox2dScreen {
     private Body ball;
     private TextureAtlas.AtlasRegion bodyRegion;
     private TextureAtlas.AtlasRegion starRegion;
+    private TextureAtlas.AtlasRegion blockRegion;
     private TextureAtlas.AtlasRegion circleRainbowRegion;
 
     private ParticleEffect particleEffect;
@@ -42,14 +42,14 @@ public class FallingBallScreen extends AbstractBox2dScreen {
     private Label scoreLabel;
     private Label timeLabel;
 
-    public FallingBallScreen(DemoGdx game) {
+    public HitBallScreen(DemoGdx game) {
         super(game);
     }
 
     @Override
     public void show() {
         super.show();
-        map = new TmxMapLoader().load("maps/map.tmx");
+        map = new TmxMapLoader().load("maps/hit_ball_map.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(map, AppConfig.unitScale32, game.batch);
         box2DMapObjectParser = new Box2DMapObjectParser(mapRenderer.getUnitScale());
 //        box2DMapObjectParser.setListener(new Box2DMapObjectParserListenerAdapter(box2DMapObjectParser));
@@ -108,13 +108,6 @@ public class FallingBallScreen extends AbstractBox2dScreen {
         world.getBodies(bodies);
     }
 
-    private void spawnBalls(int qty, float posX, float posY) {
-        for (int i = 0; i < qty; i++) {
-            final Body body = Box2dUtils.createBox2dCircleBody(world, MathUtils.random(posX), posY);
-            body.setUserData("HangingCircle");
-        }
-    }
-
     private void createPlayer() {
         for (Body body : bodies) {
             if (isPlayer(body)) {
@@ -171,13 +164,15 @@ public class FallingBallScreen extends AbstractBox2dScreen {
         cam.update();
 
         b2dr.render(world, cam.combined);
-        mapRenderer.setView(cam);
-        mapRenderer.render();
+        // TODO: 2016.10.03 uncomment when releasing in Prod
+//        mapRenderer.setView(cam);
+//        mapRenderer.render();
 
         game.batch.setProjectionMatrix(cam.combined);
         game.batch.begin();
-        drawBodies();
-        drawParticles();
+        // TODO: 2016.10.03 uncomment later
+//        drawBodies();
+//        drawParticles();
         game.batch.end();
 
         stage.act();
@@ -198,12 +193,13 @@ public class FallingBallScreen extends AbstractBox2dScreen {
     }
 
     private void handleInput() {
-        if (Gdx.input.isKeyPressed(Input.Keys.BACK) || Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
             game.setScreen(game.getMainMenuScreen());
         }
 
+        // NOTE: 2016.10.03 commented teporarily
+/*
         if (Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer)) {
-//            ball.applyForceToCenter(-Gdx.input.getAccelerometerX(), 0, true);
             moveBallOnXAxis(-Gdx.input.getAccelerometerX());
         }
 
@@ -213,6 +209,7 @@ public class FallingBallScreen extends AbstractBox2dScreen {
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             moveBallOnXAxis(3.0f);
         }
+*/
     }
 
     private void moveBallOnXAxis(float x) {
@@ -224,7 +221,10 @@ public class FallingBallScreen extends AbstractBox2dScreen {
             if ((body.getUserData() != null) && (body.getUserData() instanceof String)) {
                 final String userData = (String) body.getUserData();
                 switch (userData) {
-                    case "HangingCircle":
+                    case "Block":
+                        bodyRegion = starRegion;
+                        break;
+                    case "Circle":
                         bodyRegion = starRegion;
                         break;
                     case "Player":

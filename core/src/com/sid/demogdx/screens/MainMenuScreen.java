@@ -23,7 +23,7 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 public class MainMenuScreen extends AbstractScreen {
 //    Stage stage;
     Label title, btnOverlay, btnGoToTarget, btnFallingStars, btnFallingBall, btnGravityBalls,
-    btnBTree, btnFollowTheLIne, btnCircleAroundScreen, btnDropStackScreen;
+    btnBTree, btnFollowTheLIne, btnCircleAroundScreen, btnDropStackScreen, btnHitBallScreen;
     Image exitBtn;
 
     public MainMenuScreen(DemoGdx game) {
@@ -123,6 +123,16 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
+        btnHitBallScreen = new Label("Hit a Ball", skin, "gold");
+        btnHitBallScreen.setAlignment(Align.center);
+        btnHitBallScreen.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                game.setScreen(game.getHitBallScreen());
+            }
+        });
+
         btnOverlay = new Label("Overlay Menu", skin, "gold");
         btnOverlay.setAlignment(Align.center);
         btnOverlay.addListener(new ClickListener(){
@@ -167,6 +177,8 @@ public class MainMenuScreen extends AbstractScreen {
         table.add(btnCircleAroundScreen);
         table.row().pad(10.0f);
         table.add(btnDropStackScreen);
+        table.row().pad(10.0f);
+        table.add(btnHitBallScreen);
         table.row().pad(10.0f);
         table.add(btnOverlay);
         table.row().pad(10.0f);
