@@ -2,23 +2,30 @@ package com.sid.demogdx.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.interfaces.ListenerClass;
 import com.sid.demogdx.utils.AppConfig;
+import com.sid.demogdx.utils.ProjectileMotion;
 
 import net.dermetfan.gdx.physics.box2d.Box2DMapObjectParser;
 
@@ -30,7 +37,7 @@ public class HitBallScreen extends AbstractBox2dScreen {
     OrthogonalTiledMapRenderer mapRenderer;
     Box2DMapObjectParser box2DMapObjectParser;
 
-    private Body ball;
+    private Body player;
     private TextureAtlas.AtlasRegion bodyRegion;
     private TextureAtlas.AtlasRegion starRegion;
     private TextureAtlas.AtlasRegion blockRegion;
@@ -41,6 +48,10 @@ public class HitBallScreen extends AbstractBox2dScreen {
 
     private Label scoreLabel;
     private Label timeLabel;
+
+    private Vector2 impulse = new Vector2();
+    private boolean touchedPlayer = false;
+    private Array<Vector2> displacement;
 
     public HitBallScreen(DemoGdx game) {
         super(game);
@@ -63,13 +74,10 @@ public class HitBallScreen extends AbstractBox2dScreen {
                 if ((isPlayer(bodyA) || isPlayer(bodyB))
                         && ((bodyA.getType() == BodyDef.BodyType.DynamicBody) && bodyB.getType() == BodyDef.BodyType.DynamicBody)) {
                     if (isPlayer(bodyA)) {
-                        setParticleToStart(bodyB.getPosition().x, bodyB.getPosition().y);
-                        bodiesToRemove.add(bodyB);
+
                     } else if (isPlayer(bodyB)) {
-                        setParticleToStart(bodyA.getPosition().x, bodyA.getPosition().y);
-                        bodiesToRemove.add(bodyA);
                     }
-                    playCollisionSound();
+//                    playCollisionSound();
                 }
                 if (isFinish(bodyA) || isFinish(bodyB)) {
 //                    show();
@@ -83,6 +91,38 @@ public class HitBallScreen extends AbstractBox2dScreen {
         createWorld();
         createPlayer();
         createHUD();
+        // TODO: 2016.10.03 write code to hit a player
+        Gdx.input.setInputProcessor(new InputAdapter(){
+            @Override
+            public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+                cam.unproject(touchPos.set(screenX, screenY, 0));
+                world.QueryAABB(callback, touchPos.x - 0.0001f, touchPos.y - 0.0001f, touchPos.x + 0.0001f, touchPos.y + 0.0001f);
+                return false;
+            }
+
+            @Override
+            public boolean touchDragged(int screenX, int screenY, int pointer) {
+                if (touchedPlayer) {
+                    cam.unproject(touchPos.set(screenX, screenY, 0));
+                    impulse.set(
+                            player.getPosition().x - touchPos.x,
+                            player.getPosition().y - touchPos.y);
+                    displacement = ProjectileMotion.calcDisplacement(player.getPosition(), new Vector2(touchPos.x, touchPos.y), impulse);
+                }
+                return false;
+            }
+
+            @Override
+            public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+                if (touchedPlayer) {
+                    // cam.unproject(touchPos.set(screenX, screenY, 0));
+                    impulse.scl(ProjectileMotion.INITIAL_VELOCITY); // Impulse force
+                    player.applyLinearImpulse(impulse, player.getPosition(), true);
+                }
+                touchedPlayer = false;
+                return false;
+            }
+        });
     }
 
     private void loadAssets() {
@@ -104,14 +144,13 @@ public class HitBallScreen extends AbstractBox2dScreen {
 
     private void createWorld() {
         box2DMapObjectParser.load(world, map);
-//        spawnBalls(20, viewport.getWorldWidth() / 2, viewport.getWorldHeight() * 2.0f);
         world.getBodies(bodies);
     }
 
     private void createPlayer() {
         for (Body body : bodies) {
             if (isPlayer(body)) {
-                ball = body;
+                player = body;
                 return;
             }
         }
@@ -141,26 +180,15 @@ public class HitBallScreen extends AbstractBox2dScreen {
         table.add(timeLabel).right();
     }
 
-    private float getMapHeight() {
-        final float posY;
-        if (map.getProperties().get("height") != null) {
-            posY = (int) map.getProperties().get("height");
-        } else {
-            posY = AppConfig.WHV * 2;
-        }
-        return posY;
-    }
-
     @Override
     public void render(float delta) {
         super.render(delta);
         handleInput();
 
         particleEffect.update(delta);
-        removedDeadBodies();
         updateHUD();
         // Show only visible part of the Tiled Map on Y-axis - MathUtils.clamp()
-        cam.position.set(viewport.getWorldWidth() / 2, MathUtils.clamp(ball.getPosition().y, cam.viewportHeight / 2, cam.viewportHeight * 2), 0);
+//        cam.position.set(viewport.getWorldWidth() / 2, MathUtils.clamp(player.getPosition().y, cam.viewportHeight / 2, cam.viewportHeight * 2), 0);
         cam.update();
 
         b2dr.render(world, cam.combined);
@@ -175,17 +203,13 @@ public class HitBallScreen extends AbstractBox2dScreen {
 //        drawParticles();
         game.batch.end();
 
+        game.shapeRenderer.setAutoShapeType(true);
+        game.shapeRenderer.begin();
+        drawProjectile();
+        game.shapeRenderer.end();
+
         stage.act();
         stage.draw();
-    }
-
-    private void removedDeadBodies() {
-        if (bodiesToRemove.size > 0) {
-            for (Body deadBody : bodiesToRemove) {
-                world.destroyBody(deadBody);
-            }
-            bodiesToRemove.clear();
-        }
     }
 
     private void updateHUD() {
@@ -193,27 +217,10 @@ public class HitBallScreen extends AbstractBox2dScreen {
     }
 
     private void handleInput() {
-        if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK) || Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             game.setScreen(game.getMainMenuScreen());
         }
 
-        // NOTE: 2016.10.03 commented teporarily
-/*
-        if (Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer)) {
-            moveBallOnXAxis(-Gdx.input.getAccelerometerX());
-        }
-
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            moveBallOnXAxis(-3.0f);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            moveBallOnXAxis(3.0f);
-        }
-*/
-    }
-
-    private void moveBallOnXAxis(float x) {
-        ball.applyForceToCenter(x, 0, true);
     }
 
     private void drawBodies() {
@@ -242,15 +249,34 @@ public class HitBallScreen extends AbstractBox2dScreen {
         }
     }
 
-    private void drawParticles() {
-        if (!particleEffect.isComplete()) {
-            particleEffect.draw(game.batch);
+    private void drawProjectile() {
+        if (displacement != null && touchedPlayer) {
+            game.shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
+            for (Vector2 point : displacement) {
+                worldCoords.set(point.x, point.y, 0);
+                cam.project(worldCoords);
+                game.shapeRenderer.circle(worldCoords.x, worldCoords.y, 3.0f);
+            }
         }
     }
 
     private void playCollisionSound() {
         collisionSound.play();
     }
+
+    private QueryCallback callback = new QueryCallback() {
+        @Override
+        public boolean reportFixture(Fixture fixture) {
+            if (fixture.testPoint(touchPos.x, touchPos.y)) {
+                if (isPlayer(fixture.getBody())) {
+                    touchedPlayer = true;
+                } else {
+                    touchedPlayer = false;
+                }
+            }
+            return false;
+        }
+    };
 
     @Override
     public void resize(int width, int height) {

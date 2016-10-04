@@ -2,6 +2,7 @@ package com.sid.demogdx;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.sid.demogdx.screens.BehaviorTreeScreen;
 import com.sid.demogdx.screens.CircleAroundScreen;
 import com.sid.demogdx.screens.FallingBallScreen;
@@ -16,6 +17,7 @@ import com.sid.demogdx.screens.DropStackScreen;
 public class DemoGdx extends Game {
 
     public SpriteBatch batch;
+    public ShapeRenderer shapeRenderer;
     HeroScreen heroScreen;
     MainMenuScreen mainMenuScreen;
     FallingStarsScreen fallingStarsScreen;
@@ -30,6 +32,7 @@ public class DemoGdx extends Game {
     @Override
     public void create() {
         batch = new SpriteBatch();
+        shapeRenderer = new ShapeRenderer();
         loadAssets();
         mainMenuScreen = new MainMenuScreen(this);
         heroScreen = new HeroScreen(this);

@@ -180,8 +180,9 @@ public class MainMenuScreen extends AbstractScreen {
         table.row().pad(10.0f);
         table.add(btnHitBallScreen);
         table.row().pad(10.0f);
-        table.add(btnOverlay);
-        table.row().pad(10.0f);
+        // NOTE: 2016.10.04 commented out since not enough space on the Menu Screen
+//        table.add(btnOverlay);
+//        table.row().pad(10.0f);
         table.columnDefaults(0).reset();
         table.add(exitBtn);
     }

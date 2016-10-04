@@ -26,6 +26,7 @@ public abstract class AbstractScreen implements Screen {
     final Stage stage;
     final Assets assets = Assets.inst();
     final Vector3 touchPos = new Vector3();
+    final Vector3 worldCoords = new Vector3();
 
     Skin skin;
 
