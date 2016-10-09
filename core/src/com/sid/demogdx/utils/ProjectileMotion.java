@@ -27,7 +27,6 @@ public class ProjectileMotion {
         for (float t = stepping; t < time; t += stepping) {
             final float angleRad = end.angleRad(start);
             float x = start.x + INITIAL_VELOCITY * impulse.x * t * MathUtils.cos(angleRad);
-//            float y = start.y + INITIAL_VELOCITY * impulse.y * t * MathUtils.sin(angleRad) - 0.5f * G * t * t;
             float y = start.y + INITIAL_VELOCITY * impulse.y * t * MathUtils.sin(angleRad) - 0.1f * G * t * t;
             displacement.get(i).set(x, y);
             i++;

@@ -23,7 +23,7 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 public class MainMenuScreen extends AbstractScreen {
 //    Stage stage;
     Label title, btnOverlay, btnGoToTarget, btnFallingStars, btnFallingBall, btnGravityBalls,
-    btnBTree, btnFollowTheLIne, btnCircleAroundScreen, btnDropStackScreen, btnHitBallScreen;
+    btnBTree, btnFollowTheLine, btnCircleAround, btnDropStack, btnHitBall, btnFollowTheWave;
     Image exitBtn;
 
     public MainMenuScreen(DemoGdx game) {
@@ -93,9 +93,9 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
-        btnFollowTheLIne = new Label("Follow the Line", skin, "gold");
-        btnFollowTheLIne.setAlignment(Align.center);
-        btnFollowTheLIne.addListener(new ClickListener(){
+        btnFollowTheLine = new Label("Follow the Line", skin, "gold");
+        btnFollowTheLine.setAlignment(Align.center);
+        btnFollowTheLine.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
@@ -103,9 +103,9 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
-        btnCircleAroundScreen = new Label("Circle Around", skin, "gold");
-        btnCircleAroundScreen.setAlignment(Align.center);
-        btnCircleAroundScreen.addListener(new ClickListener(){
+        btnCircleAround = new Label("Circle Around", skin, "gold");
+        btnCircleAround.setAlignment(Align.center);
+        btnCircleAround.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
@@ -113,9 +113,9 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
-        btnDropStackScreen = new Label("Drop Stack", skin, "gold");
-        btnDropStackScreen.setAlignment(Align.center);
-        btnDropStackScreen.addListener(new ClickListener(){
+        btnDropStack = new Label("Drop Stack", skin, "gold");
+        btnDropStack.setAlignment(Align.center);
+        btnDropStack.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
@@ -123,13 +123,23 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
-        btnHitBallScreen = new Label("Hit a Ball", skin, "gold");
-        btnHitBallScreen.setAlignment(Align.center);
-        btnHitBallScreen.addListener(new ClickListener(){
+        btnHitBall = new Label("Hit a Ball", skin, "gold");
+        btnHitBall.setAlignment(Align.center);
+        btnHitBall.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 game.setScreen(game.getHitBallScreen());
+            }
+        });
+
+        btnFollowTheWave = new Label("Follow The Wave", skin, "gold");
+        btnFollowTheWave.setAlignment(Align.center);
+        btnFollowTheWave.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                game.setScreen(game.getFollowTheWaveScreen());
             }
         });
 
@@ -160,26 +170,28 @@ public class MainMenuScreen extends AbstractScreen {
         table.setBackground(skin.getDrawable("button_black"));
         table.row().expandX().fillX();
         table.add(title);
-        table.row().pad(10.0f);
+        table.row().pad(2.0f);
         table.columnDefaults(0).width(Value.percentWidth(0.8f, table));
         table.add(btnGoToTarget);
-        table.row().pad(10.0f);
+        table.row().pad(2.0f);
         table.add(btnFallingStars);
-        table.row().pad(10.0f);
+        table.row().pad(2.0f);
         table.add(btnFallingBall);
-        table.row().pad(10.0f);
+        table.row().pad(2.0f);
         table.add(btnGravityBalls);
-        table.row().pad(10.0f);
+        table.row().pad(2.0f);
         table.add(btnBTree);
-        table.row().pad(10.0f);
-        table.add(btnFollowTheLIne);
-        table.row().pad(10.0f);
-        table.add(btnCircleAroundScreen);
-        table.row().pad(10.0f);
-        table.add(btnDropStackScreen);
-        table.row().pad(10.0f);
-        table.add(btnHitBallScreen);
-        table.row().pad(10.0f);
+        table.row().pad(2.0f);
+        table.add(btnFollowTheLine);
+        table.row().pad(2.0f);
+        table.add(btnCircleAround);
+        table.row().pad(2.0f);
+        table.add(btnDropStack);
+        table.row().pad(2.0f);
+        table.add(btnHitBall);
+        table.row().pad(2.0f);
+        table.add(btnFollowTheWave);
+        table.row().pad(2.0f);
         // NOTE: 2016.10.04 commented out since not enough space on the Menu Screen
 //        table.add(btnOverlay);
 //        table.row().pad(10.0f);

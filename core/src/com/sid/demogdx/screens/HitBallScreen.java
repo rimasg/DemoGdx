@@ -237,8 +237,9 @@ public class HitBallScreen extends AbstractBox2dScreen {
                     case "Player":
                         bodyRegion = circleRainbowRegion;
                         break;
+                    default:
+                        break;
                 }
-
 //                final float radius = body.getFixtureList().get(0).getShape().getRadius();
                 game.batch.draw(bodyRegion,
                         body.getPosition().x,

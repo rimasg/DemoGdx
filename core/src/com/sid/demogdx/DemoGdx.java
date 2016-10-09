@@ -8,6 +8,7 @@ import com.sid.demogdx.screens.CircleAroundScreen;
 import com.sid.demogdx.screens.FallingBallScreen;
 import com.sid.demogdx.screens.FallingStarsScreen;
 import com.sid.demogdx.screens.FollowTheLineScreen;
+import com.sid.demogdx.screens.FollowTheWaveScreen;
 import com.sid.demogdx.screens.GravityBallsScreen;
 import com.sid.demogdx.screens.HeroScreen;
 import com.sid.demogdx.screens.HitBallScreen;
@@ -28,6 +29,7 @@ public class DemoGdx extends Game {
     CircleAroundScreen circleAroundScreen;
     DropStackScreen dropStackScreen;
     HitBallScreen hitBallScreen;
+    FollowTheWaveScreen followTheWaveScreen;
 
     @Override
     public void create() {
@@ -44,6 +46,7 @@ public class DemoGdx extends Game {
         circleAroundScreen = new CircleAroundScreen(this);
         dropStackScreen = new DropStackScreen(this);
         hitBallScreen = new HitBallScreen(this);
+        followTheWaveScreen = new FollowTheWaveScreen(this);
         setScreen(mainMenuScreen);
     }
 
@@ -90,6 +93,10 @@ public class DemoGdx extends Game {
 
     public HitBallScreen getHitBallScreen() {
         return hitBallScreen;
+    }
+
+    public FollowTheWaveScreen getFollowTheWaveScreen() {
+        return followTheWaveScreen;
     }
 
     @Override
