@@ -3,12 +3,14 @@ package com.sid.demogdx.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.CatmullRomSpline;
 import com.badlogic.gdx.math.Vector2;
 import com.sid.demogdx.DemoGdx;
+import com.sid.demogdx.entities.wave.Runner;
 import com.sid.demogdx.utils.AppConfig;
+import com.sid.demogdx.utils.CameraHelper;
 
 /**
  * Created by Okis on 2016.10.09.
@@ -26,7 +28,7 @@ public class FollowTheWaveScreen extends AbstractScreen {
     private Vector2[] pointsOther = new Vector2[k];
     private float speed = 0.15f;
     private float current = 0.0f;
-    private TextureRegion star;
+    private Runner runner;
     private boolean togglePath;
 
     public FollowTheWaveScreen(DemoGdx game) {
@@ -42,8 +44,9 @@ public class FollowTheWaveScreen extends AbstractScreen {
         initDataSet();
         initSpline();
         cachePathPoints();
-
-        star = skin.getRegion("star");
+        runner = new Runner(new Sprite(skin.getRegion("star")));
+        CameraHelper.setCam(stage.getCamera());
+        CameraHelper.setTarget(runner);
     }
 
     private void initDataSet() {
@@ -93,6 +96,7 @@ public class FollowTheWaveScreen extends AbstractScreen {
         drawPath();
         shapeRenderer.end();
 
+        CameraHelper.update(delta);
         game.batch.setProjectionMatrix(stage.getCamera().combined);
         game.batch.begin();
         if (togglePath) {
@@ -118,10 +122,8 @@ public class FollowTheWaveScreen extends AbstractScreen {
         }
         float t = place - ((int) place);
 
-        game.batch.draw(star,
-                (first.x - star.getRegionWidth() / 2) + (second.x - first.x) * t,
-                (first.y - star.getRegionHeight() / 2) + (second.y - first.y) * t);
-
+        runner.setPos(first.x + (second.x - first.x) * t, first.y + (second.y - first.y) * t);
+        runner.draw(game.batch);
     }
 
     private void handleInput() {
