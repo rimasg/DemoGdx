@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="9" height="16" tilewidth="32" tileheight="32" nextobjectid="42">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="9" height="16" tilewidth="32" tileheight="32" nextobjectid="46">
  <tileset firstgid="1" name="Desert" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="48" columns="8">
   <image source="../tilesets/desert.png" width="265" height="199"/>
   <terraintypes>
@@ -157,6 +157,37 @@
     <property name="friction" value="0.8"/>
     <property name="userData" value="Block"/>
    </properties>
+  </object>
+  <object id="42" name="RotatingPlatform" type="object" x="96" y="128" width="160" height="32">
+   <properties>
+    <property name="awake" type="bool" value="false"/>
+    <property name="bodyType" value="DynamicBody"/>
+    <property name="density" type="float" value="1"/>
+    <property name="friction" type="float" value="0.8"/>
+    <property name="userData" value="Block"/>
+   </properties>
+  </object>
+  <object id="44" name="RevoluteJoint" type="joint" x="160" y="128" width="32" height="32">
+   <properties>
+    <property name="bodyA" value="RotatingPlatform"/>
+    <property name="bodyB" value="RevoluteAnchorPoint"/>
+    <property name="enableLimit" type="bool" value="true"/>
+    <property name="jointType" value="RevoluteJoint"/>
+    <property name="localAnchorAX" type="float" value="2.5"/>
+    <property name="localAnchorAY" type="float" value="0.5"/>
+    <property name="localAnchorBX" type="float" value="0.5"/>
+    <property name="localAnchorBY" type="float" value="0.5"/>
+    <property name="lowerAngle" type="float" value="-1.5"/>
+    <property name="upperAngle" type="float" value="1.5"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="45" name="RevoluteAnchorPoint" type="object" x="160" y="128" width="32" height="32">
+   <properties>
+    <property name="bodyType" value="StaticBody"/>
+    <property name="friction" type="float" value="1"/>
+   </properties>
+   <ellipse/>
   </object>
  </objectgroup>
  <objectgroup name="walls">

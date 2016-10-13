@@ -26,7 +26,7 @@ public final class CameraHelper {
     public static void update(float delta) {
         if ((null != cam) && (null != target)) {
             directionVec.set(target.pos.x, target.pos.y, 0);
-            cam.position.lerp(directionVec, delta * 100.0f);
+            cam.position.lerp(directionVec, delta);
             cam.update();
         }
     }
