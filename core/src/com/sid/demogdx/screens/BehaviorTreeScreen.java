@@ -9,6 +9,7 @@ import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.btree.npc.NPC;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 /**
  * Created by Okis on 2016.03.26 @ 21:50.
@@ -51,12 +52,13 @@ public class BehaviorTreeScreen extends AbstractScreen {
             game.setScreen(game.getMainMenuScreen());
         }
         if (Gdx.input.justTouched()) {
+            touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+            cam.unproject(touchPos);
             Gdx.app.log(TAG, "handleInput: Coords:" +
-                    " X -> " + Gdx.input.getX() +
-                    ", Y -> " + (Gdx.graphics.getHeight() - Gdx.input.getY() - 1));
-            getPixelColor(
-                    Gdx.input.getX(),
-                    Gdx.graphics.getHeight() - Gdx.input.getY() - 1);
+                    " X -> " + (int) touchPos.x +
+                    ", Y -> " + (int) touchPos.y);
+            cam.project(touchPos);
+            getPixelColor((int) touchPos.x, (int) touchPos.y);
         }
     }
 
@@ -67,21 +69,23 @@ public class BehaviorTreeScreen extends AbstractScreen {
      */
     private void getPixelColor(int x, int y) {
         ByteBuffer pixels = ByteBuffer.allocateDirect(4);
-//        pixels.order(ByteOrder.nativeOrder());
-//        pixels.position(0);
-        for (int i = 0; i < 300; i += 5) {
-            Gdx.gl.glReadPixels(
-                    i,
-                    i,
-                    1, 1, GL20.GL_RGBA, GL20.GL_UNSIGNED_BYTE, pixels);
-            // TODO: 2016.07.02 how to get pixel color?
-            int r = pixels.get(); if (0 > r) r += 256;
-            int g = pixels.get(); if (0 > g) g += 256;
-            int b = pixels.get(); if (0 > b) b += 256;
-            int a = pixels.get(); if (0 > a) a += 256;
-            pixels.position(0);
-            Gdx.app.log(TAG, "getPixelColor:R: " + r + " G: " + g + " B: " + b + " A: " + a);
-        }
+        pixels.order(ByteOrder.nativeOrder());
+        pixels.position(0);
+        Gdx.gl.glReadPixels(
+                x,
+                y,
+                1, 1, GL20.GL_RGBA, GL20.GL_UNSIGNED_BYTE, pixels);
+        // TODO: 2016.07.02 how to get pixel color?
+        int r = pixels.get();
+        if (0 > r) r += 256;
+        int g = pixels.get();
+        if (0 > g) g += 256;
+        int b = pixels.get();
+        if (0 > b) b += 256;
+        int a = pixels.get();
+        if (0 > a) a += 256;
+        pixels.position(0);
+        Gdx.app.log(TAG, "getPixelColor:R: " + r + " G: " + g + " B: " + b + " A: " + a);
     }
 
     private void updateAI(float delta) {

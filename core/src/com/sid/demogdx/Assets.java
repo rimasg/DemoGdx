@@ -4,6 +4,8 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 /**
@@ -20,7 +22,7 @@ public final class Assets extends AssetManager {
      * Instantiate Assets and load assets if @Assets instance is null
      * @return instance
      */
-    public static Assets inst() {
+    public static synchronized Assets inst() {
         if (inst == null) {
             inst = new Assets();
             loadAssets();
@@ -29,7 +31,7 @@ public final class Assets extends AssetManager {
     }
 
     private static void loadAssets() {
-        inst.load("skin.json", Skin.class, new SkinLoader.SkinParameter("textures/texture.pack"));
+        inst.load(SKIN_JSON, SKIN_CLASS, new SkinLoader.SkinParameter("textures/texture.pack"));
         inst.load(COLLISION_SOUND, SOUND_CLASS);
     }
 
@@ -39,8 +41,16 @@ public final class Assets extends AssetManager {
         inst = null;
     }
 
-    public static final String COLLISION_SOUND = "sounds/click.ogg";
+    public static Sound getCollisionSound() {
+        return inst.get(Assets.COLLISION_SOUND, Assets.SOUND_CLASS);
+    }
 
-    public static final Class<Sound> SOUND_CLASS = Sound.class;
-    public static final Class<Music> MUSIC_CLASS = Music.class;
+    private static final Class<Skin> SKIN_CLASS = Skin.class;
+    private static final Class<TextureAtlas> TEXTURE_ATLAS = TextureAtlas.class;
+    private static final Class<BitmapFont> BITMAP_FONT_CLASS = BitmapFont.class;
+    private static final Class<Sound> SOUND_CLASS = Sound.class;
+    private static final Class<Music> MUSIC_CLASS = Music.class;
+
+    private static final String SKIN_JSON = "skin.json";
+    private static final String COLLISION_SOUND = "sounds/click.ogg";
 }

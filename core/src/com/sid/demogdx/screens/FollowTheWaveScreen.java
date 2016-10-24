@@ -19,8 +19,8 @@ import com.sid.demogdx.utils.CameraHelper;
 public class FollowTheWaveScreen extends AbstractScreen {
     private ShapeRenderer shapeRenderer;
     private int worldW, worldH;
-    private Vector2[] dataSet = new Vector2[5];
-    private Vector2[] dataSetOther = new Vector2[5];
+    private Vector2[] dataSet = new Vector2[7];
+    private Vector2[] dataSetOther = new Vector2[7];
     private CatmullRomSpline<Vector2> spline;
     private CatmullRomSpline<Vector2> splineOther;
     private int k = 100;
@@ -30,6 +30,8 @@ public class FollowTheWaveScreen extends AbstractScreen {
     private float current = 0.0f;
     private Runner runner;
     private boolean togglePath;
+    private boolean isStarTranslationFinished = true;
+    private float translationPos = 0.0f;
 
     public FollowTheWaveScreen(DemoGdx game) {
         super(game);
@@ -50,29 +52,40 @@ public class FollowTheWaveScreen extends AbstractScreen {
     }
 
     private void initDataSet() {
+/*
         dataSet[0] = new Vector2(50.0f, worldH * 0.2f);
         dataSet[1] = new Vector2(worldW / 4, worldH / 2);
         dataSet[2] = new Vector2(50.0f, worldH * 0.8f);
         dataSet[3] = new Vector2(worldW / 2, worldH *  0.8f);
         dataSet[4] = new Vector2(worldW * 0.9f, worldH * 0.3f);
+*/
+        dataSet[0] = new Vector2(50.0f, 50.0f);
+        dataSet[1] = new Vector2(worldW / 4, 200.0f);
+        dataSet[2] = new Vector2(worldW / 2, 500.0f);
+        dataSet[3] = new Vector2(worldW / 4, 800.0f);
+        dataSet[4] = new Vector2(worldW * 0.8f, 1000.0f);
+        dataSet[5] = new Vector2(worldW * 0.4f , 1500.0f);
+        dataSet[6] = new Vector2(worldW * 0.6f, 2000.0f);
         float offset = 50.0f;
+/*
         dataSetOther[0] = new Vector2(50.0f + offset, worldH * 0.2f + offset);
         dataSetOther[1] = new Vector2(worldW / 4 + offset, worldH / 2);
         dataSetOther[2] = new Vector2(50.0f + offset, worldH * 0.8f - offset);
         dataSetOther[3] = new Vector2(worldW / 2 - offset, worldH *  0.8f);
         dataSetOther[4] = new Vector2(worldW * 0.9f - offset, worldH * 0.3f + offset);
-/*
-        dataSetOther[0] = new Vector2(worldW * 0.1f, worldH * 0.3f);
-        dataSetOther[1] = new Vector2(worldW / 3.0f, worldH * 0.5f);
-        dataSetOther[2] = new Vector2(worldW * 0.1f, worldH * 0.7f);
-        dataSetOther[3] = new Vector2(worldW / 3.0f, worldH * 0.6f);
-        dataSetOther[4] = new Vector2(worldW * 0.8f, worldH * 0.4f);
 */
+        dataSetOther[0] = new Vector2(50.0f + offset, 50.0f);
+        dataSetOther[1] = new Vector2(worldW / 4 + offset, 200.0f);
+        dataSetOther[2] = new Vector2(worldW / 2 + offset, 500.0f);
+        dataSetOther[3] = new Vector2(worldW / 4 + offset, 800.0f);
+        dataSetOther[4] = new Vector2(worldW * 0.8f + offset, 1000.0f);
+        dataSetOther[5] = new Vector2(worldW * 0.4f + offset, 1500.0f);
+        dataSetOther[6] = new Vector2(worldW * 0.6f + offset, 2000.0f);
     }
 
     private void initSpline() {
-        spline = new CatmullRomSpline<>(dataSet, true);
-        splineOther = new CatmullRomSpline<>(dataSetOther, true);
+        spline = new CatmullRomSpline<>(dataSet, false);
+        splineOther = new CatmullRomSpline<>(dataSetOther, false);
     }
 
     private void cachePathPoints() {
@@ -100,9 +113,19 @@ public class FollowTheWaveScreen extends AbstractScreen {
         game.batch.setProjectionMatrix(stage.getCamera().combined);
         game.batch.begin();
         if (togglePath) {
-            drawStar(delta, points);
+            if (isStarTranslationFinished) {
+                drawStar(delta, points);
+            } else {
+                float place = current * k;
+                translateStar(delta, pointsOther[(int) place], points[(int) place]);
+            }
         } else {
-            drawStar(delta, pointsOther);
+            if (isStarTranslationFinished) {
+                drawStar(delta, pointsOther);
+            } else {
+                float place = current * k;
+                translateStar(delta, points[(int) place], pointsOther[(int) place]);
+            }
         }
         game.batch.end();
     }
@@ -126,11 +149,23 @@ public class FollowTheWaveScreen extends AbstractScreen {
         runner.draw(game.batch);
     }
 
+    private void translateStar(float delta, Vector2 from, Vector2 to) {
+        translationPos += delta * 4.0f;
+        if (translationPos >= 1.0f) {
+            translationPos = 0.0f;
+            isStarTranslationFinished = true;
+            return;
+        }
+        runner.setPos(from.x + (to.x - from.x) * translationPos, from.y + (to.y - from.y) * translationPos);
+        runner.draw(game.batch);
+    }
+
     private void handleInput() {
         if (Gdx.input.isKeyPressed(Input.Keys.BACK) || Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             game.setScreen(game.getMainMenuScreen());
         }
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE) || Gdx.input.justTouched()) {
+            isStarTranslationFinished = false;
             togglePath = !togglePath;
         }
     }

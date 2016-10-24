@@ -16,6 +16,10 @@ public abstract class GameObject {
         this.sprite = sprite;
     }
 
+    public Vector2 getPos() {
+        return pos;
+    }
+
     public void setPos(float x, float y) {
         this.pos.set(x, y);
     }
