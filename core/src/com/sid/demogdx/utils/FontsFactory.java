@@ -41,7 +41,7 @@ public final class FontsFactory {
     }
 
     public enum FontName {
-        FREE_MONO_BOLD("fonts/FREE_MONO_BOLD.ttf");
+        FREE_MONO_BOLD("fonts/FreeMonoBold.ttf");
         private String fontName;
 
         FontName(String fontName) {
