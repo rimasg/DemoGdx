@@ -27,7 +27,6 @@ import static com.sid.demogdx.utils.FontsFactory.createFont;
  * Created by SID on 2016-03-03 @ 18:09.
  */
 public class MainMenuScreen extends AbstractScreen {
-//    Stage stage;
     Label title, btnOverlay, btnGoToTarget, btnFallingStars, btnFallingBall, btnGravityBalls,
     btnBTree, btnFollowTheLine, btnCircleAround, btnDropStack, btnHitBall, btnFollowTheWave;
     Image exitBtn;
@@ -45,10 +44,9 @@ public class MainMenuScreen extends AbstractScreen {
         final Table table = new Table(skin);
         table.setBounds(0, 0 , AppConfig.WWP, AppConfig.WHP);
 
-        Label.LabelStyle style = new Label.LabelStyle(createFont(FontName.FreeMonoBold, FontSize.Size32), Color.WHITE);
+        Label.LabelStyle style = new Label.LabelStyle(createFont(FontName.FREE_MONO_BOLD, FontSize.SIZE_32), Color.WHITE);
         style.background = skin.getDrawable("button_gold");
         title = new Label("Mover", style);
-//        title = new Label("Mover", skin, "gold");
         title.setAlignment(Align.center);
         // TODO: 2016.11.09 sequence behave strangle, the 1st move action not executed, this is why I have added delay(0.001f)
         title.addAction(sequence(
@@ -57,7 +55,6 @@ public class MainMenuScreen extends AbstractScreen {
                 moveBy(0, -stage.getHeight(), 1.5f, Interpolation.bounce)));
 
         btnGoToTarget = new Label("Go to Target", style);
-//        btnGoToTarget = new Label("Go to Target", skin, "gold");
         btnGoToTarget.setAlignment(Align.center);
         btnGoToTarget.addListener(new ClickListener(){
             @Override
@@ -68,7 +65,6 @@ public class MainMenuScreen extends AbstractScreen {
         });
 
         btnFallingStars = new Label("Falling Stars", style);
-//        btnFallingStars = new Label("Falling Stars", skin, "gold");
         btnFallingStars.setAlignment(Align.center);
         btnFallingStars.addListener(new ClickListener(){
             @Override
@@ -79,7 +75,6 @@ public class MainMenuScreen extends AbstractScreen {
         });
 
         btnFallingBall = new Label("Falling Ball", style);
-//        btnFallingBall = new Label("Falling Ball", skin, "gold");
         btnFallingBall.setAlignment(Align.center);
         btnFallingBall.addListener(new ClickListener(){
             @Override
@@ -90,7 +85,6 @@ public class MainMenuScreen extends AbstractScreen {
         });
 
         btnGravityBalls = new Label("Gravity Ball", style);
-//        btnGravityBalls = new Label("Gravity Ball", skin, "gold");
         btnGravityBalls.setAlignment(Align.center);
         btnGravityBalls.addListener(new ClickListener(){
             @Override
@@ -101,7 +95,6 @@ public class MainMenuScreen extends AbstractScreen {
         });
 
         btnBTree = new Label("BehaviorTree", style);
-//        btnBTree = new Label("BehaviorTree", skin, "gold");
         btnBTree.setAlignment(Align.center);
         btnBTree.addListener(new ClickListener(){
             @Override
@@ -112,7 +105,6 @@ public class MainMenuScreen extends AbstractScreen {
         });
 
         btnFollowTheLine = new Label("Follow the Line", style);
-//        btnFollowTheLine = new Label("Follow the Line", skin, "gold");
         btnFollowTheLine.setAlignment(Align.center);
         btnFollowTheLine.addListener(new ClickListener(){
             @Override
@@ -123,7 +115,6 @@ public class MainMenuScreen extends AbstractScreen {
         });
 
         btnCircleAround = new Label("Circle Around", style);
-//        btnCircleAround = new Label("Circle Around", skin, "gold");
         btnCircleAround.setAlignment(Align.center);
         btnCircleAround.addListener(new ClickListener(){
             @Override
@@ -134,7 +125,6 @@ public class MainMenuScreen extends AbstractScreen {
         });
 
         btnDropStack = new Label("Drop Stack", style);
-//        btnDropStack = new Label("Drop Stack", skin, "gold");
         btnDropStack.setAlignment(Align.center);
         btnDropStack.addListener(new ClickListener(){
             @Override
@@ -145,7 +135,6 @@ public class MainMenuScreen extends AbstractScreen {
         });
 
         btnHitBall = new Label("Hit a Ball", style);
-//        btnHitBall = new Label("Hit a Ball", skin, "gold");
         btnHitBall.setAlignment(Align.center);
         btnHitBall.addListener(new ClickListener(){
             @Override
@@ -156,7 +145,6 @@ public class MainMenuScreen extends AbstractScreen {
         });
 
         btnFollowTheWave = new Label("Follow The Wave", style);
-//        btnFollowTheWave = new Label("Follow The Wave", skin, "gold");
         btnFollowTheWave.setAlignment(Align.center);
         btnFollowTheWave.addListener(new ClickListener(){
             @Override
@@ -167,7 +155,6 @@ public class MainMenuScreen extends AbstractScreen {
         });
 
         btnOverlay = new Label("Overlay Menu", style);
-//        btnOverlay = new Label("Overlay Menu", skin, "gold");
         btnOverlay.setAlignment(Align.center);
         btnOverlay.addListener(new ClickListener(){
             @Override
@@ -239,7 +226,6 @@ public class MainMenuScreen extends AbstractScreen {
     @Override
     public void hide() {
         super.hide();
-        Gdx.input.setInputProcessor(null); /* We need this to avoid Menu click during the game
-        play */
+        Gdx.input.setInputProcessor(null); /* We need this to avoid Menu click during the game play */
     }
 }
