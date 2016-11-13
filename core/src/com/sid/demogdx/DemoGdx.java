@@ -3,6 +3,7 @@ package com.sid.demogdx;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.sid.demogdx.screens.AirFightScreen;
 import com.sid.demogdx.screens.BehaviorTreeScreen;
 import com.sid.demogdx.screens.CircleAroundScreen;
 import com.sid.demogdx.screens.DropStackScreen;
@@ -30,6 +31,7 @@ public class DemoGdx extends Game {
     DropStackScreen dropStackScreen;
     HitBallScreen hitBallScreen;
     FollowTheWaveScreen followTheWaveScreen;
+    AirFightScreen airFightScreen;
 
     @Override
     public void create() {
@@ -47,6 +49,7 @@ public class DemoGdx extends Game {
         dropStackScreen = new DropStackScreen(this);
         hitBallScreen = new HitBallScreen(this);
         followTheWaveScreen = new FollowTheWaveScreen(this);
+        airFightScreen = new AirFightScreen(this);
         setScreen(mainMenuScreen);
     }
 
@@ -97,6 +100,10 @@ public class DemoGdx extends Game {
 
     public FollowTheWaveScreen getFollowTheWaveScreen() {
         return followTheWaveScreen;
+    }
+
+    public AirFightScreen getAirFightScreen() {
+        return airFightScreen;
     }
 
     @Override

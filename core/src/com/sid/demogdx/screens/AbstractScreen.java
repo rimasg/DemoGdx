@@ -41,7 +41,6 @@ public abstract class AbstractScreen implements Screen {
         this.viewport.apply(true);
 
         this.stage = new Stage(new FitViewport(AppConfig.WWP, AppConfig.WHP), game.batch);
-        Gdx.input.setInputProcessor(stage);
 
         loadAssets();
     }
@@ -53,6 +52,7 @@ public abstract class AbstractScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setCatchBackKey(true);
+        Gdx.input.setInputProcessor(stage);
         startTimer();
     }
 

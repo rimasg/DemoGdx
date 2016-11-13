@@ -10,5 +10,8 @@
   "com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
     "default": { "font": "black-font", "fontColor": "black", "background": "button_black"},
     "gold": { "font": "white-font", "fontColor": "white", "background": "button_gold"}
+  },
+  "com.badlogic.gdx.scenes.scene2d.ui.Touchpad$TouchpadStyle": {
+    "default": { "background": "touch_pad", "knob": "touch_knob"}
   }
 }

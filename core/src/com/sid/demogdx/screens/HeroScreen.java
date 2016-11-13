@@ -29,7 +29,6 @@ public class HeroScreen extends AbstractScreen {
     @Override
     public void show() {
         super.show();
-        Gdx.input.setInputProcessor(stage);
         stage.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {

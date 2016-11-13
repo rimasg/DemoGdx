@@ -28,7 +28,8 @@ import static com.sid.demogdx.utils.FontsFactory.createFont;
  */
 public class MainMenuScreen extends AbstractScreen {
     Label title, btnOverlay, btnGoToTarget, btnFallingStars, btnFallingBall, btnGravityBalls,
-    btnBTree, btnFollowTheLine, btnCircleAround, btnDropStack, btnHitBall, btnFollowTheWave;
+    btnBTree, btnFollowTheLine, btnCircleAround, btnDropStack, btnHitBall, btnFollowTheWave,
+            btnAirFight;
     Image exitBtn;
 
     public MainMenuScreen(DemoGdx game) {
@@ -38,9 +39,6 @@ public class MainMenuScreen extends AbstractScreen {
     @Override
     public void show() {
         super.show();
-
-        Gdx.input.setInputProcessor(stage);
-
         final Table table = new Table(skin);
         table.setBounds(0, 0 , AppConfig.WWP, AppConfig.WHP);
 
@@ -154,6 +152,16 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
+        btnAirFight = new Label("Air Fight", style);
+        btnAirFight.setAlignment(Align.center);
+        btnAirFight.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                game.setScreen(game.getAirFightScreen());
+            }
+        });
+
         btnOverlay = new Label("Overlay Menu", style);
         btnOverlay.setAlignment(Align.center);
         btnOverlay.addListener(new ClickListener(){
@@ -202,6 +210,8 @@ public class MainMenuScreen extends AbstractScreen {
         table.add(btnHitBall);
         table.row().pad(2.0f);
         table.add(btnFollowTheWave);
+        table.row().pad(2.0f);
+        table.add(btnAirFight);
         table.row().pad(2.0f);
         table.add(btnOverlay);
         table.row().pad(10.0f);
