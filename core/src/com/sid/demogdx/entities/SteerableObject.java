@@ -29,7 +29,7 @@ public class SteerableObject implements Steerable<Vector2> {
     private float maxAngularSpeed = 5.f;
     private float maxAngularAcceleration = 100.f;
 
-    private boolean independantFacing;
+    private boolean independentFacing;
 
     private Sprite sprite;
     private float width, height;
@@ -151,12 +151,12 @@ public class SteerableObject implements Steerable<Vector2> {
         this.steeringBehavior = steeringBehavior;
     }
 
-    public boolean isIndependantFacing() {
-        return independantFacing;
+    public boolean isIndependentFacing() {
+        return independentFacing;
     }
 
-    public void setIndependantFacing(boolean independantFacing) {
-        this.independantFacing = independantFacing;
+    public void setIndependentFacing(boolean independentFacing) {
+        this.independentFacing = independentFacing;
     }
 
     public Sprite getSprite() {
@@ -194,7 +194,7 @@ public class SteerableObject implements Steerable<Vector2> {
         position.mulAdd(linearVelocity, delta);
         linearVelocity.mulAdd(steering.linear, delta).limit(getMaxLinearSpeed());
 
-        if (independantFacing) {
+        if (independentFacing) {
             sprite.setRotation(sprite.getRotation() + (angularVelocity * delta) * MathUtils.radiansToDegrees);
             angularVelocity += steering.angular * delta;
         } else {

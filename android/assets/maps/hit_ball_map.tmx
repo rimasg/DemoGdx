@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="9" height="16" tilewidth="32" tileheight="32" nextobjectid="46">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="9" height="16" tilewidth="32" tileheight="32" nextobjectid="47">
  <tileset firstgid="1" name="Desert" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="48" columns="8">
   <image source="../tilesets/desert.png" width="265" height="199"/>
   <terraintypes>
@@ -77,7 +77,7 @@
    </properties>
    <ellipse/>
   </object>
-  <object id="13" name="Block" type="object" x="96" y="448" width="32" height="64">
+  <object id="13" name="Block" type="object" x="128" y="448" width="32" height="64">
    <properties>
     <property name="awake" value="false"/>
     <property name="bodyType" value="DynamicBody"/>
@@ -86,7 +86,7 @@
     <property name="userData" value="Block"/>
    </properties>
   </object>
-  <object id="14" name="Block" type="object" x="112" y="384" width="32" height="64">
+  <object id="14" name="Block" type="object" x="144" y="384" width="32" height="64">
    <properties>
     <property name="awake" value="false"/>
     <property name="bodyType" value="DynamicBody"/>
@@ -95,7 +95,7 @@
     <property name="userData" value="Block"/>
    </properties>
   </object>
-  <object id="15" name="Block" type="object" x="208" y="384" width="32" height="64">
+  <object id="15" name="Block" type="object" x="240" y="384" width="32" height="64">
    <properties>
     <property name="awake" value="false"/>
     <property name="bodyType" value="DynamicBody"/>
@@ -104,7 +104,7 @@
     <property name="userData" value="Block"/>
    </properties>
   </object>
-  <object id="16" name="Block" type="object" x="224" y="448" width="32" height="64">
+  <object id="16" name="Block" type="object" x="256" y="448" width="32" height="64">
    <properties>
     <property name="awake" value="false"/>
     <property name="bodyType" value="DynamicBody"/>
@@ -113,7 +113,7 @@
     <property name="userData" value="Block"/>
    </properties>
   </object>
-  <object id="17" name="Block" type="object" x="160" y="288" width="32" height="64">
+  <object id="17" name="Block" type="object" x="192" y="288" width="32" height="64">
    <properties>
     <property name="awake" value="false"/>
     <property name="bodyType" value="DynamicBody"/>
@@ -122,7 +122,7 @@
     <property name="userData" value="Block"/>
    </properties>
   </object>
-  <object id="18" name="Block" type="object" x="112" y="352" width="128" height="31.0151">
+  <object id="18" name="Block" type="object" x="144" y="352" width="128" height="31.0151">
    <properties>
     <property name="awake" value="false"/>
     <property name="bodyType" value="DynamicBody"/>
@@ -131,7 +131,7 @@
     <property name="userData" value="Block"/>
    </properties>
   </object>
-  <object id="19" name="Circle" type="object" x="160" y="192" width="32" height="32">
+  <object id="19" name="Circle" type="object" x="192" y="192" width="32" height="32">
    <properties>
     <property name="awake" value="false"/>
     <property name="bodyType" value="DynamicBody"/>
@@ -149,7 +149,7 @@
     <property name="userData" value="Block"/>
    </properties>
   </object>
-  <object id="23" name="Block" type="object" x="160" y="224" width="32" height="64">
+  <object id="23" name="Block" type="object" x="192" y="224" width="32" height="64">
    <properties>
     <property name="awake" value="false"/>
     <property name="bodyType" value="DynamicBody"/>
@@ -158,7 +158,7 @@
     <property name="userData" value="Block"/>
    </properties>
   </object>
-  <object id="42" name="RotatingPlatform" type="object" x="96" y="128" width="160" height="32">
+  <object id="42" name="RotatingPlatform" type="object" x="160" y="128" width="96" height="32">
    <properties>
     <property name="awake" type="bool" value="false"/>
     <property name="bodyType" value="DynamicBody"/>
@@ -167,7 +167,7 @@
     <property name="userData" value="Block"/>
    </properties>
   </object>
-  <object id="44" name="RevoluteJoint" type="joint" x="160" y="128" width="32" height="32">
+  <object id="44" name="RevoluteJoint" type="joint" x="192" y="128" width="32" height="32">
    <properties>
     <property name="bodyA" value="RotatingPlatform"/>
     <property name="bodyB" value="RevoluteAnchorPoint"/>
@@ -182,12 +182,21 @@
    </properties>
    <ellipse/>
   </object>
-  <object id="45" name="RevoluteAnchorPoint" type="object" x="160" y="128" width="32" height="32">
+  <object id="45" name="RevoluteAnchorPoint" type="object" x="192" y="128" width="32" height="32">
    <properties>
     <property name="bodyType" value="StaticBody"/>
     <property name="friction" type="float" value="1"/>
    </properties>
    <ellipse/>
+  </object>
+  <object id="46" name="RopeHolder" type="object" x="96" y="32" width="32" height="32">
+   <properties>
+    <property name="awake" value="false"/>
+    <property name="bodyType" value="StaticBody"/>
+    <property name="collideConnected" type="bool" value="false"/>
+    <property name="density" value="1"/>
+    <property name="userData" value="Finish"/>
+   </properties>
   </object>
  </objectgroup>
  <objectgroup name="walls">

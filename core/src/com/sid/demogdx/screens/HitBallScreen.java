@@ -16,7 +16,10 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
+import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Value;
@@ -28,6 +31,8 @@ import com.sid.demogdx.utils.AppConfig;
 import com.sid.demogdx.utils.ProjectileMotion;
 
 import net.dermetfan.gdx.physics.box2d.Box2DMapObjectParser;
+import net.dermetfan.gdx.physics.box2d.Box2DUtils;
+import net.dermetfan.gdx.physics.box2d.Chain;
 
 /**
  * Created by Okis on 2016.03.19 @ 10:05.
@@ -38,6 +43,8 @@ public class HitBallScreen extends AbstractBox2dScreen {
     Box2DMapObjectParser box2DMapObjectParser;
 
     private Body player;
+    private Body finish;
+    private Chain chain;
     private TextureAtlas.AtlasRegion bodyRegion;
     private TextureAtlas.AtlasRegion starRegion;
     private TextureAtlas.AtlasRegion blockRegion;
@@ -90,6 +97,9 @@ public class HitBallScreen extends AbstractBox2dScreen {
 
         createWorld();
         createPlayer();
+        createChainHolder();
+        chain = createChain();
+        attachChainToChainHolder();
         createHUD();
         // TODO: 2016.10.03 write code to hit a player
         Gdx.input.setInputProcessor(new InputAdapter(){
@@ -154,6 +164,51 @@ public class HitBallScreen extends AbstractBox2dScreen {
                 return;
             }
         }
+    }
+
+    private void createChainHolder() {
+        for (Body body : bodies) {
+            if (isFinish(body)) {
+                finish = body;
+                return;
+            }
+        }
+    }
+
+    private Chain createChain() {
+        final BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.position.set(finish.getPosition());
+
+        final PolygonShape shape = new PolygonShape();
+        shape.setAsBox(.1f, 0.25f);
+
+        final FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.density = 2.0f;
+
+        final RevoluteJointDef jointDef = new RevoluteJointDef();
+        jointDef.localAnchorA.y = -Box2DUtils.height(shape) / 2;
+        jointDef.localAnchorB.y = Box2DUtils.height(shape) / 2;
+
+        final Chain.DefBuilder builder = new Chain.DefBuilder(world, bodyDef, fixtureDef, jointDef);
+        final Chain chain = new Chain(10, builder);
+
+        shape.dispose();
+
+        return chain;
+    }
+
+    private void attachChainToChainHolder() {
+        final Body segment = chain.getSegment(0);
+
+        final RevoluteJointDef jointDef = new RevoluteJointDef();
+        jointDef.collideConnected = false;
+        jointDef.bodyA = finish;
+        jointDef.bodyB = segment;
+        jointDef.localAnchorA.set(0.5f, 0);
+        jointDef.localAnchorB.set(.1f / 2, 0.25f / 2);
+        world.createJoint(jointDef);
     }
 
     private boolean isPlayer(Body body) {
