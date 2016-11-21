@@ -62,11 +62,11 @@
  </imagelayer>
  <layer name="background" width="9" height="16">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFgwnwDzE1ACC4AEw=
+   eJxjYBgFgw3wDyE1AB+MAEw=
   </data>
  </layer>
  <objectgroup name="objects">
-  <object id="9" name="Player" type="object" x="32" y="320" width="32" height="32">
+  <object id="9" name="Player" type="object" x="64" y="320" width="32" height="32">
    <properties>
     <property name="awake" type="bool" value="true"/>
     <property name="bodyType" value="DynamicBody"/>
@@ -141,7 +141,7 @@
    </properties>
    <ellipse/>
   </object>
-  <object id="22" name="Platform" type="object" x="32" y="352" width="32" height="160">
+  <object id="22" name="Platform" type="object" x="64" y="352" width="32" height="160">
    <properties>
     <property name="awake" value="false"/>
     <property name="bodyType" value="StaticBody"/>
@@ -173,7 +173,7 @@
     <property name="bodyB" value="RevoluteAnchorPoint"/>
     <property name="enableLimit" type="bool" value="true"/>
     <property name="jointType" value="RevoluteJoint"/>
-    <property name="localAnchorAX" type="float" value="2.5"/>
+    <property name="localAnchorAX" type="float" value="1.5"/>
     <property name="localAnchorAY" type="float" value="0.5"/>
     <property name="localAnchorBX" type="float" value="0.5"/>
     <property name="localAnchorBY" type="float" value="0.5"/>
