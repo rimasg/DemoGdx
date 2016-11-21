@@ -10,7 +10,6 @@ buildscript {
 }
 
 allprojects {
-    apply plugin: "eclipse"
     apply plugin: "idea"
 
     version = '1.0'
@@ -87,8 +86,4 @@ project(":core") {
         compile "net.dermetfan.libgdx-utils:libgdx-utils-box2d:$gdxUtilsVersion" // Box2D module
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
     }
-}
-
-tasks.eclipse.doLast {
-    delete ".project"
 }
