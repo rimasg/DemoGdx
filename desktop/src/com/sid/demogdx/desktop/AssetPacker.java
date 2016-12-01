@@ -14,6 +14,7 @@ public class AssetPacker {
     public static void main(String[] args) {
         final TexturePacker.Settings settings = new TexturePacker.Settings();
         settings.atlasExtension = ".pack";
+        settings.pot = false;
         TexturePacker.process(settings, RAW_ASSET_PATH, ASSET_PATH, "texture");
     }
 }
