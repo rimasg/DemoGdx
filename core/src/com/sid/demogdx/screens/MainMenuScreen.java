@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
@@ -27,9 +28,10 @@ import static com.sid.demogdx.utils.FontsFactory.createFont;
  * Created by SID on 2016-03-03 @ 18:09.
  */
 public class MainMenuScreen extends AbstractScreen {
-    Label title, btnOverlay, btnGoToTarget, btnFallingStars, btnFallingBall, btnGravityBalls,
-    btnBTree, btnFollowTheLine, btnCircleAround, btnDropStack, btnHitBall, btnFollowTheWave,
-            btnAirFight;
+    Label title, lblOverlay, lblGoToTarget, lblFallingStars, lblFallingBall, lblGravityBalls,
+            lblBTree, lblFollowTheLine, lblCircleAround, lblDropStack, lblHitBall, lblFollowTheWave,
+            lblAirFight;
+    TextButton btnGoToTarget;
     Image exitBtn;
 
     public MainMenuScreen(DemoGdx game) {
@@ -52,9 +54,16 @@ public class MainMenuScreen extends AbstractScreen {
                 moveBy(0, stage.getHeight()),
                 moveBy(0, -stage.getHeight(), 1.5f, Interpolation.bounce)));
 
-        btnGoToTarget = new Label("Go to Target", style);
-        btnGoToTarget.setAlignment(Align.center);
-        btnGoToTarget.addListener(new ClickListener(){
+        final TextButton.TextButtonStyle buttonStyle = new TextButton.TextButtonStyle(
+                skin.getDrawable("button_gold"),
+                skin.getDrawable("button_gold_pressed"),
+                skin.getDrawable("button_gold"),
+                createFont(FontName.FREE_MONO_BOLD, FontSize.SIZE_32)
+        );
+        btnGoToTarget = new TextButton("Go to Target", buttonStyle);
+        lblGoToTarget = new Label("Go to Target", style);
+        lblGoToTarget.setAlignment(Align.center);
+        lblGoToTarget.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
@@ -62,9 +71,9 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
-        btnFallingStars = new Label("Falling Stars", style);
-        btnFallingStars.setAlignment(Align.center);
-        btnFallingStars.addListener(new ClickListener(){
+        lblFallingStars = new Label("Falling Stars", style);
+        lblFallingStars.setAlignment(Align.center);
+        lblFallingStars.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
@@ -72,9 +81,9 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
-        btnFallingBall = new Label("Falling Ball", style);
-        btnFallingBall.setAlignment(Align.center);
-        btnFallingBall.addListener(new ClickListener(){
+        lblFallingBall = new Label("Falling Ball", style);
+        lblFallingBall.setAlignment(Align.center);
+        lblFallingBall.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
@@ -82,9 +91,9 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
-        btnGravityBalls = new Label("Gravity Ball", style);
-        btnGravityBalls.setAlignment(Align.center);
-        btnGravityBalls.addListener(new ClickListener(){
+        lblGravityBalls = new Label("Gravity Ball", style);
+        lblGravityBalls.setAlignment(Align.center);
+        lblGravityBalls.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
@@ -92,9 +101,9 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
-        btnBTree = new Label("BehaviorTree", style);
-        btnBTree.setAlignment(Align.center);
-        btnBTree.addListener(new ClickListener(){
+        lblBTree = new Label("BehaviorTree", style);
+        lblBTree.setAlignment(Align.center);
+        lblBTree.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
@@ -102,9 +111,9 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
-        btnFollowTheLine = new Label("Follow the Line", style);
-        btnFollowTheLine.setAlignment(Align.center);
-        btnFollowTheLine.addListener(new ClickListener(){
+        lblFollowTheLine = new Label("Follow the Line", style);
+        lblFollowTheLine.setAlignment(Align.center);
+        lblFollowTheLine.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
@@ -112,9 +121,9 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
-        btnCircleAround = new Label("Circle Around", style);
-        btnCircleAround.setAlignment(Align.center);
-        btnCircleAround.addListener(new ClickListener(){
+        lblCircleAround = new Label("Circle Around", style);
+        lblCircleAround.setAlignment(Align.center);
+        lblCircleAround.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
@@ -122,9 +131,9 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
-        btnDropStack = new Label("Drop Stack", style);
-        btnDropStack.setAlignment(Align.center);
-        btnDropStack.addListener(new ClickListener(){
+        lblDropStack = new Label("Drop Stack", style);
+        lblDropStack.setAlignment(Align.center);
+        lblDropStack.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
@@ -132,9 +141,9 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
-        btnHitBall = new Label("Hit a Ball", style);
-        btnHitBall.setAlignment(Align.center);
-        btnHitBall.addListener(new ClickListener(){
+        lblHitBall = new Label("Hit a Ball", style);
+        lblHitBall.setAlignment(Align.center);
+        lblHitBall.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
@@ -142,9 +151,9 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
-        btnFollowTheWave = new Label("Follow The Wave", style);
-        btnFollowTheWave.setAlignment(Align.center);
-        btnFollowTheWave.addListener(new ClickListener(){
+        lblFollowTheWave = new Label("Follow The Wave", style);
+        lblFollowTheWave.setAlignment(Align.center);
+        lblFollowTheWave.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
@@ -152,9 +161,9 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
-        btnAirFight = new Label("Air Fight", style);
-        btnAirFight.setAlignment(Align.center);
-        btnAirFight.addListener(new ClickListener(){
+        lblAirFight = new Label("Air Fight", style);
+        lblAirFight.setAlignment(Align.center);
+        lblAirFight.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
@@ -162,9 +171,9 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
-        btnOverlay = new Label("Overlay Menu", style);
-        btnOverlay.setAlignment(Align.center);
-        btnOverlay.addListener(new ClickListener(){
+        lblOverlay = new Label("Overlay Menu", style);
+        lblOverlay.setAlignment(Align.center);
+        lblOverlay.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 final OverlayMenuActor overlayMenuActor = new OverlayMenuActor();
@@ -193,27 +202,29 @@ public class MainMenuScreen extends AbstractScreen {
         table.columnDefaults(0).width(Value.percentWidth(0.8f, table));
         table.add(btnGoToTarget);
         table.row().pad(2.0f);
-        table.add(btnFallingStars);
+        table.add(lblGoToTarget);
         table.row().pad(2.0f);
-        table.add(btnFallingBall);
+        table.add(lblFallingStars);
         table.row().pad(2.0f);
-        table.add(btnGravityBalls);
+        table.add(lblFallingBall);
         table.row().pad(2.0f);
-        table.add(btnBTree);
+        table.add(lblGravityBalls);
         table.row().pad(2.0f);
-        table.add(btnFollowTheLine);
+        table.add(lblBTree);
         table.row().pad(2.0f);
-        table.add(btnCircleAround);
+        table.add(lblFollowTheLine);
         table.row().pad(2.0f);
-        table.add(btnDropStack);
+        table.add(lblCircleAround);
         table.row().pad(2.0f);
-        table.add(btnHitBall);
+        table.add(lblDropStack);
         table.row().pad(2.0f);
-        table.add(btnFollowTheWave);
+        table.add(lblHitBall);
         table.row().pad(2.0f);
-        table.add(btnAirFight);
+        table.add(lblFollowTheWave);
         table.row().pad(2.0f);
-        table.add(btnOverlay);
+        table.add(lblAirFight);
+        table.row().pad(2.0f);
+        table.add(lblOverlay);
         table.row().pad(10.0f);
         table.columnDefaults(0).reset();
         table.add(exitBtn);
