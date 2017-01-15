@@ -8,7 +8,7 @@ public final class AppConfig {
 
     public static final boolean DEBUG = false;
     public static final String DEBUG_TEXT = "Running Circle";
-    // S4 mini resolution
+    // Samsung S4 Mini resolution
     public static final int WWP = 540; /* WORLD_WIDTH_PIXEL */
     public static final int WHP = 960; /* WORLD_HEIGHT_PIXEL */
     //

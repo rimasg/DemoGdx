@@ -42,7 +42,11 @@ public final class Assets extends AssetManager {
     }
 
     public static Sound getCollisionSound() {
-        return inst.get(Assets.COLLISION_SOUND, Assets.SOUND_CLASS);
+        return inst.get(COLLISION_SOUND, SOUND_CLASS);
+    }
+
+    public static Skin getSkin() {
+        return inst.get(SKIN_JSON, SKIN_CLASS);
     }
 
     private static final Class<Skin> SKIN_CLASS = Skin.class;

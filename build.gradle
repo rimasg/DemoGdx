@@ -71,6 +71,7 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-arm64-v8a"
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86"
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86_64"
+//        compile fileTree(dir: '../libs', include: ['*.jar']) // Box2D BodyEditor Loader
     }
 }
 
@@ -85,5 +86,6 @@ project(":core") {
         compile "net.dermetfan.libgdx-utils:libgdx-utils:$gdxUtilsVersion"
         compile "net.dermetfan.libgdx-utils:libgdx-utils-box2d:$gdxUtilsVersion" // Box2D module
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+//        compile fileTree(dir: '../libs', include: ['*.jar']) // Box2D BodyEditor Loader
     }
 }

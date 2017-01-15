@@ -13,7 +13,7 @@ import com.sid.demogdx.Assets;
 public class OverlayMenuActor extends Table {
 
     public OverlayMenuActor() {
-        final Skin skin = Assets.inst().get("skin.json", Skin.class);
+        final Skin skin = Assets.inst().getSkin();
         setSkin(skin);
         background(skin.getDrawable("popup_bg"));
         setSize(400.0f, 200.0f);

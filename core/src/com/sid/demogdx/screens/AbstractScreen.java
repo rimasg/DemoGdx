@@ -28,7 +28,7 @@ public abstract class AbstractScreen implements Screen {
     final Vector3 touchPos = new Vector3();
     final Vector3 worldCoords = new Vector3();
 
-    Skin skin;
+    protected Skin skin;
 
     private long secondsTime = 0L;
     private Timer.Task secondsTimer;
@@ -46,7 +46,7 @@ public abstract class AbstractScreen implements Screen {
     }
 
     private void loadAssets() {
-        skin = assets.get("skin.json", Skin.class);
+        skin = Assets.getSkin();
     }
 
     @Override

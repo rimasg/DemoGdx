@@ -15,6 +15,7 @@ import com.sid.demogdx.screens.GravityBallsScreen;
 import com.sid.demogdx.screens.HeroScreen;
 import com.sid.demogdx.screens.HitBallScreen;
 import com.sid.demogdx.screens.MainMenuScreen;
+import com.sid.demogdx.screens.PhysicsBodyScreen;
 
 public class DemoGdx extends Game {
 
@@ -32,6 +33,7 @@ public class DemoGdx extends Game {
     HitBallScreen hitBallScreen;
     FollowTheWaveScreen followTheWaveScreen;
     AirFightScreen airFightScreen;
+    PhysicsBodyScreen physicsBodyScreen;
 
     @Override
     public void create() {
@@ -50,11 +52,11 @@ public class DemoGdx extends Game {
         hitBallScreen = new HitBallScreen(this);
         followTheWaveScreen = new FollowTheWaveScreen(this);
         airFightScreen = new AirFightScreen(this);
+        physicsBodyScreen = new PhysicsBodyScreen(this);
         setScreen(mainMenuScreen);
     }
 
     private void loadAssets() {
-        Assets.inst();
         Assets.inst().finishLoading();
     }
 
@@ -104,6 +106,10 @@ public class DemoGdx extends Game {
 
     public AirFightScreen getAirFightScreen() {
         return airFightScreen;
+    }
+
+    public PhysicsBodyScreen getPhysicsBodyScreen() {
+        return physicsBodyScreen;
     }
 
     @Override

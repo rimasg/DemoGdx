@@ -30,7 +30,7 @@ import static com.sid.demogdx.utils.FontsFactory.createFont;
 public class MainMenuScreen extends AbstractScreen {
     Label title, lblOverlay, lblGoToTarget, lblFallingStars, lblFallingBall, lblGravityBalls,
             lblBTree, lblFollowTheLine, lblCircleAround, lblDropStack, lblHitBall, lblFollowTheWave,
-            lblAirFight;
+            lblAirFight, lblPhysicsBody;
     TextButton btnGoToTarget;
     Image exitBtn;
 
@@ -171,6 +171,16 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
+        lblPhysicsBody = new Label("Physics Body", style);
+        lblPhysicsBody.setAlignment(Align.center);
+        lblPhysicsBody.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                game.setScreen(game.getPhysicsBodyScreen());
+            }
+        });
+
         lblOverlay = new Label("Overlay Menu", style);
         lblOverlay.setAlignment(Align.center);
         lblOverlay.addListener(new ClickListener(){
@@ -223,6 +233,8 @@ public class MainMenuScreen extends AbstractScreen {
         table.add(lblFollowTheWave);
         table.row().pad(2.0f);
         table.add(lblAirFight);
+        table.row().pad(2.0f);
+        table.add(lblPhysicsBody);
         table.row().pad(2.0f);
         table.add(lblOverlay);
         table.row().pad(10.0f);

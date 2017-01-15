@@ -1,6 +1,5 @@
 package com.sid.demogdx.screens;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2D;
@@ -46,14 +45,9 @@ public abstract class AbstractBox2dScreen extends AbstractScreen {
         accumulator += Math.min(delta, 0.25f);
 
         while (accumulator >= TIME_STEP) {
-            world.step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
             accumulator -= TIME_STEP;
+            world.step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
         }
-    }
-
-    @Override
-    public void hide() {
-        super.hide();
     }
 
     @Override
@@ -64,6 +58,5 @@ public abstract class AbstractBox2dScreen extends AbstractScreen {
 
         b2dr = null;
         world = null;
-        Gdx.app.log(TAG, "dispose: Called");
     }
 }

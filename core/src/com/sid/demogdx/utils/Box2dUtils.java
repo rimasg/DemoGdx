@@ -57,7 +57,7 @@ public final class Box2dUtils {
                 break;
             case Polygon:
                 shape = new PolygonShape();
-                ((PolygonShape) shape).setAsBox(0.8f, 0.4f);
+                ((PolygonShape) shape).setAsBox(0.5f, 0.25f);
                 break;
             case Chain:
                 shape = new EdgeShape();
@@ -70,8 +70,7 @@ public final class Box2dUtils {
     }
 
     private static FixtureDef createFixture() {
-        FixtureDef fixtureDef;
-        fixtureDef = new FixtureDef();
+        FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.friction = 0.2f;
         fixtureDef.restitution = 0.2f;
         fixtureDef.density = 1.0f;
@@ -90,7 +89,9 @@ public final class Box2dUtils {
 
         shape.set(new Vector2(0.f, 0.f), new Vector2(AppConfig.WWV, 0.f)); /* ground */
         body.createFixture(fixtureDef);
-        shape.set(new Vector2(0.0001f, 0.f), new Vector2(0.f, AppConfig.WHV)); /* left side */
+        shape.set(new Vector2(0.f, AppConfig.WHV), new Vector2(AppConfig.WWV, AppConfig.WHV)); /* top */
+        body.createFixture(fixtureDef);
+        shape.set(new Vector2(0.0001f, 0.f), new Vector2(0.0001f, AppConfig.WHV)); /* left side */
         body.createFixture(fixtureDef);
         shape.set(new Vector2(AppConfig.WWV, 0.f), new Vector2(AppConfig.WWV, AppConfig.WHV)); /* right side */
         body.createFixture(fixtureDef);
