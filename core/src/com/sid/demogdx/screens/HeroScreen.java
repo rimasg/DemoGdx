@@ -1,7 +1,5 @@
 package com.sid.demogdx.screens;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -53,16 +51,9 @@ public class HeroScreen extends AbstractScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-        handleInput();
 
         stage.act(delta);
         stage.draw();
-    }
-
-    private void handleInput() {
-        if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
-            game.setScreen(game.getMainMenuScreen());
-        }
     }
 
     private void moveActorToTargetPos(float x, float y) {
@@ -87,15 +78,5 @@ public class HeroScreen extends AbstractScreen {
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
-    }
-
-    @Override
-    public void hide() {
-        super.hide();
-    }
-
-    @Override
-    public void dispose() {
-        super.dispose();
     }
 }

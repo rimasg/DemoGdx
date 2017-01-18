@@ -35,7 +35,6 @@ public class BehaviorTreeScreen extends AbstractScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-        handleInput();
 //        updateAI(delta);
         game.batch.setProjectionMatrix(cam.combined);
         game.batch.begin();
@@ -47,7 +46,9 @@ public class BehaviorTreeScreen extends AbstractScreen {
         game.batch.end();
     }
 
-    private void handleInput() {
+    @Override
+    protected void handleInput() {
+        super.handleInput();
         if (Gdx.input.isKeyPressed(Input.Keys.BACK) || Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             game.setScreen(game.getMainMenuScreen());
         }
@@ -98,16 +99,6 @@ public class BehaviorTreeScreen extends AbstractScreen {
             npc.btree.step();
             runDelayAccumulator = 0;
         }
-    }
-
-        @Override
-    public void resize(int width, int height) {
-        super.resize(width, height);
-    }
-
-    @Override
-    public void hide() {
-        super.hide();
     }
 
     @Override

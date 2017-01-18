@@ -57,7 +57,6 @@ public class CircleAroundScreen extends AbstractScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-        handleInput();
         master.update(delta);
         satelliteSpawner.update(delta, shapeRenderer);
 
@@ -81,7 +80,9 @@ public class CircleAroundScreen extends AbstractScreen {
         satelliteSpawner.spawnSatellite();
     }
 
-    private void handleInput() {
+    @Override
+    protected void handleInput() {
+        super.handleInput();
         if (Gdx.input.isKeyPressed(Input.Keys.BACK) || Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             game.setScreen(game.getMainMenuScreen());
         }
@@ -90,11 +91,6 @@ public class CircleAroundScreen extends AbstractScreen {
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
-    }
-
-    @Override
-    public void hide() {
-        super.hide();
     }
 
     @Override

@@ -17,6 +17,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.utils.Align;
 import com.sid.demogdx.DemoGdx;
+import com.sid.demogdx.assets.AssetDescriptors;
+import com.sid.demogdx.assets.AssetsNew;
 import com.sid.demogdx.interfaces.ListenerClass;
 import com.sid.demogdx.utils.Box2DConfig;
 import com.sid.demogdx.utils.Box2DUtils;
@@ -88,7 +90,8 @@ public class FallingBallScreen extends AbstractBox2dScreen {
     private void loadAssets() {
         starRegion = skin.getAtlas().findRegion("star");
         circleRainbowRegion = skin.getAtlas().findRegion("circle_rainbow");
-        collisionSound = Gdx.audio.newSound(Gdx.files.internal("sounds/click.ogg"));
+//        collisionSound = Gdx.audio.newSound(Gdx.files.internal("sounds/click.ogg"));
+        collisionSound = AssetsNew.getSound(AssetDescriptors.SOUND_COLLISION);
     }
 
     private void loadParticles() {
@@ -161,7 +164,6 @@ public class FallingBallScreen extends AbstractBox2dScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-        handleInput();
 
         particleEffect.update(delta);
         removedDeadBodies();
@@ -197,7 +199,9 @@ public class FallingBallScreen extends AbstractBox2dScreen {
         timeLabel.setText(getScreenTime());
     }
 
-    private void handleInput() {
+    @Override
+    protected void handleInput() {
+        super.handleInput();
         if (Gdx.input.isKeyPressed(Input.Keys.BACK) || Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             game.setScreen(game.getMainMenuScreen());
         }
@@ -262,7 +266,6 @@ public class FallingBallScreen extends AbstractBox2dScreen {
         super.hide();
         mapRenderer.dispose();
         map.dispose();
-        collisionSound.dispose();
     }
 
     @Override

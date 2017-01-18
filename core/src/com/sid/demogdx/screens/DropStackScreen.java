@@ -152,7 +152,6 @@ public class DropStackScreen extends AbstractBox2dScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-        handleInput();
 
         updateSpawnerBodyDirection(delta);
 
@@ -197,7 +196,9 @@ public class DropStackScreen extends AbstractBox2dScreen {
         Gdx.app.log(TAG, "updateSpawnerBodyHeight: height -> " + height);
     }
 
-    private void handleInput() {
+    @Override
+    protected void handleInput() {
+        super.handleInput();
         if (Gdx.input.isKeyPressed(Input.Keys.BACK) || Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             game.setScreen(game.getMainMenuScreen());
         }

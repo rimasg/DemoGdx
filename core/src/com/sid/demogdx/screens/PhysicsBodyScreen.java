@@ -40,7 +40,6 @@ public class PhysicsBodyScreen extends AbstractBox2dScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-        handleInput();
 
         drawPhysicsBody();
     }
@@ -97,7 +96,9 @@ public class PhysicsBodyScreen extends AbstractBox2dScreen {
 //        rocketOrigin = loader.getOrigin("Rocket", ROCKET_SIZE).cpy();
     }
 
-    private void handleInput() {
+    @Override
+    protected void handleInput() {
+        super.handleInput();
         if (Gdx.input.isKeyPressed(Input.Keys.BACK) || Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             game.setScreen(game.getMainMenuScreen());
         }

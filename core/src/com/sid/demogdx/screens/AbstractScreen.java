@@ -1,6 +1,7 @@
 package com.sid.demogdx.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -10,8 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.sid.demogdx.assets.Assets;
 import com.sid.demogdx.DemoGdx;
+import com.sid.demogdx.assets.AssetsNew;
 import com.sid.demogdx.utils.Box2DConfig;
 
 /**
@@ -24,7 +25,6 @@ public abstract class AbstractScreen implements Screen {
     final OrthographicCamera cam;
     final Viewport viewport;
     final Stage stage;
-    final Assets assets = Assets.inst();
     final Vector3 touchPos = new Vector3();
     final Vector3 worldCoords = new Vector3();
 
@@ -41,19 +41,19 @@ public abstract class AbstractScreen implements Screen {
         this.viewport.apply(true);
 
         this.stage = new Stage(new FitViewport(Box2DConfig.WWP, Box2DConfig.WHP), game.batch);
-
-        loadAssets();
-    }
-
-    private void loadAssets() {
-        skin = Assets.getSkin();
     }
 
     @Override
     public void show() {
         Gdx.input.setCatchBackKey(true);
         Gdx.input.setInputProcessor(stage);
+        loadAssets();
         startTimer();
+    }
+
+    private void loadAssets() {
+        skin = AssetsNew.getSkin();
+//        skin = Assets.getSkin();
     }
 
     private void startTimer() {
@@ -83,6 +83,13 @@ public abstract class AbstractScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0.45f, 0.45f, 0.45f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        handleInput();
+    }
+
+    protected void handleInput() {
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK) || Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+            game.setScreen(game.getMainMenuScreen());
+        }
     }
 
     @Override
@@ -105,10 +112,11 @@ public abstract class AbstractScreen implements Screen {
     public void hide() {
         secondsTimer.cancel();
         resetVars();
+        stage.dispose();
     }
 
     @Override
     public void dispose() {
-        stage.dispose();
+
     }
 }

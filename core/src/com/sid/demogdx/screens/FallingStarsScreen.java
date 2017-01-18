@@ -19,7 +19,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.assets.AssetDescriptors;
-import com.sid.demogdx.assets.Assets;
+import com.sid.demogdx.assets.AssetsNew;
 import com.sid.demogdx.utils.Box2DConfig;
 import com.sid.demogdx.utils.Box2DUtils;
 
@@ -53,7 +53,8 @@ public class FallingStarsScreen extends AbstractBox2dScreen {
         starRegion = skin.getAtlas().findRegion("star");
         lineDotRegion = skin.getAtlas().findRegion("line_dot");
 
-        particleEffect = Assets.getParticleEffect(AssetDescriptors.PARTICLE_EFFECT_TRAIL);
+        particleEffect = AssetsNew.getParticleEffect(AssetDescriptors.PARTICLE_EFFECT_TRAIL);
+//        particleEffect = Assets.getParticleEffect(AssetDescriptors.PARTICLE_EFFECT_TRAIL);
         particleEffectPool = new ParticleEffectPool(this.particleEffect, 20, 100);
     }
 
@@ -134,7 +135,6 @@ public class FallingStarsScreen extends AbstractBox2dScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-        handleInput();
 
         destroyBodiesOutsideWorld();
 
@@ -149,7 +149,9 @@ public class FallingStarsScreen extends AbstractBox2dScreen {
         game.batch.end();
     }
 
-    private void handleInput() {
+    @Override
+    protected void handleInput() {
+        super.handleInput();
         if (Gdx.input.isKeyPressed(Input.Keys.BACK) || Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             game.setScreen(game.getMainMenuScreen());
         }

@@ -100,7 +100,6 @@ public class FollowTheWaveScreen extends AbstractScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-        handleInput();
 
         shapeRenderer.setProjectionMatrix(stage.getCamera().combined);
         shapeRenderer.setAutoShapeType(true);
@@ -160,7 +159,9 @@ public class FollowTheWaveScreen extends AbstractScreen {
         runner.draw(game.batch);
     }
 
-    private void handleInput() {
+    @Override
+    protected void handleInput() {
+        super.handleInput();
         if (Gdx.input.isKeyPressed(Input.Keys.BACK) || Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             game.setScreen(game.getMainMenuScreen());
         }

@@ -57,7 +57,6 @@ public class AirFightScreen extends AbstractScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-        handleInput();
 
         CameraHelper.update(delta);
         airplane.update(delta);
@@ -83,7 +82,9 @@ public class AirFightScreen extends AbstractScreen {
         table.add(touchpad).expand().bottom();
     }
 
-    private void handleInput() {
+    @Override
+    protected void handleInput() {
+        super.handleInput();
         if (Gdx.input.isKeyPressed(Input.Keys.BACK) || Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             game.setScreen(game.getMainMenuScreen());
         }

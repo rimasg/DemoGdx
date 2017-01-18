@@ -238,7 +238,6 @@ public class HitBallScreen extends AbstractBox2dScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-        handleInput();
 
         particleEffect.update(delta);
         updateHUD();
@@ -271,7 +270,9 @@ public class HitBallScreen extends AbstractBox2dScreen {
         timeLabel.setText(getScreenTime());
     }
 
-    private void handleInput() {
+    @Override
+    protected void handleInput() {
+        super.handleInput();
         if (Gdx.input.isKeyPressed(Input.Keys.BACK) || Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             game.setScreen(game.getMainMenuScreen());
         }

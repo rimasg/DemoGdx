@@ -77,7 +77,6 @@ public class FollowTheLineScreen extends AbstractScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-        handleInput();
 
         shapeRenderer.setProjectionMatrix(stage.getCamera().combined);
         shapeRenderer.setAutoShapeType(true);
@@ -95,7 +94,9 @@ public class FollowTheLineScreen extends AbstractScreen {
 
     }
 
-    private void handleInput() {
+    @Override
+    protected void handleInput() {
+        super.handleInput();
         if (Gdx.input.isKeyPressed(Input.Keys.BACK) || Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             game.setScreen(game.getMainMenuScreen());
         }
@@ -140,10 +141,5 @@ public class FollowTheLineScreen extends AbstractScreen {
         super.hide();
         shapeRenderer.dispose();
         font.dispose();
-    }
-
-    @Override
-    public void dispose() {
-        super.dispose();
     }
 }
