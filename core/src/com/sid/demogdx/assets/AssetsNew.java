@@ -15,7 +15,7 @@ public final class AssetsNew implements Disposable {
         am = new AssetManager(); load();
     }
 
-    private static synchronized void load() {
+    private static void load() {
         // TODO: 2017-01-18 implement code
     }
 
