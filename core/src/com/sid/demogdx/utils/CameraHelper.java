@@ -9,25 +9,27 @@ import com.sid.demogdx.entities.GameObject;
  * The Camera will follow the Target on {@link #update(float)}
  */
 public final class CameraHelper {
-    private static Camera mCam;
-    private static GameObject mTarget;
-    private static Vector3 mDirectionVec = new Vector3();
+    public static float VELOCITY = 1.f;
+
+    private static Camera cam;
+    private static GameObject target;
+    private static Vector3 targetVec = new Vector3();
 
     private CameraHelper() { }
 
     public static void setCam(Camera cam) {
-        mCam = cam;
+        CameraHelper.cam = cam;
     }
 
     public static void setTarget(GameObject target) {
-        mTarget = target;
+        CameraHelper.target = target;
     }
 
     public static void update(float delta) {
-        if ((null != mCam) && (null != mTarget)) {
-            mDirectionVec.set(mTarget.pos.x, mTarget.pos.y, 0);
-            mCam.position.lerp(mDirectionVec, delta);
-            mCam.update();
+        if ((null != cam) && (null != target)) {
+            targetVec.set(target.pos.x, target.pos.y, 0);
+            cam.position.lerp(targetVec, delta * VELOCITY);
+            cam.update();
         }
     }
 }

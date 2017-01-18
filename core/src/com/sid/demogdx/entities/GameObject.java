@@ -33,7 +33,7 @@ public abstract class GameObject {
     }
 
     public void draw(SpriteBatch batch) {
-        sprite.setPosition(pos.x - (sprite.getWidth() / 2), pos.y - (sprite.getWidth() / 2));
+        sprite.setPosition(pos.x - sprite.getOriginX(), pos.y - sprite.getOriginY());
         sprite.draw(batch);
     }
 }
