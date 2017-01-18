@@ -18,17 +18,17 @@ import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.sid.demogdx.DemoGdx;
-import com.sid.demogdx.utils.AppConfig;
-import com.sid.demogdx.utils.Box2dUtils;
-
-import net.dermetfan.gdx.physics.box2d.Box2DUtils;
+import com.sid.demogdx.assets.AssetDescriptors;
+import com.sid.demogdx.assets.Assets;
+import com.sid.demogdx.utils.Box2DConfig;
+import com.sid.demogdx.utils.Box2DUtils;
 
 /**
  * Created by Okis on 2016.03.06 @ 20:22.
  */
 public class FallingStarsScreen extends AbstractBox2dScreen {
     private static final float SPAWN_BODIES_INTERVAL_SECONDS = 0.4f;
-    private static final Vector2 defaultBodyPos = new Vector2(AppConfig.WWV / 2, 20);
+    private static final Vector2 defaultBodyPos = new Vector2(Box2DConfig.WWV / 2, 20);
 
     private ParticleEffect particleEffect;
     private ParticleEffectPool particleEffectPool;
@@ -53,14 +53,13 @@ public class FallingStarsScreen extends AbstractBox2dScreen {
         starRegion = skin.getAtlas().findRegion("star");
         lineDotRegion = skin.getAtlas().findRegion("line_dot");
 
-        particleEffect = new ParticleEffect();
-        particleEffect.load(Gdx.files.internal("particles/trail.p"), Gdx.files.internal("textures"));
-        particleEffectPool = new ParticleEffectPool(particleEffect, 20, 100);
+        particleEffect = Assets.getParticleEffect(AssetDescriptors.PARTICLE_EFFECT_TRAIL);
+        particleEffectPool = new ParticleEffectPool(this.particleEffect, 20, 100);
     }
 
     private void createGround() {
         EdgeShape floor = new EdgeShape();
-        floor.set(new Vector2(0, 0), new Vector2(AppConfig.WWV, 0));
+        floor.set(new Vector2(0, 0), new Vector2(Box2DConfig.WWV, 0));
 
         BodyDef bodyDef = new BodyDef();
         ground = world.createBody(bodyDef);
@@ -79,7 +78,7 @@ public class FallingStarsScreen extends AbstractBox2dScreen {
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.KinematicBody;
-        bodyDef.position.set(AppConfig.WWV / 2, AppConfig.WHV * 0.2f);
+        bodyDef.position.set(Box2DConfig.WWV / 2, Box2DConfig.WHV * 0.2f);
         Body platform = world.createBody(bodyDef);
 
         FixtureDef fixtureDef = new FixtureDef();
@@ -105,7 +104,7 @@ public class FallingStarsScreen extends AbstractBox2dScreen {
         fd.shape = polygonShape;
         fd.density = 10.0f;
 
-        bd.position.set(AppConfig.WWV / 2, AppConfig.WHV * 0.4f);
+        bd.position.set(Box2DConfig.WWV / 2, Box2DConfig.WHV * 0.4f);
         final Body bodyA = world.createBody(bd);
         bd.position.set(bodyA.getPosition().x + 1.0f, bodyA.getPosition().y - 1.0f);
         final Body bodyB = world.createBody(bd);
@@ -123,7 +122,7 @@ public class FallingStarsScreen extends AbstractBox2dScreen {
         RevoluteJointDef revoluteJointDef = new RevoluteJointDef();
         revoluteJointDef.collideConnected  = false;
 
-        revoluteJointDef.initialize(ground, bodyA, new Vector2(AppConfig.WWV / 2, AppConfig.WHV * 0.5f));
+        revoluteJointDef.initialize(ground, bodyA, new Vector2(Box2DConfig.WWV / 2, Box2DConfig.WHV * 0.5f));
         revoluteJointDef.localAnchorB.set(-1.0f, 0);
         world.createJoint(revoluteJointDef);
         revoluteJointDef.initialize(bodyA, bodyB, new Vector2());
@@ -151,7 +150,7 @@ public class FallingStarsScreen extends AbstractBox2dScreen {
     }
 
     private void handleInput() {
-        if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK) || Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             game.setScreen(game.getMainMenuScreen());
         }
     }
@@ -162,7 +161,7 @@ public class FallingStarsScreen extends AbstractBox2dScreen {
         Timer.instance().scheduleTask(new Timer.Task() {
             @Override
             public void run() {
-                tmpBody = Box2dUtils.createBox2dCircleBody(world, defaultBodyPos.x + MathUtils.random(-defaultBodyPos.x * 0.2f, defaultBodyPos.x * 0.2f), defaultBodyPos.y);
+                tmpBody = Box2DUtils.createBox2dCircleBody(world, defaultBodyPos.x + MathUtils.random(-defaultBodyPos.x * 0.2f, defaultBodyPos.x * 0.2f), defaultBodyPos.y);
                 tmpBody.applyAngularImpulse(0.2f, true);
                 addParticleEffectToBody(tmpBody);
             }
@@ -218,7 +217,7 @@ public class FallingStarsScreen extends AbstractBox2dScreen {
                 final Array<Fixture> fixtureList = body.getFixtureList();
                 for (Fixture fixture : fixtureList) {
                     // TODO: 2016.03.08 find NOT Body angle but Fixture angle
-                    final Vector2 position = Box2DUtils.position(fixture);
+                    final Vector2 position = net.dermetfan.gdx.physics.box2d.Box2DUtils.position(fixture);
                     batch.draw(lineDotRegion, position.x - 1, position.y,
                             1.0f, 0.25f, 2.0f, 0.5f, 1.0f, 1.0f, body.getAngle() * MathUtils.radiansToDegrees);
                 }

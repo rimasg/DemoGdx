@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="9" height="16" tilewidth="32" tileheight="32" nextobjectid="15">
+ <properties>
+  <property name="type" value="DynamicBody"/>
+ </properties>
+ <objectgroup name="Objects">
+  <object id="1" name="CenterBody" type="object" x="128" y="224" width="32" height="32">
+   <properties>
+    <property name="awake" type="bool" value="true"/>
+    <property name="bodyType" value="DynamicBody"/>
+    <property name="density" type="float" value="1"/>
+    <property name="restitution" type="float" value="0.2"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="3" name="fixture4" type="fixture" x="160" y="224" width="64" height="32">
+   <properties>
+    <property name="body" value="CenterBody"/>
+    <property name="density" value="1"/>
+    <property name="friction" value="0.2"/>
+    <property name="restitution" value="0.2"/>
+   </properties>
+  </object>
+  <object id="4" name="fixture3" type="fixture" x="64" y="224" width="64" height="32">
+   <properties>
+    <property name="body" value="CenterBody"/>
+    <property name="density" value="1"/>
+    <property name="friction" value="0.2"/>
+    <property name="restitution" value="0.2"/>
+   </properties>
+  </object>
+  <object id="5" name="fixture2" type="fixture" x="128" y="160" width="32" height="64">
+   <properties>
+    <property name="body" value="CenterBody"/>
+    <property name="density" value="1"/>
+    <property name="friction" value="0.2"/>
+    <property name="restitution" value="0.2"/>
+   </properties>
+  </object>
+  <object id="6" name="fixture1" type="fixture" x="128" y="256" width="32" height="64">
+   <properties>
+    <property name="body" value="CenterBody"/>
+    <property name="density" value="1"/>
+    <property name="friction" value="0.2"/>
+    <property name="restitution" value="0.2"/>
+   </properties>
+  </object>
+  <object id="9" name="AnchorPoint" type="body" x="128" y="32" width="32" height="32">
+   <properties>
+    <property name="bodyType" value="StaticBody"/>
+   </properties>
+  </object>
+  <object id="11" name="RevoluteJoint" type="joint" x="128" y="32" width="32" height="32">
+   <properties>
+    <property name="bodyA" value="AnchorPoint"/>
+    <property name="bodyB" value="CenterBody"/>
+    <property name="jointType" value="RevoluteJoint"/>
+    <property name="localAnchorAX" value="0"/>
+    <property name="localAnchorAY" value="-6"/>
+    <property name="localAnchorBX" value="0.5"/>
+    <property name="localAnchorBY" value="0"/>
+    <property name="maxLength" value="5"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <layer name="Layer" width="9" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo4B8AAACQAAB
+  </data>
+ </layer>
+</map>

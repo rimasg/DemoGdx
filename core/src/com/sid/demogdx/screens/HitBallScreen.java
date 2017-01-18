@@ -27,7 +27,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.interfaces.ListenerClass;
-import com.sid.demogdx.utils.AppConfig;
+import com.sid.demogdx.utils.Box2DConfig;
 import com.sid.demogdx.utils.ProjectileMotion;
 
 import net.dermetfan.gdx.physics.box2d.Box2DMapObjectParser;
@@ -68,7 +68,7 @@ public class HitBallScreen extends AbstractBox2dScreen {
     public void show() {
         super.show();
         map = new TmxMapLoader().load("maps/hit_ball_map.tmx");
-        mapRenderer = new OrthogonalTiledMapRenderer(map, AppConfig.unitScale32, game.batch);
+        mapRenderer = new OrthogonalTiledMapRenderer(map, Box2DConfig.unitScale32, game.batch);
         box2DMapObjectParser = new Box2DMapObjectParser(mapRenderer.getUnitScale());
 //        box2DMapObjectParser.setListener(new Box2DMapObjectParserListenerAdapter(box2DMapObjectParser));
         world.setContactListener(new ListenerClass(){

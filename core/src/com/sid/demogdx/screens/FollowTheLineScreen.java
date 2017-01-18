@@ -12,7 +12,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.entities.LineSegment;
-import com.sid.demogdx.utils.AppConfig;
+import com.sid.demogdx.utils.Box2DConfig;
 
 /**
  * Created by Okis on 2016.05.08 @ 13:46.
@@ -36,8 +36,8 @@ public class FollowTheLineScreen extends AbstractScreen {
         shapeRenderer = new ShapeRenderer();
         font = new BitmapFont();
         font.setColor(Color.BLUE);
-        worldW = AppConfig.WWP;
-        worldH = AppConfig.WHP;
+        worldW = Box2DConfig.WWP;
+        worldH = Box2DConfig.WHP;
         addLineSegments();
 
         InputProcessor inputProcessor = new InputAdapter(){

@@ -17,10 +17,11 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
-import com.sid.demogdx.Assets;
+import com.sid.demogdx.assets.AssetDescriptors;
+import com.sid.demogdx.assets.Assets;
 import com.sid.demogdx.DemoGdx;
-import com.sid.demogdx.utils.AppConfig;
-import com.sid.demogdx.utils.Box2dUtils;
+import com.sid.demogdx.utils.Box2DConfig;
+import com.sid.demogdx.utils.Box2DUtils;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -51,7 +52,7 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
         loadAssets();
         loadParticles();
 
-        Box2dUtils.createWorldBoundaries(world);
+        Box2DUtils.createWorldBoundaries(world);
         createHUD();
         //
         spawnBalls(94);
@@ -95,7 +96,7 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
                     if (visited.contains(neighbourBall)) continue;
                     if (neighbourBall.getType() != BodyDef.BodyType.DynamicBody) continue;
 
-                    final float radiusSum = (AppConfig.BALL_RADIUS + AppConfig.BALL_RADIUS) + 0.1f; /* overlap proximity  */
+                    final float radiusSum = (Box2DConfig.BALL_RADIUS + Box2DConfig.BALL_RADIUS) + 0.1f; /* overlap proximity  */
                     if (neighbourBall.getPosition().dst2(currentBall.getPosition()) < radiusSum * radiusSum) {
                         if (ballType == (int) neighbourBall.getUserData()) {
                             if (!bodiesToRemove.contains(neighbourBall, true)) {
@@ -151,7 +152,7 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
     }
 
     private void spawnBalls(int qty) {
-        final float ballRadius = AppConfig.BALL_RADIUS;
+        final float ballRadius = Box2DConfig.BALL_RADIUS;
         final float ballSize = ballRadius * 2;
         int cols = MathUtils.floor(cam.viewportWidth / ballSize);
         float col = ballRadius;
@@ -173,8 +174,8 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
                 }
                 row += ballSize;
             }
-            final Body body = Box2dUtils.createBox2dCircleBody(world, col, row);
-//            final Body body = Box2dUtils.createBox2dBody(world, col, row, fixtureDef, Shape.Type.Circle);
+            final Body body = Box2DUtils.createBox2dCircleBody(world, col, row);
+//            final Body body = Box2DUtils.createBox2dBody(world, col, row, fixtureDef, Shape.Type.Circle);
             col += ballSize;
 
             final int randomBallColor = MathUtils.random(ballsRegions.size - 1);
@@ -237,7 +238,7 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
     }
 
     private void playCollisionSound() {
-        Assets.getCollisionSound().play();
+        Assets.getSound(AssetDescriptors.SOUND_COLLISION).play();
     }
 
     private void resetVars() {

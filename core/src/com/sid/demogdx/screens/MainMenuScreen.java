@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.screens.actors.OverlayMenuActor;
-import com.sid.demogdx.utils.AppConfig;
+import com.sid.demogdx.utils.Box2DConfig;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.delay;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveBy;
@@ -42,7 +42,7 @@ public class MainMenuScreen extends AbstractScreen {
     public void show() {
         super.show();
         final Table table = new Table(skin);
-        table.setBounds(0, 0 , AppConfig.WWP, AppConfig.WHP);
+        table.setBounds(0, 0 , Box2DConfig.WWP, Box2DConfig.WHP);
 
         Label.LabelStyle style = new Label.LabelStyle(createFont(FontName.FREE_MONO_BOLD, FontSize.SIZE_32), Color.WHITE);
         style.background = skin.getDrawable("button_gold");
@@ -188,8 +188,8 @@ public class MainMenuScreen extends AbstractScreen {
             public void clicked(InputEvent event, float x, float y) {
                 final OverlayMenuActor overlayMenuActor = new OverlayMenuActor();
                 overlayMenuActor.addAction(sequence(
-                        moveTo(overlayMenuActor.getX(), AppConfig.WHP + 200),
-                        moveToAligned(AppConfig.WWP / 2, AppConfig.WHP / 2, Align.center, 1.5f,
+                        moveTo(overlayMenuActor.getX(), Box2DConfig.WHP + 200),
+                        moveToAligned(Box2DConfig.WWP / 2, Box2DConfig.WHP / 2, Align.center, 1.5f,
                                 Interpolation.bounceOut))) ;
                 stage.addActor(overlayMenuActor);
             }

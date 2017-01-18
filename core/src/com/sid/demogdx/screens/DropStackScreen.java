@@ -15,7 +15,7 @@ import com.badlogic.gdx.physics.box2d.joints.PrismaticJointDef;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.entities.stack.Block;
-import com.sid.demogdx.utils.Box2dUtils;
+import com.sid.demogdx.utils.Box2DUtils;
 
 /**
  * Created by Okis on 2016.06.18 @ 19:32.
@@ -33,7 +33,7 @@ public class DropStackScreen extends AbstractBox2dScreen {
     @Override
     public void show() {
         super.show();
-        wallsBody = Box2dUtils.createWorldBoundaries(world);
+        wallsBody = Box2DUtils.createWorldBoundaries(world);
 //        spawnBlock();
         spawnMovingPlatform();
         createBuoys();
@@ -54,10 +54,10 @@ public class DropStackScreen extends AbstractBox2dScreen {
     }
 
     private void createBuoys() {
-        final Body body1 = Box2dUtils.createBox2dCircleBody(world, 2.0f, cam.viewportHeight * 0.3f);
-        final Body body2 = Box2dUtils.createBox2dCircleBody(world, 4.0f, cam.viewportHeight * 0.3f);
-        final Body body3 = Box2dUtils.createBox2dCircleBody(world, 6.0f, cam.viewportHeight * 0.3f);
-        final Body body4 = Box2dUtils.createBox2dCircleBody(world, 8.0f, cam.viewportHeight * 0.3f);
+        final Body body1 = Box2DUtils.createBox2dCircleBody(world, 2.0f, cam.viewportHeight * 0.3f);
+        final Body body2 = Box2DUtils.createBox2dCircleBody(world, 4.0f, cam.viewportHeight * 0.3f);
+        final Body body3 = Box2DUtils.createBox2dCircleBody(world, 6.0f, cam.viewportHeight * 0.3f);
+        final Body body4 = Box2DUtils.createBox2dCircleBody(world, 8.0f, cam.viewportHeight * 0.3f);
 
         final Vector2 wallsPos = wallsBody.getPosition();
         wallsPos.add(cam.viewportWidth / 2f, 0.f);
@@ -84,10 +84,10 @@ public class DropStackScreen extends AbstractBox2dScreen {
     }
 
     private void createBuoysTop() {
-        final Body body1 = Box2dUtils.createBox2dCircleBody(world, 2.0f, cam.viewportHeight * 0.3f);
-        final Body body2 = Box2dUtils.createBox2dCircleBody(world, 4.0f, cam.viewportHeight * 0.3f);
-        final Body body3 = Box2dUtils.createBox2dCircleBody(world, 6.0f, cam.viewportHeight * 0.3f);
-        final Body body4 = Box2dUtils.createBox2dCircleBody(world, 8.0f, cam.viewportHeight * 0.3f);
+        final Body body1 = Box2DUtils.createBox2dCircleBody(world, 2.0f, cam.viewportHeight * 0.3f);
+        final Body body2 = Box2DUtils.createBox2dCircleBody(world, 4.0f, cam.viewportHeight * 0.3f);
+        final Body body3 = Box2DUtils.createBox2dCircleBody(world, 6.0f, cam.viewportHeight * 0.3f);
+        final Body body4 = Box2DUtils.createBox2dCircleBody(world, 8.0f, cam.viewportHeight * 0.3f);
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(new Vector2(cam.viewportWidth / 2f, cam.viewportHeight));
@@ -137,7 +137,7 @@ public class DropStackScreen extends AbstractBox2dScreen {
         fixtureDef.friction = 0.8f;
         fixtureDef.restitution = 0.f;
         fixtureDef.density = 1.0f;
-        activeBody = Box2dUtils.createBox2dBody(world,
+        activeBody = Box2DUtils.createBox2dBody(world,
                 spawnerBody.getPosition().x,
                 spawnerBody.getPosition().y,
                 fixtureDef, Shape.Type.Polygon);

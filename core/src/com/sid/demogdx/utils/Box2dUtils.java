@@ -13,9 +13,9 @@ import com.badlogic.gdx.physics.box2d.World;
 /**
  * Created by Okis on 2016.03.06 @ 20:28.
  */
-public final class Box2dUtils {
-    private static final String TAG = "Box2dUtils";
-    private Box2dUtils() { }
+public final class Box2DUtils {
+    private static final String TAG = "Box2DUtils";
+    private Box2DUtils() { }
 
     public static Body createBox2dCircleBody(World world, float posX, float posY) {
         return createBox2dBody(world, posX, posY, null, Shape.Type.Circle);
@@ -53,7 +53,7 @@ public final class Box2dUtils {
         switch (shapeType) {
             case Circle:
                 shape = new CircleShape();
-                shape.setRadius(AppConfig.BALL_RADIUS);
+                shape.setRadius(Box2DConfig.BALL_RADIUS);
                 break;
             case Polygon:
                 shape = new PolygonShape();
@@ -87,13 +87,13 @@ public final class Box2dUtils {
         fixtureDef.friction = 1.0f;
         fixtureDef.restitution = 0.f;
 
-        shape.set(new Vector2(0.f, 0.f), new Vector2(AppConfig.WWV, 0.f)); /* ground */
+        shape.set(new Vector2(0.f, 0.f), new Vector2(Box2DConfig.WWV, 0.f)); /* ground */
         body.createFixture(fixtureDef);
-        shape.set(new Vector2(0.f, AppConfig.WHV), new Vector2(AppConfig.WWV, AppConfig.WHV)); /* top */
+        shape.set(new Vector2(0.f, Box2DConfig.WHV), new Vector2(Box2DConfig.WWV, Box2DConfig.WHV)); /* top */
         body.createFixture(fixtureDef);
-        shape.set(new Vector2(0.0001f, 0.f), new Vector2(0.0001f, AppConfig.WHV)); /* left side */
+        shape.set(new Vector2(0.0001f, 0.f), new Vector2(0.0001f, Box2DConfig.WHV)); /* left side */
         body.createFixture(fixtureDef);
-        shape.set(new Vector2(AppConfig.WWV, 0.f), new Vector2(AppConfig.WWV, AppConfig.WHV)); /* right side */
+        shape.set(new Vector2(Box2DConfig.WWV, 0.f), new Vector2(Box2DConfig.WWV, Box2DConfig.WHV)); /* right side */
         body.createFixture(fixtureDef);
 
         shape.dispose();

@@ -11,7 +11,7 @@ import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.entities.circle.AbstractCircle;
 import com.sid.demogdx.entities.circle.MasterCircle;
 import com.sid.demogdx.entities.circle.SatelliteSpawner;
-import com.sid.demogdx.utils.AppConfig;
+import com.sid.demogdx.utils.Box2DConfig;
 
 /**
  * Created by Okis on 2016.05.08 @ 13:46.
@@ -32,8 +32,8 @@ public class CircleAroundScreen extends AbstractScreen {
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setColor(Color.RED);
 
-        int worldW = AppConfig.WWP;
-        int worldH = AppConfig.WHP;
+        int worldW = Box2DConfig.WWP;
+        int worldH = Box2DConfig.WHP;
 
         int masterPosX = worldW / 2;
         int masterPosY = worldH - masterPosX;

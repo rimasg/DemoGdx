@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.entities.SteerableObject;
-import com.sid.demogdx.utils.AppConfig;
+import com.sid.demogdx.utils.Box2DConfig;
 import com.sid.demogdx.utils.CameraHelper;
 
 /**
@@ -33,8 +33,8 @@ public class AirFightScreen extends AbstractScreen {
     public void show() {
         super.show();
         shapeRenderer = new ShapeRenderer();
-        worldW = AppConfig.WWP;
-        worldH = AppConfig.WHP;
+        worldW = Box2DConfig.WWP;
+        worldH = Box2DConfig.WHP;
         CameraHelper.setCam(stage.getCamera());
 //        CameraHelper.setTarget(); TODO: 2016.11.13 set target
 

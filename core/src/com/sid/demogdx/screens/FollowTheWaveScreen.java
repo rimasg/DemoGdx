@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.CatmullRomSpline;
 import com.badlogic.gdx.math.Vector2;
 import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.entities.wave.Runner;
-import com.sid.demogdx.utils.AppConfig;
+import com.sid.demogdx.utils.Box2DConfig;
 import com.sid.demogdx.utils.CameraHelper;
 
 /**
@@ -41,8 +41,8 @@ public class FollowTheWaveScreen extends AbstractScreen {
     public void show() {
         super.show();
         shapeRenderer = new ShapeRenderer();
-        worldW = AppConfig.WWP;
-        worldH = AppConfig.WHP;
+        worldW = Box2DConfig.WWP;
+        worldH = Box2DConfig.WHP;
         initDataSet();
         initSpline();
         cachePathPoints();

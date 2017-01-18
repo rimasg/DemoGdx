@@ -10,9 +10,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.sid.demogdx.Assets;
+import com.sid.demogdx.assets.Assets;
 import com.sid.demogdx.DemoGdx;
-import com.sid.demogdx.utils.AppConfig;
+import com.sid.demogdx.utils.Box2DConfig;
 
 /**
  * Created by SID on 2016-03-03 @ 17:13 @ 17:19.
@@ -37,10 +37,10 @@ public abstract class AbstractScreen implements Screen {
         this.TAG = getClass().getSimpleName();
         this.game = game;
         this.cam = new OrthographicCamera();
-        this.viewport = new FitViewport(AppConfig.WWV, AppConfig.WHV, cam);
+        this.viewport = new FitViewport(Box2DConfig.WWV, Box2DConfig.WHV, cam);
         this.viewport.apply(true);
 
-        this.stage = new Stage(new FitViewport(AppConfig.WWP, AppConfig.WHP), game.batch);
+        this.stage = new Stage(new FitViewport(Box2DConfig.WWP, Box2DConfig.WHP), game.batch);
 
         loadAssets();
     }

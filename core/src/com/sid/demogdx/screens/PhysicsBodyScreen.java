@@ -3,14 +3,15 @@ package com.sid.demogdx.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.Shape;
 import com.sid.demogdx.DemoGdx;
-import com.sid.demogdx.utils.Box2dUtils;
+import com.sid.demogdx.utils.Box2DConfig;
+import com.sid.demogdx.utils.Box2DUtils;
+
+import net.dermetfan.gdx.physics.box2d.Box2DMapObjectParser;
 
 /**
  * Created by Okis on 2017.01.14.
@@ -23,6 +24,7 @@ public class PhysicsBodyScreen extends AbstractBox2dScreen {
     private Vector2 rocketOrigin;
     private Vector2 rocketPos;
     private TextureAtlas.AtlasRegion rocketAtlasRegion;
+    private TiledMap map;
 
     public PhysicsBodyScreen(DemoGdx game) {
         super(game);
@@ -43,29 +45,53 @@ public class PhysicsBodyScreen extends AbstractBox2dScreen {
         drawPhysicsBody();
     }
 
+    @Override
+    public void dispose() {
+        super.dispose();
+        map.dispose();
+    }
+
     private void initPhysicsBody() {
 //        BodyEditorLoader loader = new BodyEditorLoader(Gdx.files.internal("physics_body/rocket.json"));
-        Box2dUtils.createWorldBoundaries(world);
+        final Body worldBody = Box2DUtils.createWorldBoundaries(world);
 
+        map = new TmxMapLoader().load("maps/physics_map.tmx");
+        new Box2DMapObjectParser(Box2DConfig.unitScale32).load(world, map);
+
+        world.getBodies(bodiesToRemove);
+
+/*
         for (float i = 1.f; i < 5.f; i += 0.5f) {
-            Box2dUtils.createBox2dBody(world, cam.viewportWidth / 2.f, cam.viewportHeight * 0.1f + i, null, Shape.Type.Polygon);
+            Box2DUtils.createBox2dBody(world, cam.viewportWidth / 2.f, cam.viewportHeight * 0.1f + i, null, Shape.Type.Polygon);
         }
+*/
+
+/*
+        final Shape circleShape = new CircleShape();
+        final PolygonShape polyShape = new PolygonShape();
 
         final BodyDef bdef = new BodyDef();
         bdef.position.set(cam.viewportWidth / 2.f, cam.viewportHeight / 2.f);
         bdef.type = BodyDef.BodyType.DynamicBody;
+        rocketBody = world.createBody(bdef);
 
-        Shape shape = new CircleShape();
-        shape.setRadius(0.5f);
         final FixtureDef fdef = new FixtureDef();
-        fdef.shape = shape;
         fdef.density = 1.f;
         fdef.friction = 0.5f;
         fdef.restitution = 0.6f;
 
-        rocketBody = world.createBody(bdef);
+        fdef.shape = circleShape;
+        circleShape.setRadius(0.5f);
         rocketBody.createFixture(fdef);
-        shape.dispose();
+        fdef.shape = polyShape;
+        polyShape.setAsBox(0.5f, 0.25f, new Vector2(1.f, 0.f), 0.f * MathUtils.degRad);
+        rocketBody.createFixture(fdef);
+        polyShape.setAsBox(0.5f, 0.25f, new Vector2(-1.f, 0.f), 0.f * MathUtils.degRad);
+        rocketBody.createFixture(fdef);
+
+        circleShape.dispose();
+        polyShape.dispose();
+*/
 
 //        loader.attachFixture(rocketBody, "Rocket", fdef, ROCKET_SIZE);
 //        rocketOrigin = loader.getOrigin("Rocket", ROCKET_SIZE).cpy();

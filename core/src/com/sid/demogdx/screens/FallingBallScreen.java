@@ -18,8 +18,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.utils.Align;
 import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.interfaces.ListenerClass;
-import com.sid.demogdx.utils.AppConfig;
-import com.sid.demogdx.utils.Box2dUtils;
+import com.sid.demogdx.utils.Box2DConfig;
+import com.sid.demogdx.utils.Box2DUtils;
 
 import net.dermetfan.gdx.physics.box2d.Box2DMapObjectParser;
 
@@ -50,7 +50,7 @@ public class FallingBallScreen extends AbstractBox2dScreen {
     public void show() {
         super.show();
         map = new TmxMapLoader().load("maps/map.tmx");
-        mapRenderer = new OrthogonalTiledMapRenderer(map, AppConfig.unitScale32, game.batch);
+        mapRenderer = new OrthogonalTiledMapRenderer(map, Box2DConfig.unitScale32, game.batch);
         box2DMapObjectParser = new Box2DMapObjectParser(mapRenderer.getUnitScale());
 //        box2DMapObjectParser.setListener(new Box2DMapObjectParserListenerAdapter(box2DMapObjectParser));
         world.setContactListener(new ListenerClass(){
@@ -110,7 +110,7 @@ public class FallingBallScreen extends AbstractBox2dScreen {
 
     private void spawnBalls(int qty, float posX, float posY) {
         for (int i = 0; i < qty; i++) {
-            final Body body = Box2dUtils.createBox2dCircleBody(world, MathUtils.random(posX), posY);
+            final Body body = Box2DUtils.createBox2dCircleBody(world, MathUtils.random(posX), posY);
             body.setUserData("HangingCircle");
         }
     }
@@ -153,7 +153,7 @@ public class FallingBallScreen extends AbstractBox2dScreen {
         if (map.getProperties().get("height") != null) {
             posY = (int) map.getProperties().get("height");
         } else {
-            posY = AppConfig.WHV * 2;
+            posY = Box2DConfig.WHV * 2;
         }
         return posY;
     }

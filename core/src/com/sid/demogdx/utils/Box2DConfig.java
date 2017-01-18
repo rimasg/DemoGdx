@@ -3,8 +3,8 @@ package com.sid.demogdx.utils;
 /**
  * Created by Okis on 2015.07.08.
  */
-public final class AppConfig {
-    private AppConfig() { }
+public final class Box2DConfig {
+    private Box2DConfig() { }
 
     public static final boolean DEBUG = false;
     public static final String DEBUG_TEXT = "Running Circle";
