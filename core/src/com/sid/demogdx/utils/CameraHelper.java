@@ -9,7 +9,7 @@ import com.sid.demogdx.entities.GameObject;
  * The Camera will follow the Target on {@link #update(float)}
  */
 public final class CameraHelper {
-    public static float VELOCITY = 1.f;
+    public static float VELOCITY = 4.f;
 
     private static Camera cam;
     private static GameObject target;

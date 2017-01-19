@@ -19,8 +19,8 @@ import com.sid.demogdx.utils.CameraHelper;
 public class FollowTheWaveScreen extends AbstractScreen {
     private ShapeRenderer shapeRenderer;
     private int worldW, worldH;
-    private Vector2[] dataSet = new Vector2[7];
-    private Vector2[] dataSetOther = new Vector2[7];
+    private Vector2[] dataSet = new Vector2[10];
+    private Vector2[] dataSetOther = new Vector2[10];
     private CatmullRomSpline<Vector2> spline;
     private CatmullRomSpline<Vector2> splineOther;
     private int k = 100;
@@ -52,40 +52,32 @@ public class FollowTheWaveScreen extends AbstractScreen {
     }
 
     private void initDataSet() {
-/*
-        dataSet[0] = new Vector2(50.0f, worldH * 0.2f);
-        dataSet[1] = new Vector2(worldW / 4, worldH / 2);
-        dataSet[2] = new Vector2(50.0f, worldH * 0.8f);
-        dataSet[3] = new Vector2(worldW / 2, worldH *  0.8f);
-        dataSet[4] = new Vector2(worldW * 0.9f, worldH * 0.3f);
-*/
-        dataSet[0] = new Vector2(50.0f, 50.0f);
-        dataSet[1] = new Vector2(worldW / 4, 200.0f);
-        dataSet[2] = new Vector2(worldW / 2, 500.0f);
-        dataSet[3] = new Vector2(worldW / 4, 800.0f);
-        dataSet[4] = new Vector2(worldW * 0.8f, 1000.0f);
-        dataSet[5] = new Vector2(worldW * 0.4f , 1500.0f);
-        dataSet[6] = new Vector2(worldW * 0.6f, 2000.0f);
-        float offset = 50.0f;
-/*
-        dataSetOther[0] = new Vector2(50.0f + offset, worldH * 0.2f + offset);
-        dataSetOther[1] = new Vector2(worldW / 4 + offset, worldH / 2);
-        dataSetOther[2] = new Vector2(50.0f + offset, worldH * 0.8f - offset);
-        dataSetOther[3] = new Vector2(worldW / 2 - offset, worldH *  0.8f);
-        dataSetOther[4] = new Vector2(worldW * 0.9f - offset, worldH * 0.3f + offset);
-*/
-        dataSetOther[0] = new Vector2(50.0f + offset, 50.0f);
-        dataSetOther[1] = new Vector2(worldW / 4 + offset, 200.0f);
-        dataSetOther[2] = new Vector2(worldW / 2 + offset, 500.0f);
-        dataSetOther[3] = new Vector2(worldW / 4 + offset, 800.0f);
-        dataSetOther[4] = new Vector2(worldW * 0.8f + offset, 1000.0f);
-        dataSetOther[5] = new Vector2(worldW * 0.4f + offset, 1500.0f);
-        dataSetOther[6] = new Vector2(worldW * 0.6f + offset, 2000.0f);
+        dataSet[0] = new Vector2(0.f, 50.f);
+        dataSet[1] = new Vector2(40.f, 200.f);
+        dataSet[2] = new Vector2(120.f, 500.f);
+        dataSet[3] = new Vector2(300.f, 800.f);
+        dataSet[4] = new Vector2(600.f, 1000.f);
+        dataSet[5] = new Vector2(1000.f, 800.f);
+        dataSet[6] = new Vector2(800.f, 600.f);
+        dataSet[7] = new Vector2(600.f, 400.f);
+        dataSet[8] = new Vector2(300.f, 200.f);
+        dataSet[9] = new Vector2(200.f, 100.f);
+        float offset = 100.0f;
+        dataSetOther[0] = new Vector2(0.f + offset, 50.f);
+        dataSetOther[1] = new Vector2(40.f + offset, 200.f);
+        dataSetOther[2] = new Vector2(120.f + offset, 500.f);
+        dataSetOther[3] = new Vector2(300.f + offset, 800.f);
+        dataSetOther[4] = new Vector2(600.f + offset, 1000.f);
+        dataSetOther[5] = new Vector2(1000.f + offset, 800.f);
+        dataSetOther[6] = new Vector2(800.f + offset, 600.f);
+        dataSetOther[7] = new Vector2(600.f + offset, 400.f);
+        dataSetOther[8] = new Vector2(300.f + offset, 200.f);
+        dataSetOther[9] = new Vector2(200.f + offset, 100.f);
     }
 
     private void initSpline() {
-        spline = new CatmullRomSpline<>(dataSet, false);
-        splineOther = new CatmullRomSpline<>(dataSetOther, false);
+        spline = new CatmullRomSpline<>(dataSet, true);
+        splineOther = new CatmullRomSpline<>(dataSetOther, true);
     }
 
     private void cachePathPoints() {

@@ -38,8 +38,10 @@ public final class AssetDescriptors {
             AssetDescriptor<>(AssetPaths.PARTICLE_EFFECT_EXPLOSION, PARTICLE_EFFECT_CLASS, PARTICLE_EFFECT_PARAMS);
     public static final AssetDescriptor<ParticleEffect> PARTICLE_EFFECT_GRAVITY_EXPLOSION = new
             AssetDescriptor<>(AssetPaths.PARTICLE_EFFECT_GRAVITY_EXPLOSION, PARTICLE_EFFECT_CLASS, PARTICLE_EFFECT_PARAMS);
-    public static final AssetDescriptor<ParticleEffect> PARTICLE_EFFECT_TRAIL = new
-            AssetDescriptor<>(AssetPaths.PARTICLE_EFFECT_TRAIL, PARTICLE_EFFECT_CLASS, PARTICLE_EFFECT_PARAMS);
+    public static final AssetDescriptor<ParticleEffect> PARTICLE_EFFECT_STAR_TRAIL = new
+            AssetDescriptor<>(AssetPaths.PARTICLE_EFFECT_STAR_TRAIL, PARTICLE_EFFECT_CLASS, PARTICLE_EFFECT_PARAMS);
+    public static final AssetDescriptor<ParticleEffect> PARTICLE_EFFECT_SIMPLE_TRAIL = new
+            AssetDescriptor<>(AssetPaths.PARTICLE_EFFECT_SIMPLE_TRAIL, PARTICLE_EFFECT_CLASS, PARTICLE_EFFECT_PARAMS);
 
     static {
         PARTICLE_EFFECT_PARAMS.atlasFile = AssetPaths.TEXTURE_ATLAS_FILE;

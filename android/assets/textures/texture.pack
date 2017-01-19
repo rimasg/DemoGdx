@@ -150,6 +150,13 @@ popup_bg
   orig: 32, 32
   offset: 0, 0
   index: -1
+pre_particle
+  rotate: false
+  xy: 826, 221
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 racket
   rotate: false
   xy: 2, 5

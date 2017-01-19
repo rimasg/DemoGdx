@@ -33,7 +33,7 @@ public final class Assets extends AssetManager {
         inst.load(AssetDescriptors.SOUND_COLLISION);
         inst.load(AssetDescriptors.PARTICLE_EFFECT_EXPLOSION);
         inst.load(AssetDescriptors.PARTICLE_EFFECT_GRAVITY_EXPLOSION);
-        inst.load(AssetDescriptors.PARTICLE_EFFECT_TRAIL);
+        inst.load(AssetDescriptors.PARTICLE_EFFECT_STAR_TRAIL);
     }
 
     public static Skin getSkin() {

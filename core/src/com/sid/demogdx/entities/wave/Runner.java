@@ -1,6 +1,11 @@
 package com.sid.demogdx.entities.wave;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.sid.demogdx.assets.AssetDescriptors;
+import com.sid.demogdx.assets.AssetsNew;
 import com.sid.demogdx.entities.GameObject;
 
 /**
@@ -8,7 +13,23 @@ import com.sid.demogdx.entities.GameObject;
  */
 
 public class Runner extends GameObject {
+    private ParticleEffect particleEffect;
+
     public Runner(Sprite sprite) {
         super(sprite);
+        particleEffect = AssetsNew.getParticleEffect(AssetDescriptors.PARTICLE_EFFECT_SIMPLE_TRAIL);
+    }
+
+    @Override
+    public void update(float delta) {
+        super.update(delta);
+//        particleEffect.update(delta);
+    }
+
+    @Override
+    public void draw(SpriteBatch batch) {
+        super.draw(batch);
+        particleEffect.setPosition(pos.x, pos.y);
+        particleEffect.draw(batch, Gdx.graphics.getDeltaTime());
     }
 }
