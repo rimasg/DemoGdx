@@ -137,6 +137,7 @@ public class FollowTheWaveScreen extends AbstractScreen {
         float t = place - ((int) place);
 
         runner.setPos(first.x + (second.x - first.x) * t, first.y + (second.y - first.y) * t);
+        runner.update(delta);
         runner.draw(game.batch);
     }
 
@@ -148,6 +149,7 @@ public class FollowTheWaveScreen extends AbstractScreen {
             return;
         }
         runner.setPos(from.x + (to.x - from.x) * translationPos, from.y + (to.y - from.y) * translationPos);
+        runner.update(delta);
         runner.draw(game.batch);
     }
 
