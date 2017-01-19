@@ -240,7 +240,6 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
 
     private void playCollisionSound() {
         AssetsNew.getSound(AssetDescriptors.SOUND_COLLISION).play();
-//        Assets.getSound(AssetDescriptors.SOUND_COLLISION).play();
     }
 
     private void resetVars() {

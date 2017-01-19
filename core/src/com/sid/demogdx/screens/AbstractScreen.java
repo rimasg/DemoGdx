@@ -53,7 +53,6 @@ public abstract class AbstractScreen implements Screen {
 
     private void loadAssets() {
         skin = AssetsNew.getSkin();
-//        skin = Assets.getSkin();
     }
 
     private void startTimer() {

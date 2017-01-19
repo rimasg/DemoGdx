@@ -59,7 +59,6 @@ public class DemoGdx extends Game {
 
     private void loadAssets() {
         AssetsNew.finishLoading();
-//        Assets.inst().finishLoading();
     }
 
     public HeroScreen getHeroScreen() {

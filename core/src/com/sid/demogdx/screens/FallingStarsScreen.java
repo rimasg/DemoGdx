@@ -54,7 +54,6 @@ public class FallingStarsScreen extends AbstractBox2dScreen {
         lineDotRegion = skin.getAtlas().findRegion("line_dot");
 
         particleEffect = AssetsNew.getParticleEffect(AssetDescriptors.PARTICLE_EFFECT_STAR_TRAIL);
-//        particleEffect = Assets.getParticleEffect(AssetDescriptors.PARTICLE_EFFECT_STAR_TRAIL);
         particleEffectPool = new ParticleEffectPool(this.particleEffect, 20, 100);
     }
 
