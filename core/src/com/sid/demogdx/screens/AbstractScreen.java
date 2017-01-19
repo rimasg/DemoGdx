@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.sid.demogdx.DemoGdx;
-import com.sid.demogdx.assets.AssetsNew;
+import com.sid.demogdx.assets.Assets;
 import com.sid.demogdx.utils.Box2DConfig;
 
 /**
@@ -52,7 +52,7 @@ public abstract class AbstractScreen implements Screen {
     }
 
     private void loadAssets() {
-        skin = AssetsNew.getSkin();
+        skin = Assets.getSkin();
     }
 
     private void startTimer() {

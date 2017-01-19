@@ -3,7 +3,7 @@ package com.sid.demogdx;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.sid.demogdx.assets.AssetsNew;
+import com.sid.demogdx.assets.Assets;
 import com.sid.demogdx.screens.AirFightScreen;
 import com.sid.demogdx.screens.BehaviorTreeScreen;
 import com.sid.demogdx.screens.CircleAroundScreen;
@@ -58,7 +58,7 @@ public class DemoGdx extends Game {
     }
 
     private void loadAssets() {
-        AssetsNew.finishLoading();
+        Assets.finishLoading();
     }
 
     public HeroScreen getHeroScreen() {
@@ -122,6 +122,6 @@ public class DemoGdx extends Game {
     public void dispose() {
         super.dispose();
         batch.dispose();
-        AssetsNew.dispose();
+        Assets.dispose();
     }
 }

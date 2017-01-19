@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sid.demogdx.assets.AssetDescriptors;
-import com.sid.demogdx.assets.AssetsNew;
+import com.sid.demogdx.assets.Assets;
 import com.sid.demogdx.entities.GameObject;
 
 /**
@@ -16,7 +16,7 @@ public class Runner extends GameObject {
 
     public Runner(Sprite sprite) {
         super(sprite);
-        particleEffect = AssetsNew.getParticleEffect(AssetDescriptors.PARTICLE_EFFECT_SIMPLE_TRAIL);
+        particleEffect = Assets.getParticleEffect(AssetDescriptors.PARTICLE_EFFECT_SIMPLE_TRAIL);
     }
 
     @Override

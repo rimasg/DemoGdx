@@ -19,7 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.assets.AssetDescriptors;
-import com.sid.demogdx.assets.AssetsNew;
+import com.sid.demogdx.assets.Assets;
 import com.sid.demogdx.utils.Box2DConfig;
 import com.sid.demogdx.utils.Box2DUtils;
 
@@ -239,7 +239,7 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
     }
 
     private void playCollisionSound() {
-        AssetsNew.getSound(AssetDescriptors.SOUND_COLLISION).play();
+        Assets.getSound(AssetDescriptors.SOUND_COLLISION).play();
     }
 
     private void resetVars() {

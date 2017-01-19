@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.sid.demogdx.assets.AssetsNew;
+import com.sid.demogdx.assets.Assets;
 
 /**
  * Created by Okis on 2016.03.17 @ 22:02.
@@ -13,7 +13,7 @@ import com.sid.demogdx.assets.AssetsNew;
 public class OverlayMenuActor extends Table {
 
     public OverlayMenuActor() {
-        final Skin skin = AssetsNew.getSkin();
+        final Skin skin = Assets.getSkin();
         setSkin(skin);
         background(skin.getDrawable("popup_bg"));
         setSize(400.0f, 200.0f);

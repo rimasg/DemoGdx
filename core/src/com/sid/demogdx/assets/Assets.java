@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
  * Created by SID on 2017-01-18.
  */
 
-public final class AssetsNew {
+public final class Assets {
 
     private static final String TAG = "Assets";
     private static AssetManager am;
@@ -19,7 +19,7 @@ public final class AssetsNew {
         am = new AssetManager(); load();
     }
 
-    private AssetsNew() { }
+    private Assets() { }
 
     private static void load() {
         am.load(AssetDescriptors.SKIN);

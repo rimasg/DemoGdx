@@ -18,7 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.utils.Align;
 import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.assets.AssetDescriptors;
-import com.sid.demogdx.assets.AssetsNew;
+import com.sid.demogdx.assets.Assets;
 import com.sid.demogdx.interfaces.ListenerClass;
 import com.sid.demogdx.utils.Box2DConfig;
 import com.sid.demogdx.utils.Box2DUtils;
@@ -91,7 +91,7 @@ public class FallingBallScreen extends AbstractBox2dScreen {
         starRegion = skin.getAtlas().findRegion("star");
         circleRainbowRegion = skin.getAtlas().findRegion("circle_rainbow");
 //        collisionSound = Gdx.audio.newSound(Gdx.files.internal("sounds/click.ogg"));
-        collisionSound = AssetsNew.getSound(AssetDescriptors.SOUND_COLLISION);
+        collisionSound = Assets.getSound(AssetDescriptors.SOUND_COLLISION);
     }
 
     private void loadParticles() {
