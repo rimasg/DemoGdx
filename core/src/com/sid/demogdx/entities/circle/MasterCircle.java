@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.Array;
  * Created by Okis on 2016.05.27 @ 15:33.
  */
 public class MasterCircle extends AbstractCircle {
-    private static float rotationAnglePerSec = 75f;
+    private static float rotationAnglePerSec = 75.f;
     private float outerRadius;
 
     private Array<AbstractCircle> children = new Array<>();

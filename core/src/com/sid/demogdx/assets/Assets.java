@@ -24,10 +24,10 @@ public final class Assets {
     private static void load() {
         am.load(AssetDescriptors.SKIN);
         am.load(AssetDescriptors.SOUND_COLLISION);
-        am.load(AssetDescriptors.PARTICLE_EFFECT_EXPLOSION);
-        am.load(AssetDescriptors.PARTICLE_EFFECT_GRAVITY_EXPLOSION);
-        am.load(AssetDescriptors.PARTICLE_EFFECT_STAR_TRAIL);
-        am.load(AssetDescriptors.PARTICLE_EFFECT_SIMPLE_TRAIL);
+        am.load(AssetDescriptors.PE_EXPLOSION);
+        am.load(AssetDescriptors.PE_GRAVITY_EXPLOSION);
+        am.load(AssetDescriptors.PE_STAR_TRAIL);
+        am.load(AssetDescriptors.PE_SIMPLE_TRAIL);
     }
 
     public static Skin getSkin() {

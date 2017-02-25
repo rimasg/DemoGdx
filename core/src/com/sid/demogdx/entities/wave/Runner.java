@@ -16,7 +16,7 @@ public class Runner extends GameObject {
 
     public Runner(Sprite sprite) {
         super(sprite);
-        particleEffect = Assets.getParticleEffect(AssetDescriptors.PARTICLE_EFFECT_SIMPLE_TRAIL);
+        particleEffect = Assets.getParticleEffect(AssetDescriptors.PE_SIMPLE_TRAIL);
     }
 
     @Override
