@@ -116,4 +116,4 @@ additive: true
 behind: false
 premultipliedAlpha: false
 - Image Path -
-/C:/Users/Okis/AndroidStudioProjects/DemoGdx/android/assets/textures/particle-star.png
+/C:/Users/Okis/AndroidStudioProjects/DemoGdx/android/assets/img/particle-star.png

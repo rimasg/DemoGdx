@@ -58,7 +58,7 @@
   <tile id="47" terrain="0,0,0,0" probability="0.01"/>
  </tileset>
  <imagelayer name="BackgroundImage">
-  <image source="../textures/mountain.png" width="288" height="512"/>
+  <image source="../img/mountain.png" width="288" height="512"/>
  </imagelayer>
  <layer name="background" width="9" height="16">
   <data encoding="base64" compression="zlib">
