@@ -94,10 +94,17 @@ project(":core") {
         task packTextures {
             def inputDir = "$rootDir/desktop/assets-raw/textures"
             def outputDir = "$rootDir/android/assets/textures"
+
+            def pack = new File("${outputDir}/texture.png")
+            def atlas = new File("${outputDir}/texture.pack")
+
             inputs.dir inputDir
-            outputs.dir outputDir
+            outputs.file pack
+            outputs.file atlas
+
             doLast {
-                delete(outputDir)
+                pack.delete()
+                atlas.delete()
                 final TexturePacker.Settings settings = new TexturePacker.Settings();
                 settings.atlasExtension = ".pack";
                 settings.pot = false;
