@@ -36,7 +36,6 @@ allprojects {
 project(":desktop") {
     apply plugin: "java"
 
-
     dependencies {
         compile project(":core")
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
@@ -90,28 +89,28 @@ project(":core") {
         compile "net.dermetfan.libgdx-utils:libgdx-utils-box2d:$gdxUtilsVersion" // Box2D module
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
 //        compile fileTree(dir: '../libs', include: ['*.jar']) // Box2D BodyEditor Loader
-
-        task packTextures {
-            def inputDir = "$rootDir/desktop/assets-raw/textures"
-            def outputDir = "$rootDir/android/assets/textures"
-
-            def pack = new File("${outputDir}/texture.png")
-            def atlas = new File("${outputDir}/texture.pack")
-
-            inputs.dir inputDir
-            outputs.file pack
-            outputs.file atlas
-
-            doLast {
-                pack.delete()
-                atlas.delete()
-                final TexturePacker.Settings settings = new TexturePacker.Settings();
-                settings.atlasExtension = ".pack";
-                settings.pot = false;
-                TexturePacker.process(settings, inputDir, outputDir, "texture");
-            }
-        }
-
-        project.tasks.compileJava.dependsOn packTextures
     }
+
+    task packTextures {
+        def inputDir = "$rootDir/desktop/assets-raw/textures"
+        def outputDir = "$rootDir/android/assets/textures"
+
+        def pack = new File("${outputDir}/texture.png")
+        def atlas = new File("${outputDir}/texture.pack")
+
+        inputs.dir inputDir
+        outputs.file pack
+        outputs.file atlas
+
+        doLast {
+            pack.delete()
+            atlas.delete()
+            final TexturePacker.Settings settings = new TexturePacker.Settings();
+            settings.atlasExtension = ".pack";
+            settings.pot = false;
+            TexturePacker.process(settings, inputDir, outputDir, "texture");
+        }
+    }
+
+    project.tasks.compileJava.dependsOn packTextures
 }
