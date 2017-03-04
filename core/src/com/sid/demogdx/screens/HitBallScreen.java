@@ -26,6 +26,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.sid.demogdx.DemoGdx;
+import com.sid.demogdx.assets.AssetDescriptors;
+import com.sid.demogdx.assets.Assets;
+import com.sid.demogdx.assets.RegionNames;
 import com.sid.demogdx.interfaces.ListenerClass;
 import com.sid.demogdx.utils.Box2DConfig;
 import com.sid.demogdx.utils.ProjectileMotion;
@@ -136,14 +139,13 @@ public class HitBallScreen extends AbstractBox2dScreen {
     }
 
     private void loadAssets() {
-        starRegion = skin.getAtlas().findRegion("star");
-        circleRainbowRegion = skin.getAtlas().findRegion("circle_rainbow");
-        collisionSound = Gdx.audio.newSound(Gdx.files.internal("sounds/click.ogg"));
+        starRegion = skin.getAtlas().findRegion(RegionNames.STAR);
+        circleRainbowRegion = skin.getAtlas().findRegion(RegionNames.CIRCLE_RAINBOW);
+        collisionSound = Assets.getSound(AssetDescriptors.SOUND_COLLISION);
     }
 
     private void loadParticles() {
-        particleEffect = new ParticleEffect();
-        particleEffect.load(Gdx.files.internal("particles/explosion.p"), Gdx.files.internal("textures"));
+        particleEffect = Assets.getParticleEffect(AssetDescriptors.PE_EXPLOSION);
         particleEffect.start();
     }
 

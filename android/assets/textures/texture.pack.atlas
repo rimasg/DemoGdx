@@ -1,26 +1,33 @@
 
-texture.png
-size: 676,519
+texture.pack.png
+size: 1024,512
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 airplane
   rotate: false
-  xy: 500, 255
+  xy: 692, 290
   size: 83, 64
   orig: 83, 64
   offset: 0, 0
   index: -1
+badlogic
+  rotate: false
+  xy: 304, 250
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
 ball
   rotate: false
-  xy: 608, 453
+  xy: 777, 290
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 bg_gold
   rotate: false
-  xy: 64, 13
+  xy: 306, 64
   size: 64, 32
   split: 5, 5, 5, 5
   orig: 64, 32
@@ -28,14 +35,14 @@ bg_gold
   index: -1
 blue_ball_border
   rotate: false
-  xy: 2, 65
+  xy: 2, 54
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
 button_black
   rotate: false
-  xy: 130, 13
+  xy: 2, 2
   size: 64, 32
   split: 6, 6, 6, 6
   orig: 64, 32
@@ -43,7 +50,7 @@ button_black
   index: -1
 button_gold
   rotate: false
-  xy: 196, 31
+  xy: 654, 124
   size: 64, 32
   split: 6, 6, 6, 6
   orig: 64, 32
@@ -51,7 +58,7 @@ button_gold
   index: -1
 button_gold_pressed
   rotate: false
-  xy: 262, 31
+  xy: 852, 256
   size: 64, 32
   split: 6, 6, 6, 6
   orig: 64, 32
@@ -59,49 +66,49 @@ button_gold_pressed
   index: -1
 circle_rainbow
   rotate: false
-  xy: 500, 333
+  xy: 975, 322
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 cyan_ball_border
   rotate: false
-  xy: 154, 65
+  xy: 562, 356
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
 exit
   rotate: false
-  xy: 608, 387
+  xy: 588, 110
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 green_ball_border
   rotate: false
-  xy: 304, 367
+  xy: 714, 356
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
 leaderboard
   rotate: false
-  xy: 608, 321
+  xy: 654, 224
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 line_dot
   rotate: false
-  xy: 64, 10
+  xy: 1018, 505
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
   index: -1
 line_segment
   rotate: false
-  xy: 585, 255
+  xy: 843, 290
   size: 64, 64
   split: 30, 30, 30, 29
   orig: 64, 64
@@ -109,42 +116,42 @@ line_segment
   index: -1
 magenta_ball_border
   rotate: false
-  xy: 306, 68
+  xy: 866, 356
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
 particle
   rotate: false
-  xy: 534, 333
+  xy: 372, 64
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 particle-star
   rotate: false
-  xy: 610, 189
+  xy: 654, 158
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 particle_dark
   rotate: false
-  xy: 568, 333
+  xy: 68, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 play
   rotate: false
-  xy: 328, 2
+  xy: 562, 290
   size: 128, 64
   orig: 128, 64
   offset: 0, 0
   index: -1
 popup_bg
   rotate: false
-  xy: 590, 23
+  xy: 720, 124
   size: 32, 32
   split: 5, 5, 5, 5
   orig: 32, 32
@@ -152,84 +159,84 @@ popup_bg
   index: -1
 pre_particle
   rotate: false
-  xy: 624, 23
+  xy: 918, 256
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 racket
   rotate: false
-  xy: 64, 47
+  xy: 2, 36
   size: 128, 16
   orig: 128, 16
   offset: 0, 0
   index: -1
 red_ball_border
   rotate: false
-  xy: 456, 367
+  xy: 154, 54
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
 rocket
   rotate: false
-  xy: 434, 253
+  xy: 588, 176
   size: 64, 112
   orig: 64, 112
   offset: 0, 0
   index: -1
 share
   rotate: false
-  xy: 610, 123
+  xy: 720, 224
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 snowflake_clipart
   rotate: false
-  xy: 304, 220
+  xy: 458, 103
   size: 128, 145
   orig: 128, 145
   offset: 0, 0
   index: -1
 sound_off
   rotate: false
-  xy: 610, 57
+  xy: 909, 290
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 sound_on
   rotate: false
-  xy: 458, 35
+  xy: 720, 158
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 star
   rotate: false
-  xy: 524, 35
+  xy: 786, 224
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 touch_knob
   rotate: false
-  xy: 2, 3
+  xy: 786, 162
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
 touch_pad
   rotate: false
-  xy: 2, 217
+  xy: 2, 206
   size: 300, 300
   orig: 300, 300
   offset: 0, 0
   index: -1
 yellow_ball_border
   rotate: false
-  xy: 458, 101
+  xy: 306, 98
   size: 150, 150
   orig: 150, 150
   offset: 0, 0

@@ -27,11 +27,11 @@ public final class AssetDescriptors {
 
     public static final AssetDescriptor<Skin> SKIN = new
             AssetDescriptor<>(AssetPaths.SKIN_JSON, SKIN_CLASS, SKIN_PARAMS);
-    // TODO: 2017.01.18 finish implementation
-    //
 
     public static final AssetDescriptor<Sound> SOUND_COLLISION = new
             AssetDescriptor<>(AssetPaths.SOUND_COLLISION, SOUND_CLASS);
+    public static final AssetDescriptor<Music> MUSIC_BG = new AssetDescriptor<>
+            (AssetPaths.MUSIC_BG, MUSIC_CLASS);
 
     public static final AssetDescriptor<ParticleEffect> PE_EXPLOSION = new
             AssetDescriptor<>(AssetPaths.PE_EXPLOSION, PE_CLASS, PE_PARAMS);

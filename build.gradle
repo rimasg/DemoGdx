@@ -7,7 +7,7 @@ buildscript {
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath 'com.android.tools.build:gradle:2.3.0'
         classpath "com.badlogicgames.gdx:gdx-tools:1.9.4"
     }
 }
@@ -95,8 +95,9 @@ project(":core") {
         def inputDir = "$rootDir/desktop/assets-raw/textures"
         def outputDir = "$rootDir/android/assets/textures"
 
-        def pack = new File("${outputDir}/texture.png")
-        def atlas = new File("${outputDir}/texture.pack")
+        def atlasFile = 'texture.pack'
+        def pack = new File("${outputDir}/${atlasFile}.png")
+        def atlas = new File("${outputDir}/${atlasFile}.atlas")
 
         inputs.dir inputDir
         outputs.file pack
@@ -105,10 +106,7 @@ project(":core") {
         doLast {
             pack.delete()
             atlas.delete()
-            final TexturePacker.Settings settings = new TexturePacker.Settings();
-            settings.atlasExtension = ".pack";
-            settings.pot = false;
-            TexturePacker.process(settings, inputDir, outputDir, "texture");
+            TexturePacker.process(inputDir, outputDir, "${atlasFile}");
         }
     }
 

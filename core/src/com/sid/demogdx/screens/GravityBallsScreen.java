@@ -129,8 +129,9 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
     }
 
     private void loadParticles() {
-        particleEffect = new ParticleEffect();
-        particleEffect.load(Gdx.files.internal("particles/gravity_explosion.p"), Gdx.files.internal("textures"));
+//        particleEffect = new ParticleEffect();
+//        particleEffect.load(Gdx.files.internal("particles/gravity_explosion.p"), Gdx.files.internal("textures"));
+        particleEffect = Assets.getParticleEffect(AssetDescriptors.PE_GRAVITY_EXPLOSION);
         particleEffectPool = new ParticleEffectPool(particleEffect, 20, 100);
     }
 

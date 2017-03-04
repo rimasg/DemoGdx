@@ -6,10 +6,13 @@ package com.sid.demogdx.assets;
 
 public final class AssetPaths {
     static final String SKIN_JSON = "skin.json";
-    static final String TEXTURE_ATLAS_FILE = "textures/texture.pack";
+    static final String TEXTURE_ATLAS_FILE = "textures/texture.pack.atlas";
 
     private static final String PATH_SOUND = "sounds/";
     static final String SOUND_COLLISION = PATH_SOUND + "click.ogg";
+
+    private static final String PATH_MUSIC = "music/";
+    static final String MUSIC_BG = PATH_MUSIC + "the_dojo_short.wav";
 
     private static final String PATH_PARTICLE = "particles/";
     static final String PE_EXPLOSION = PATH_PARTICLE + "explosion.p";

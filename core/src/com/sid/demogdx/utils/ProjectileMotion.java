@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.Array;
  * Created by Okis on 2016.10.04.
  */
 
-public class ProjectileMotion {
+public final class ProjectileMotion {
     public static int INITIAL_VELOCITY = 50;
     private static float G = 9.8f;
     private static float time = 1.0f;
@@ -33,4 +33,6 @@ public class ProjectileMotion {
         }
         return displacement;
     }
+
+    private ProjectileMotion() { }
 }

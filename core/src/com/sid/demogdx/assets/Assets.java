@@ -11,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
  */
 
 public final class Assets {
-
     private static final String TAG = "Assets";
     private static AssetManager am;
 

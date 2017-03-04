@@ -6,9 +6,6 @@ import com.badlogic.gdx.math.Vector2;
  * Created by Okis on 2016.02.25 @ 07:51.
  */
 public final class SteeringUtils {
-    private SteeringUtils() {
-        //no instance
-    }
 
     public static float vectorToAngle(Vector2 vector) {
         return (float) Math.atan2(-vector.x, vector.y);
@@ -19,4 +16,6 @@ public final class SteeringUtils {
         outVector.y = (float) Math.cos(angle);
         return outVector;
     }
+
+    private SteeringUtils() { }
 }
