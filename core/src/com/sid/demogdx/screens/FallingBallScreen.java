@@ -266,9 +266,4 @@ public class FallingBallScreen extends AbstractBox2dScreen {
         mapRenderer.dispose();
         map.dispose();
     }
-
-    @Override
-    public void dispose() {
-        super.dispose();
-    }
 }

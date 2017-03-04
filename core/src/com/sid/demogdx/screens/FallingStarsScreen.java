@@ -232,17 +232,6 @@ public class FallingStarsScreen extends AbstractBox2dScreen {
         super.resize(width, height);
     }
 
-    @Override
-    public void hide() {
-        super.hide();
-    }
-
-    @Override
-    public void dispose() {
-        super.dispose();
-        particleEffect.dispose();
-    }
-
     private enum BodyType{
         STAR, PLATFORM
     }

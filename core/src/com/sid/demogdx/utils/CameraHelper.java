@@ -21,6 +21,11 @@ public final class CameraHelper {
         CameraHelper.cam = cam;
     }
 
+    public static void reset() {
+        cam = null;
+        target = null;
+    }
+
     public static void setTarget(GameObject target) {
         CameraHelper.target = target;
     }

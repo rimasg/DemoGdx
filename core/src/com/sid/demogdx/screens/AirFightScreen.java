@@ -94,8 +94,13 @@ public class AirFightScreen extends AbstractScreen {
     }
 
     @Override
+    public void hide() {
+        super.hide();
+        CameraHelper.reset();
+    }
+
+    @Override
     public void dispose() {
-        super.dispose();
         shapeRenderer.dispose();
     }
 }
