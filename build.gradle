@@ -73,7 +73,7 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-arm64-v8a"
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86"
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86_64"
-//        compile fileTree(dir: '../libs', include: ['*.jar']) // Box2D BodyEditor Loader
+//        compile fileTree(dir: '../libs', include: ['*.jar'])
     }
 }
 
@@ -91,11 +91,11 @@ project(":core") {
 //        compile fileTree(dir: '../libs', include: ['*.jar']) // Box2D BodyEditor Loader
     }
 
-    task packTextures {
-        def inputDir = "$rootDir/desktop/assets-raw/textures"
-        def outputDir = "$rootDir/android/assets/textures"
+    task packGamePlayTextures {
+        def inputDir = "$rootDir/desktop/assets-raw/gameplay"
+        def outputDir = "$rootDir/android/assets/gameplay"
 
-        def atlasFile = 'texture.pack'
+        def atlasFile = 'gameplay'
         def pack = new File("${outputDir}/${atlasFile}.png")
         def atlas = new File("${outputDir}/${atlasFile}.atlas")
 
@@ -110,5 +110,25 @@ project(":core") {
         }
     }
 
-    project.tasks.compileJava.dependsOn packTextures
+    task packUiTextures {
+        def inputDir = "$rootDir/desktop/assets-raw/ui"
+        def outputDir = "$rootDir/android/assets/ui"
+
+        def atlasFile = 'skin'
+        def pack = new File("${outputDir}/${atlasFile}.png")
+        def atlas = new File("${outputDir}/${atlasFile}.atlas")
+
+        inputs.dir inputDir
+        outputs.file pack
+        outputs.file atlas
+
+        doLast {
+            pack.delete()
+            atlas.delete()
+            TexturePacker.process(inputDir, outputDir, "${atlasFile}");
+        }
+    }
+
+    project.tasks.compileJava.dependsOn packGamePlayTextures
+    project.tasks.compileJava.dependsOn packUiTextures
 }

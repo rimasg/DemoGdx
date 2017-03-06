@@ -2,7 +2,6 @@ package com.sid.demogdx.assets;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.loaders.ParticleEffectLoader;
-import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -23,10 +22,11 @@ public final class AssetDescriptors {
     private static final Class<ParticleEffect> PE_CLASS = ParticleEffect.class;
 
     private static final ParticleEffectLoader.ParticleEffectParameter PE_PARAMS = new ParticleEffectLoader.ParticleEffectParameter();
-    private static final SkinLoader.SkinParameter SKIN_PARAMS = new SkinLoader.SkinParameter(AssetPaths.TEXTURE_ATLAS_FILE);
 
     public static final AssetDescriptor<Skin> SKIN = new
-            AssetDescriptor<>(AssetPaths.SKIN_JSON, SKIN_CLASS, SKIN_PARAMS);
+            AssetDescriptor<>(AssetPaths.SKIN_JSON, SKIN_CLASS);
+    public static final AssetDescriptor<TextureAtlas> TEXTURE_ATLAS = new
+            AssetDescriptor<>(AssetPaths.TEXTURE_ATLAS, TEXTURE_ATLAS_CLASS);
 
     public static final AssetDescriptor<Sound> SOUND_COLLISION = new
             AssetDescriptor<>(AssetPaths.SOUND_COLLISION, SOUND_CLASS);
@@ -43,7 +43,7 @@ public final class AssetDescriptors {
             AssetDescriptor<>(AssetPaths.PE_SIMPLE_TRAIL, PE_CLASS, PE_PARAMS);
 
     static {
-        PE_PARAMS.atlasFile = AssetPaths.TEXTURE_ATLAS_FILE;
+        PE_PARAMS.atlasFile = AssetPaths.TEXTURE_ATLAS;
     }
 
     private AssetDescriptors() { }

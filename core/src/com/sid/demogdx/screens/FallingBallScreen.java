@@ -89,8 +89,8 @@ public class FallingBallScreen extends AbstractBox2dScreen {
     }
 
     private void loadAssets() {
-        starRegion = skin.getAtlas().findRegion(RegionNames.STAR);
-        circleRainbowRegion = skin.getAtlas().findRegion(RegionNames.CIRCLE_RAINBOW);
+        starRegion = Assets.getRegion(RegionNames.STAR);
+        circleRainbowRegion = Assets.getRegion(RegionNames.CIRCLE_RAINBOW);
         collisionSound = Assets.getSound(AssetDescriptors.SOUND_COLLISION);
     }
 

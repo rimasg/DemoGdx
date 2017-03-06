@@ -2,8 +2,10 @@ package com.sid.demogdx.assets;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 /**
@@ -22,6 +24,7 @@ public final class Assets {
 
     private static void load() {
         am.load(AssetDescriptors.SKIN);
+        am.load(AssetDescriptors.TEXTURE_ATLAS);
         am.load(AssetDescriptors.SOUND_COLLISION);
         am.load(AssetDescriptors.PE_EXPLOSION);
         am.load(AssetDescriptors.PE_GRAVITY_EXPLOSION);
@@ -33,7 +36,19 @@ public final class Assets {
         return am.get(AssetDescriptors.SKIN);
     }
 
+    public static TextureAtlas getAtlas() {
+        return am.get(AssetDescriptors.TEXTURE_ATLAS);
+    }
+
+    public static TextureAtlas.AtlasRegion getRegion(String regionName) {
+        return am.get(AssetDescriptors.TEXTURE_ATLAS).findRegion(regionName);
+    }
+
     public static Sound getSound(AssetDescriptor<Sound> descriptor) {
+        return am.get(descriptor);
+    }
+
+    public static Music getMusic(AssetDescriptor<Music> descriptor) {
         return am.get(descriptor);
     }
 

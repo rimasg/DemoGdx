@@ -5,8 +5,8 @@ package com.sid.demogdx.assets;
  */
 
 public final class AssetPaths {
-    static final String SKIN_JSON = "skin.json";
-    static final String TEXTURE_ATLAS_FILE = "textures/texture.pack.atlas";
+    static final String SKIN_JSON = "ui/skin.json";
+    static final String TEXTURE_ATLAS = "gameplay/gameplay.atlas";
 
     private static final String PATH_SOUND = "sounds/";
     static final String SOUND_COLLISION = PATH_SOUND + "click.ogg";

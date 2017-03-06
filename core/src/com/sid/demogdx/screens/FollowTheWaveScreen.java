@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.CatmullRomSpline;
 import com.badlogic.gdx.math.Vector2;
 import com.sid.demogdx.DemoGdx;
+import com.sid.demogdx.assets.Assets;
 import com.sid.demogdx.assets.RegionNames;
 import com.sid.demogdx.entities.wave.Runner;
 import com.sid.demogdx.utils.Box2DConfig;
@@ -47,7 +48,7 @@ public class FollowTheWaveScreen extends AbstractScreen {
         initDataSet();
         initSpline();
         cachePathPoints();
-        runner = new Runner(new Sprite(skin.getRegion(RegionNames.STAR)));
+        runner = new Runner(new Sprite(Assets.getRegion(RegionNames.STAR)));
         CameraHelper.setCam(stage.getCamera());
         CameraHelper.setTarget(runner);
     }

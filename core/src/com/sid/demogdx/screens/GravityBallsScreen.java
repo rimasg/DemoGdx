@@ -20,6 +20,7 @@ import com.badlogic.gdx.utils.Array;
 import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.assets.AssetDescriptors;
 import com.sid.demogdx.assets.Assets;
+import com.sid.demogdx.assets.RegionNames;
 import com.sid.demogdx.utils.Box2DConfig;
 import com.sid.demogdx.utils.Box2DUtils;
 
@@ -120,12 +121,12 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
 
     private void loadBallsRegions() {
         if (ballsRegions.size > 0) return; /* skip loading assets if they're loaded */
-        ballsRegions.add(skin.getAtlas().findRegion("red_ball_border"));
-        ballsRegions.add(skin.getAtlas().findRegion("green_ball_border"));
-        ballsRegions.add(skin.getAtlas().findRegion("blue_ball_border"));
-        ballsRegions.add(skin.getAtlas().findRegion("yellow_ball_border"));
-        ballsRegions.add(skin.getAtlas().findRegion("cyan_ball_border"));
-        ballsRegions.add(skin.getAtlas().findRegion("magenta_ball_border"));
+        ballsRegions.add(Assets.getRegion(RegionNames.RED_BALL_BORDER));
+        ballsRegions.add(Assets.getRegion(RegionNames.GREEN_BALL_BORDER));
+        ballsRegions.add(Assets.getRegion(RegionNames.BLUE_BALL_BORDER));
+        ballsRegions.add(Assets.getRegion(RegionNames.YELLOW_BALL_BORDER));
+        ballsRegions.add(Assets.getRegion(RegionNames.CYAN_BALL_BORDER));
+        ballsRegions.add(Assets.getRegion(RegionNames.MAGENTA_BALL_BORDER));
     }
 
     private void loadParticles() {

@@ -20,6 +20,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.assets.AssetDescriptors;
 import com.sid.demogdx.assets.Assets;
+import com.sid.demogdx.assets.RegionNames;
 import com.sid.demogdx.utils.Box2DConfig;
 import com.sid.demogdx.utils.Box2DUtils;
 
@@ -50,8 +51,8 @@ public class FallingStarsScreen extends AbstractBox2dScreen {
 //        createJointBodies();
         spawnContinuousBodies();
 
-        starRegion = skin.getAtlas().findRegion("star");
-        lineDotRegion = skin.getAtlas().findRegion("line_dot");
+        starRegion = Assets.getRegion(RegionNames.STAR);
+        lineDotRegion = Assets.getRegion(RegionNames.LINE_DOT);
 
         particleEffect = Assets.getParticleEffect(AssetDescriptors.PE_STAR_TRAIL);
         particleEffectPool = new ParticleEffectPool(particleEffect, 20, 100);

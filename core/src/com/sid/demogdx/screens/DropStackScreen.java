@@ -14,6 +14,8 @@ import com.badlogic.gdx.physics.box2d.joints.DistanceJointDef;
 import com.badlogic.gdx.physics.box2d.joints.PrismaticJointDef;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 import com.sid.demogdx.DemoGdx;
+import com.sid.demogdx.assets.Assets;
+import com.sid.demogdx.assets.RegionNames;
 import com.sid.demogdx.entities.stack.Block;
 import com.sid.demogdx.utils.Box2DUtils;
 
@@ -146,7 +148,7 @@ public class DropStackScreen extends AbstractBox2dScreen {
     }
 
     private void loadAssets() {
-        blockAtlasRegion = skin.getAtlas().findRegion("button_gold");
+        blockAtlasRegion = Assets.getRegion(RegionNames.BUTTON_GOLD);
     }
 
     @Override

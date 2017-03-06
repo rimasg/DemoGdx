@@ -8,6 +8,8 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.sid.demogdx.DemoGdx;
+import com.sid.demogdx.assets.Assets;
+import com.sid.demogdx.assets.RegionNames;
 import com.sid.demogdx.utils.Box2DConfig;
 import com.sid.demogdx.utils.Box2DUtils;
 
@@ -34,7 +36,7 @@ public class PhysicsBodyScreen extends AbstractBox2dScreen {
     public void show() {
         super.show();
         initPhysicsBody();
-        rocketAtlasRegion = skin.getAtlas().findRegion("rocket");
+        rocketAtlasRegion = Assets.getRegion(RegionNames.ROCKET);
     }
 
     @Override

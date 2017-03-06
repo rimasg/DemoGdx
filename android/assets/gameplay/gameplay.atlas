@@ -1,0 +1,112 @@
+
+gameplay.png
+size: 1024,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+airplane
+  rotate: false
+  xy: 2, 36
+  size: 83, 64
+  orig: 83, 64
+  offset: 0, 0
+  index: -1
+badlogic
+  rotate: false
+  xy: 2, 254
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+blue_ball_border
+  rotate: false
+  xy: 2, 102
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+button_gold
+  rotate: false
+  xy: 2, 2
+  size: 64, 32
+  split: 6, 6, 6, 6
+  orig: 64, 32
+  offset: 0, 0
+  index: -1
+cyan_ball_border
+  rotate: false
+  xy: 260, 360
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+green_ball_border
+  rotate: false
+  xy: 412, 360
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+line_dot
+  rotate: false
+  xy: 1020, 509
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+magenta_ball_border
+  rotate: false
+  xy: 564, 360
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+particle
+  rotate: false
+  xy: 68, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+particle-star
+  rotate: false
+  xy: 260, 294
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+particle_dark
+  rotate: false
+  xy: 102, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+red_ball_border
+  rotate: false
+  xy: 716, 360
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+rocket
+  rotate: false
+  xy: 154, 140
+  size: 64, 112
+  orig: 64, 112
+  offset: 0, 0
+  index: -1
+star
+  rotate: false
+  xy: 87, 36
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+yellow_ball_border
+  rotate: false
+  xy: 868, 360
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1

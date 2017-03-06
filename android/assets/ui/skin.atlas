@@ -1,48 +1,27 @@
 
-texture.pack.png
-size: 1024,512
+skin.png
+size: 512,512
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-airplane
-  rotate: false
-  xy: 692, 290
-  size: 83, 64
-  orig: 83, 64
-  offset: 0, 0
-  index: -1
-badlogic
-  rotate: false
-  xy: 304, 250
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
 ball
   rotate: false
-  xy: 777, 290
+  xy: 132, 135
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 bg_gold
   rotate: false
-  xy: 306, 64
+  xy: 2, 2
   size: 64, 32
   split: 5, 5, 5, 5
   orig: 64, 32
   offset: 0, 0
   index: -1
-blue_ball_border
-  rotate: false
-  xy: 2, 54
-  size: 150, 150
-  orig: 150, 150
-  offset: 0, 0
-  index: -1
 button_black
   rotate: false
-  xy: 2, 2
+  xy: 304, 271
   size: 64, 32
   split: 6, 6, 6, 6
   orig: 64, 32
@@ -50,7 +29,7 @@ button_black
   index: -1
 button_gold
   rotate: false
-  xy: 654, 124
+  xy: 370, 337
   size: 64, 32
   split: 6, 6, 6, 6
   orig: 64, 32
@@ -58,7 +37,7 @@ button_gold
   index: -1
 button_gold_pressed
   rotate: false
-  xy: 852, 256
+  xy: 304, 237
   size: 64, 32
   split: 6, 6, 6, 6
   orig: 64, 32
@@ -66,92 +45,43 @@ button_gold_pressed
   index: -1
 circle_rainbow
   rotate: false
-  xy: 975, 322
+  xy: 264, 167
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-cyan_ball_border
-  rotate: false
-  xy: 562, 356
-  size: 150, 150
-  orig: 150, 150
-  offset: 0, 0
-  index: -1
 exit
   rotate: false
-  xy: 588, 110
+  xy: 304, 371
   size: 64, 64
   orig: 64, 64
-  offset: 0, 0
-  index: -1
-green_ball_border
-  rotate: false
-  xy: 714, 356
-  size: 150, 150
-  orig: 150, 150
   offset: 0, 0
   index: -1
 leaderboard
   rotate: false
-  xy: 654, 224
+  xy: 434, 437
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-line_dot
-  rotate: false
-  xy: 1018, 505
-  size: 1, 1
-  orig: 1, 1
-  offset: 0, 0
-  index: -1
 line_segment
   rotate: false
-  xy: 843, 290
+  xy: 132, 69
   size: 64, 64
   split: 30, 30, 30, 29
   orig: 64, 64
   offset: 0, 0
   index: -1
-magenta_ball_border
-  rotate: false
-  xy: 866, 356
-  size: 150, 150
-  orig: 150, 150
-  offset: 0, 0
-  index: -1
-particle
-  rotate: false
-  xy: 372, 64
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-particle-star
-  rotate: false
-  xy: 654, 158
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-particle_dark
-  rotate: false
-  xy: 68, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
 play
   rotate: false
-  xy: 562, 290
+  xy: 304, 437
   size: 128, 64
   orig: 128, 64
   offset: 0, 0
   index: -1
 popup_bg
   rotate: false
-  xy: 720, 124
+  xy: 436, 403
   size: 32, 32
   split: 5, 5, 5, 5
   orig: 32, 32
@@ -159,7 +89,7 @@ popup_bg
   index: -1
 pre_particle
   rotate: false
-  xy: 918, 256
+  xy: 68, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -171,73 +101,45 @@ racket
   orig: 128, 16
   offset: 0, 0
   index: -1
-red_ball_border
-  rotate: false
-  xy: 154, 54
-  size: 150, 150
-  orig: 150, 150
-  offset: 0, 0
-  index: -1
-rocket
-  rotate: false
-  xy: 588, 176
-  size: 64, 112
-  orig: 64, 112
-  offset: 0, 0
-  index: -1
 share
   rotate: false
-  xy: 720, 224
+  xy: 198, 135
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 snowflake_clipart
   rotate: false
-  xy: 458, 103
+  xy: 2, 54
   size: 128, 145
   orig: 128, 145
   offset: 0, 0
   index: -1
 sound_off
   rotate: false
-  xy: 909, 290
+  xy: 304, 305
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 sound_on
   rotate: false
-  xy: 720, 158
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-star
-  rotate: false
-  xy: 786, 224
+  xy: 370, 371
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 touch_knob
   rotate: false
-  xy: 786, 162
+  xy: 198, 73
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
 touch_pad
   rotate: false
-  xy: 2, 206
+  xy: 2, 201
   size: 300, 300
   orig: 300, 300
-  offset: 0, 0
-  index: -1
-yellow_ball_border
-  rotate: false
-  xy: 306, 98
-  size: 150, 150
-  orig: 150, 150
   offset: 0, 0
   index: -1
