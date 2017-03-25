@@ -19,4 +19,12 @@ public final class Box2DConfig {
     public static final float unitScale32 = 1 / 32f; /* Box2d world scale */
     //
     public static final float BALL_RADIUS = 0.5f;
+
+    public static float pixelsToMeters (Float pixels, float scale) {
+        return (float) pixels * scale;
+    }
+
+    public static int metersToPixels(float meters, float scale) {
+        return (int) (meters / scale);
+    }
 }

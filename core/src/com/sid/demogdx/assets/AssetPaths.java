@@ -20,5 +20,8 @@ public final class AssetPaths {
     static final String PE_STAR_TRAIL = PATH_PARTICLE + "trail.p";
     static final String PE_SIMPLE_TRAIL = PATH_PARTICLE + "trail_simple.p";
 
+    private static final String PATH_MAP = "maps/";
+    static final String MAP_HUNTER = PATH_MAP + "hunter.tmx";
+
     private AssetPaths() { }
 }

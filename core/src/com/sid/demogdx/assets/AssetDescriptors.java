@@ -7,6 +7,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 /**
@@ -20,6 +21,7 @@ public final class AssetDescriptors {
     private static final Class<Sound> SOUND_CLASS = Sound.class;
     private static final Class<Music> MUSIC_CLASS = Music.class;
     private static final Class<ParticleEffect> PE_CLASS = ParticleEffect.class;
+    private static final Class<TiledMap> TILED_MAP_CLASS = TiledMap.class;
 
     private static final ParticleEffectLoader.ParticleEffectParameter PE_PARAMS = new ParticleEffectLoader.ParticleEffectParameter();
 
@@ -41,6 +43,9 @@ public final class AssetDescriptors {
             AssetDescriptor<>(AssetPaths.PE_STAR_TRAIL, PE_CLASS, PE_PARAMS);
     public static final AssetDescriptor<ParticleEffect> PE_SIMPLE_TRAIL = new
             AssetDescriptor<>(AssetPaths.PE_SIMPLE_TRAIL, PE_CLASS, PE_PARAMS);
+
+    public static final AssetDescriptor<TiledMap> MAP_HUNTER = new
+            AssetDescriptor<>(AssetPaths.MAP_HUNTER, TILED_MAP_CLASS);
 
     static {
         PE_PARAMS.atlasFile = AssetPaths.TEXTURE_ATLAS;

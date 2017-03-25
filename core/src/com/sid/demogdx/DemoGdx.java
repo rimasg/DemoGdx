@@ -15,6 +15,7 @@ import com.sid.demogdx.screens.FollowTheWaveScreen;
 import com.sid.demogdx.screens.GravityBallsScreen;
 import com.sid.demogdx.screens.HeroScreen;
 import com.sid.demogdx.screens.HitBallScreen;
+import com.sid.demogdx.screens.HunterAIScreen;
 import com.sid.demogdx.screens.MainMenuScreen;
 import com.sid.demogdx.screens.PhysicsBodyScreen;
 
@@ -35,6 +36,7 @@ public class DemoGdx extends Game {
     FollowTheWaveScreen followTheWaveScreen;
     AirFightScreen airFightScreen;
     PhysicsBodyScreen physicsBodyScreen;
+    HunterAIScreen hunterAIScreen;
 
     @Override
     public void create() {
@@ -54,6 +56,7 @@ public class DemoGdx extends Game {
         followTheWaveScreen = new FollowTheWaveScreen(this);
         airFightScreen = new AirFightScreen(this);
         physicsBodyScreen = new PhysicsBodyScreen(this);
+        hunterAIScreen = new HunterAIScreen(this);
         setScreen(mainMenuScreen);
     }
 
@@ -111,6 +114,10 @@ public class DemoGdx extends Game {
 
     public PhysicsBodyScreen getPhysicsBodyScreen() {
         return physicsBodyScreen;
+    }
+
+    public HunterAIScreen getHunterAIScreen() {
+        return hunterAIScreen;
     }
 
     @Override

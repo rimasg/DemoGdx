@@ -2,10 +2,13 @@ package com.sid.demogdx.assets;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 /**
@@ -17,10 +20,16 @@ public final class Assets {
     private static AssetManager am;
 
     static {
-        am = new AssetManager(); load();
+        am = new AssetManager();
+        setLoaders();
+        load();
     }
 
     private Assets() { }
+
+    private static void setLoaders() {
+        am.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
+    }
 
     private static void load() {
         am.load(AssetDescriptors.SKIN);
@@ -30,6 +39,7 @@ public final class Assets {
         am.load(AssetDescriptors.PE_GRAVITY_EXPLOSION);
         am.load(AssetDescriptors.PE_STAR_TRAIL);
         am.load(AssetDescriptors.PE_SIMPLE_TRAIL);
+        am.load(AssetDescriptors.MAP_HUNTER);
     }
 
     public static Skin getSkin() {
@@ -53,6 +63,10 @@ public final class Assets {
     }
 
     public static ParticleEffect getParticleEffect(AssetDescriptor<ParticleEffect> descriptor) {
+        return am.get(descriptor);
+    }
+
+    public static TiledMap getTiledMap(AssetDescriptor<TiledMap> descriptor) {
         return am.get(descriptor);
     }
 

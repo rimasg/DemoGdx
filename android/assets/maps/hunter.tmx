@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="9" height="128" tilewidth="32" tileheight="32" nextobjectid="124">
+ <tileset firstgid="1" source="../tilesets/desert.tsx"/>
+ <layer name="background" width="9" height="128">
+  <data encoding="base64" compression="zlib">
+   eJyTY2BgkCMRG5ChBxtWoECvEhQTEiPFLCUKzCDFDmLEqW3ncPcXte2ihx20xsS4dbiqoXW4oqcHStIIvfMpNdxMK3cNdNyOYvrGNy4xWtpLqTlyeMzBVg/SIxwHoh6kd90+WjYMbowvfrDld1zy+MRISUOUmIFu1kDkY1rGEz3LDXqF53AtLwbCX0OhrT6axhCY3DEZAJyGidc=
+  </data>
+ </layer>
+ <objectgroup name="obstacles">
+  <object id="4" type="object" x="128" y="96" width="32" height="32"/>
+  <object id="5" type="object" x="32" y="160" width="64" height="32"/>
+  <object id="6" type="object" x="192" y="160" width="64" height="32"/>
+  <object id="10" type="object" x="64" y="224" width="160" height="32"/>
+  <object id="11" type="object" x="0" y="320" width="96" height="32"/>
+  <object id="12" type="object" x="192" y="320" width="96" height="32"/>
+  <object id="13" type="object" x="64" y="416" width="160" height="32"/>
+  <object id="14" type="object" x="0" y="512" width="96" height="32"/>
+  <object id="15" type="object" x="192" y="512" width="96" height="32"/>
+  <object id="16" type="object" x="64" y="608" width="224" height="32"/>
+  <object id="17" type="object" x="64" y="3904" width="160" height="32"/>
+  <object id="18" type="object" x="0" y="3808" width="96" height="32"/>
+  <object id="19" type="object" x="192" y="3808" width="96" height="32"/>
+  <object id="21" type="object" x="128" y="3648" width="32" height="96"/>
+  <object id="22" type="object" x="64" y="3552" width="160" height="32"/>
+  <object id="23" type="object" x="64" y="3360" width="160" height="32"/>
+  <object id="26" type="object" x="128" y="2784" width="32" height="32"/>
+  <object id="27" type="object" x="64" y="2816" width="64" height="32"/>
+  <object id="28" type="object" x="160" y="2816" width="64" height="32"/>
+  <object id="29" type="object" x="32" y="2848" width="64" height="32"/>
+  <object id="30" type="object" x="192" y="2848" width="64" height="32"/>
+  <object id="32" type="object" x="64" y="2912" width="64" height="32"/>
+  <object id="34" type="object" x="160" y="2912" width="64" height="32"/>
+  <object id="35" type="object" x="96" y="2976" width="96" height="32"/>
+  <object id="36" type="object" x="0" y="1184" width="128" height="32"/>
+  <object id="37" type="object" x="160" y="1184" width="128" height="32"/>
+  <object id="40" type="object" x="0" y="1344" width="128" height="32"/>
+  <object id="41" type="object" x="160" y="1344" width="128" height="32"/>
+  <object id="42" type="object" x="64" y="1472" width="160" height="32"/>
+  <object id="43" type="object" x="128" y="864" width="32" height="224"/>
+  <object id="44" type="object" x="0" y="1920" width="128" height="32"/>
+  <object id="47" type="object" x="96" y="2016" width="32" height="32"/>
+  <object id="48" type="object" x="128" y="2016" width="32" height="32"/>
+  <object id="50" type="object" x="160" y="2016" width="32" height="32"/>
+  <object id="53" type="object" x="96" y="2080" width="32" height="32"/>
+  <object id="54" type="object" x="64" y="2112" width="32" height="32"/>
+  <object id="55" type="object" x="160" y="2080" width="32" height="32"/>
+  <object id="56" type="object" x="192" y="2112" width="32" height="32"/>
+  <object id="58" type="object" x="32" y="2208" width="256" height="32"/>
+  <object id="59" type="object" x="0" y="2304" width="256" height="32"/>
+  <object id="60" type="object" x="32" y="2400" width="256" height="32"/>
+  <object id="62" type="object" x="0" y="3072" width="224" height="32"/>
+  <object id="63" type="object" x="64" y="3168" width="224" height="32"/>
+  <object id="64" type="object" x="0" y="3264" width="96" height="32"/>
+  <object id="65" type="object" x="192" y="3264" width="96" height="32"/>
+  <object id="66" type="object" x="0" y="704" width="224" height="32"/>
+  <object id="67" type="object" x="64" y="1248" width="160" height="32"/>
+  <object id="68" type="object" x="160" y="1920" width="128" height="32"/>
+ </objectgroup>
+ <objectgroup name="border">
+  <object id="3" name="border" type="object" x="0" y="4096">
+   <polyline points="0,0 0,-4096 288,-4096 288,0 0,0"/>
+  </object>
+  <object id="7" name="spawn" type="object" x="142" y="15" width="32" height="32">
+   <properties>
+    <property name="awake" type="bool" value="true"/>
+    <property name="density" type="float" value="0"/>
+    <property name="friction" type="float" value="0"/>
+    <property name="isSensor" type="bool" value="true"/>
+    <property name="restitution" type="float" value="0"/>
+   </properties>
+  </object>
+  <object id="9" name="finish" type="object" x="128" y="4032" width="32" height="32">
+   <properties>
+    <property name="awake" type="bool" value="true"/>
+    <property name="density" type="float" value="0"/>
+    <property name="friction" type="float" value="0"/>
+    <property name="isSensor" type="bool" value="true"/>
+    <property name="restitution" type="float" value="0"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

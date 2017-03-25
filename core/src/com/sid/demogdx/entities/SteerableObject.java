@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.sid.demogdx.entities.airfight.SteerableLocation;
 import com.sid.demogdx.utils.SteeringUtils;
 
 /**
@@ -22,8 +21,9 @@ public class SteerableObject implements Steerable<Vector2> {
     private Vector2 position = new Vector2();
     private Vector2 linearVelocity = new Vector2();
     private float angularVelocity;
-    private boolean tagged;
 
+    private boolean tagged;
+    private float boundingRadius;
     private float maxLinearSpeed = 200.f;
     private float maxLinearAcceleration = 300.f;
     private float maxAngularSpeed = 5.f;

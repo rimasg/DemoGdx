@@ -1,4 +1,4 @@
-package com.sid.demogdx.interfaces;
+package com.sid.demogdx.utils;
 
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;

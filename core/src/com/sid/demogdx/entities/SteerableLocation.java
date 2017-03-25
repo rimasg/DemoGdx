@@ -1,4 +1,4 @@
-package com.sid.demogdx.entities.airfight;
+package com.sid.demogdx.entities;
 
 import com.badlogic.gdx.ai.utils.Location;
 import com.badlogic.gdx.math.Vector2;
@@ -9,12 +9,22 @@ import com.sid.demogdx.utils.SteeringUtils;
  */
 
 public class SteerableLocation implements Location<Vector2> {
-    private Vector2 position = new Vector2();
-    private float orientation = 0;
+
+    private Vector2 position;
+    private float orientation;
+
+    public SteerableLocation() {
+        this.position = new Vector2();
+        this.orientation = 0;
+    }
 
     @Override
     public Vector2 getPosition() {
         return position;
+    }
+
+    public void setPosition(Vector2 position) {
+        this.position = position;
     }
 
     @Override

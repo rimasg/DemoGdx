@@ -43,13 +43,6 @@ button_gold_pressed
   orig: 64, 32
   offset: 0, 0
   index: -1
-circle_rainbow
-  rotate: false
-  xy: 264, 167
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
 exit
   rotate: false
   xy: 304, 371
@@ -81,7 +74,7 @@ play
   index: -1
 popup_bg
   rotate: false
-  xy: 436, 403
+  xy: 264, 167
   size: 32, 32
   split: 5, 5, 5, 5
   orig: 32, 32
@@ -89,7 +82,7 @@ popup_bg
   index: -1
 pre_particle
   rotate: false
-  xy: 68, 2
+  xy: 436, 403
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

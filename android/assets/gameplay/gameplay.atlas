@@ -33,6 +33,13 @@ button_gold
   orig: 64, 32
   offset: 0, 0
   index: -1
+circle_rainbow
+  rotate: false
+  xy: 68, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 cyan_ball_border
   rotate: false
   xy: 260, 360
@@ -63,7 +70,7 @@ magenta_ball_border
   index: -1
 particle
   rotate: false
-  xy: 68, 2
+  xy: 102, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -77,7 +84,7 @@ particle-star
   index: -1
 particle_dark
   rotate: false
-  xy: 102, 2
+  xy: 136, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

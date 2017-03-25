@@ -57,7 +57,7 @@ public final class Box2DUtils {
                 break;
             case Polygon:
                 shape = new PolygonShape();
-                ((PolygonShape) shape).setAsBox(0.5f, 0.25f);
+                ((PolygonShape) shape).setAsBox(0.3f, 0.3f);
                 break;
             case Chain:
                 shape = new EdgeShape();

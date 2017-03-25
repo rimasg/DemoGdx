@@ -31,7 +31,7 @@ public class MainMenuScreen extends AbstractScreen {
     Label title, lblOverlay, lblGoToTarget, lblFallingStars, lblFallingBall, lblGravityBalls,
             lblBTree, lblFollowTheLine, lblCircleAround, lblDropStack, lblHitBall, lblFollowTheWave,
             lblAirFight, lblPhysicsBody;
-    TextButton btnGoToTarget;
+    TextButton btnGoToTarget, btnHunterAI;
     Image exitBtn;
 
     public MainMenuScreen(DemoGdx game) {
@@ -181,6 +181,16 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
+        btnHunterAI = new TextButton("Hunter AI", buttonStyle);
+        btnHunterAI.align(Align.center);
+        btnHunterAI.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                game.setScreen(game.getHunterAIScreen());
+            }
+        });
+
         lblOverlay = new Label("Overlay Menu", style);
         lblOverlay.setAlignment(Align.center);
         lblOverlay.addListener(new ClickListener(){
@@ -235,6 +245,8 @@ public class MainMenuScreen extends AbstractScreen {
         table.add(lblAirFight);
         table.row().pad(2.0f);
         table.add(lblPhysicsBody);
+        table.row().pad(2.0f);
+        table.add(btnHunterAI);
         table.row().pad(2.0f);
         table.add(lblOverlay);
         table.row().pad(10.0f);
