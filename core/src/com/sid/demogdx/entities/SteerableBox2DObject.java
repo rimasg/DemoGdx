@@ -27,9 +27,9 @@ public class SteerableBox2DObject implements Steerable<Vector2> {
     private float angularVelocity;
 
     private float boundingRadius;
-    private float maxLinearSpeed = 20.f;
+    private float maxLinearSpeed = 5.f;
 //    private float maxLinearSpeed = 200.f;
-    private float maxLinearAcceleration = 30.f;
+    private float maxLinearAcceleration = 10.f;
 //    private float maxLinearAcceleration = 300.f;
     private float maxAngularSpeed = 3.f;
 //    private float maxAngularSpeed = 5.f;

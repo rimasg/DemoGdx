@@ -1,6 +1,9 @@
 package com.sid.demogdx.screens;
 
 import com.badlogic.gdx.ai.steer.behaviors.PrioritySteering;
+import com.badlogic.gdx.ai.utils.Ray;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -27,11 +30,12 @@ import net.dermetfan.gdx.physics.box2d.ContactAdapter;
  */
 
 public class HunterAIScreen extends AbstractBox2dScreen {
-    TiledMap map;
-    OrthogonalTiledMapRenderer mapRenderer;
-    Box2DMapObjectParser box2DMapObjectParser;
+    private TiledMap map;
+    private OrthogonalTiledMapRenderer mapRenderer;
+    private Box2DMapObjectParser box2DMapObjectParser;
 
-    SteerableBox2DObject steerable;
+    private SteerableBox2DObject steerable;
+    private Ray<Vector2>[] steerableRays;
 
     private Body player;
     private Body spawn;
@@ -44,6 +48,7 @@ public class HunterAIScreen extends AbstractBox2dScreen {
     @Override
     public void show() {
         super.show();
+
         HunterCameraHelper.setCam(cam);
         world.setGravity(Vector2.Zero);
         world.setContactListener(new ContactAdapter(){
@@ -108,6 +113,16 @@ public class HunterAIScreen extends AbstractBox2dScreen {
         game.batch.begin();
         steerable.draw(game.batch);
         game.batch.end();
+
+        game.shapeRenderer.setProjectionMatrix(cam.combined);
+        game.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        game.shapeRenderer.setColor(Color.RED);
+        game.shapeRenderer.circle(player.getPosition().x, player.getPosition().y, steerable
+                .getBoundingRadius());
+        for (Ray<Vector2> steerableRay : steerableRays) {
+            game.shapeRenderer.line(steerableRay.start, steerableRay.end);
+        }
+        game.shapeRenderer.end();
     }
 
     @Override
@@ -118,18 +133,24 @@ public class HunterAIScreen extends AbstractBox2dScreen {
         HunterCameraHelper.reset();
     }
 
+    @Override
+    public void dispose() {
+        super.dispose();
+    }
+
     private void createWorld() {
         box2DMapObjectParser.load(world, map);
     }
 
     private void createSteerable() {
-        steerable = new SteerableBox2DObject(Assets.getRegion(RegionNames.HERO), player, 0.5f);
+        steerable = new SteerableBox2DObject(Assets.getRegion(RegionNames.HERO), player, 0.6f);
         final SteerableLocation location = new SteerableLocation();
         location.setPosition(finish.getPosition());
 
-        final PrioritySteering<Vector2> steering = new SeekAndAvoidSB()
-                .initSteering(world, steerable, location)
-                .getSteering();
+        final SeekAndAvoidSB seekAndAvoidSB = new SeekAndAvoidSB()
+                .initSteering(world, steerable, location);
+        final PrioritySteering<Vector2> steering = seekAndAvoidSB.getSteering();
+        steerableRays = seekAndAvoidSB.getRays();
         steerable.setSteeringBehavior(steering);
     }
 

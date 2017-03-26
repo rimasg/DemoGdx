@@ -129,6 +129,7 @@ public class DemoGdx extends Game {
     public void dispose() {
         super.dispose();
         batch.dispose();
+        shapeRenderer.dispose();
         Assets.dispose();
     }
 }
