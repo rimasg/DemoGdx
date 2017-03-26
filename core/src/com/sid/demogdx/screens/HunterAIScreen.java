@@ -6,8 +6,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -19,7 +21,6 @@ import com.sid.demogdx.entities.SteerableBox2DObject;
 import com.sid.demogdx.entities.SteerableLocation;
 import com.sid.demogdx.hunter.SeekAndAvoidSB;
 import com.sid.demogdx.utils.Box2DConfig;
-import com.sid.demogdx.utils.Box2DUtils;
 import com.sid.demogdx.utils.HunterCameraHelper;
 
 import net.dermetfan.gdx.physics.box2d.Box2DMapObjectParser;
@@ -30,6 +31,8 @@ import net.dermetfan.gdx.physics.box2d.ContactAdapter;
  */
 
 public class HunterAIScreen extends AbstractBox2dScreen {
+    private final float unitScale = Box2DConfig.unitScale32;
+
     private TiledMap map;
     private OrthogonalTiledMapRenderer mapRenderer;
     private Box2DMapObjectParser box2DMapObjectParser;
@@ -64,7 +67,7 @@ public class HunterAIScreen extends AbstractBox2dScreen {
         });
 
         map = Assets.getTiledMap(AssetDescriptors.MAP_HUNTER);
-        mapRenderer = new OrthogonalTiledMapRenderer(map, Box2DConfig.unitScale32, game.batch);
+        mapRenderer = new OrthogonalTiledMapRenderer(map, unitScale, game.batch);
         box2DMapObjectParser = new Box2DMapObjectParser(mapRenderer.getUnitScale());
         box2DMapObjectParser.setListener(new Box2DMapObjectParser.Listener.Adapter(){
 
@@ -78,22 +81,30 @@ public class HunterAIScreen extends AbstractBox2dScreen {
 
             @Override
             public MapObject createObject(MapObject mapObject) {
-                final MapProperties props = mapObject.getProperties();
-                float x = props.get(aliases.x, Float.class);
-                float y = props.get(aliases.y, Float.class);
+                if (mapObject instanceof RectangleMapObject) {
+                    final Rectangle rect = ((RectangleMapObject) mapObject).getRectangle();
+                    float halfWidth = rect.width / 2;
+                    float halfHeight = rect.height / 2;
 
-                x = Box2DConfig.pixelsToMeters(x, Box2DConfig.unitScale32);
-                y = Box2DConfig.pixelsToMeters(y, Box2DConfig.unitScale32);
-
-                if ("spawn".equals(mapObject.getName())) {
-                    createPlayerBody(x, y);
-                    HunterCameraHelper.setTarget(player);
-                }
-                if ("finish".equals(mapObject.getName())) {
-                    createFinishBody(x, y);
+                    final MapProperties props = mapObject.getProperties();
+                    props.put(aliases.x, props.get(aliases.x, Float.class) + halfWidth);
+                    props.put(aliases.y, props.get(aliases.y, Float.class) + halfHeight);
                 }
                 return super.createObject(mapObject);
             }
+
+            @Override
+            public void created(Body body, MapObject mapObject) {
+                super.created(body, mapObject);
+                if ("spawn".equals(mapObject.getName())) {
+                    player = body;
+                    HunterCameraHelper.setTarget(player);
+                }
+                if ("finish".equals(mapObject.getName())) {
+                    finish = body;
+                }
+            }
+
         });
 
         createWorld();
@@ -144,6 +155,7 @@ public class HunterAIScreen extends AbstractBox2dScreen {
 
     private void createSteerable() {
         steerable = new SteerableBox2DObject(Assets.getRegion(RegionNames.HERO), player, 0.6f);
+
         final SteerableLocation location = new SteerableLocation();
         location.setPosition(finish.getPosition());
 
@@ -151,14 +163,7 @@ public class HunterAIScreen extends AbstractBox2dScreen {
                 .initSteering(world, steerable, location);
         final PrioritySteering<Vector2> steering = seekAndAvoidSB.getSteering();
         steerableRays = seekAndAvoidSB.getRays();
+
         steerable.setSteeringBehavior(steering);
-    }
-
-    private void createPlayerBody(float x, float y) {
-        player = Box2DUtils.createBox2dPolygonBody(world, x, y);
-    }
-
-    private void createFinishBody(float x, float y) {
-        finish = Box2DUtils.createBox2dPolygonBody(world, x, y);
     }
 }

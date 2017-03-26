@@ -60,13 +60,14 @@
   <object id="3" name="border" type="object" x="0" y="4096">
    <polyline points="0,0 0,-4096 288,-4096 288,0 0,0"/>
   </object>
-  <object id="7" name="spawn" type="object" x="142" y="15" width="32" height="32">
+  <object id="7" name="spawn" type="object" x="132.833" y="37" width="22" height="22">
    <properties>
     <property name="awake" type="bool" value="true"/>
-    <property name="density" type="float" value="0"/>
-    <property name="friction" type="float" value="0"/>
-    <property name="isSensor" type="bool" value="true"/>
-    <property name="restitution" type="float" value="0"/>
+    <property name="bodyType" value="DynamicBody"/>
+    <property name="density" type="float" value="1"/>
+    <property name="friction" type="float" value="0.2"/>
+    <property name="isSensor" type="bool" value="false"/>
+    <property name="restitution" type="float" value="0.2"/>
    </properties>
   </object>
   <object id="9" name="finish" type="object" x="128" y="4032" width="32" height="32">

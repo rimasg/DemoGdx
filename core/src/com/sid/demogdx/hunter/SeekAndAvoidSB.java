@@ -26,7 +26,7 @@ public final class SeekAndAvoidSB {
     public SeekAndAvoidSB initSteering(World world, Steerable<Vector2> owner, Location<Vector2> target) {
         rayConfiguration = new CentralRayWithWhiskersConfiguration<>(owner, 1.f, 0.8f, 35 * MathUtils.degreesToRadians);
         RaycastCollisionDetector<Vector2> raycastCollisionDetector = new Box2dRaycastCollisionDetector(world);
-
+        //
         final RaycastObstacleAvoidance<Vector2> avoidanceSB = new RaycastObstacleAvoidance<>(owner, rayConfiguration, raycastCollisionDetector);
         //
         final Seek<Vector2> seekSB = new Seek<>(owner, target);
