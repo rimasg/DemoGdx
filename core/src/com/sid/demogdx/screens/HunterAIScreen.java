@@ -1,5 +1,6 @@
 package com.sid.demogdx.screens;
 
+import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.ai.steer.behaviors.PrioritySteering;
 import com.badlogic.gdx.ai.utils.Ray;
 import com.badlogic.gdx.graphics.Color;
@@ -19,7 +20,10 @@ import com.sid.demogdx.assets.Assets;
 import com.sid.demogdx.assets.RegionNames;
 import com.sid.demogdx.entities.SteerableBox2DObject;
 import com.sid.demogdx.entities.SteerableLocation;
+import com.sid.demogdx.hunter.EntityWorld;
 import com.sid.demogdx.hunter.SeekAndAvoidSB;
+import com.sid.demogdx.hunter.systems.PlayerSystem;
+import com.sid.demogdx.hunter.systems.RenderingSystem;
 import com.sid.demogdx.utils.Box2DConfig;
 import com.sid.demogdx.utils.HunterCameraHelper;
 
@@ -43,6 +47,8 @@ public class HunterAIScreen extends AbstractBox2dScreen {
     private Body player;
     private Body spawn;
     private Body finish;
+
+    PooledEngine engine;
 
     public HunterAIScreen(DemoGdx game) {
         super(game);
@@ -109,6 +115,11 @@ public class HunterAIScreen extends AbstractBox2dScreen {
 
         createWorld();
         createSteerable();
+
+        engine = new PooledEngine();
+        engine.addSystem(new PlayerSystem());
+        engine.addSystem(new RenderingSystem(game.batch, cam));
+        new EntityWorld(engine, player).create();
     }
 
     @Override
@@ -122,7 +133,8 @@ public class HunterAIScreen extends AbstractBox2dScreen {
         steerable.update(delta);
 
         game.batch.begin();
-        steerable.draw(game.batch);
+        // TODO: 2017.03.26 commented out to check how Ashley rendering system works
+//        steerable.draw(game.batch);
         game.batch.end();
 
         game.shapeRenderer.setProjectionMatrix(cam.combined);
@@ -134,6 +146,8 @@ public class HunterAIScreen extends AbstractBox2dScreen {
             game.shapeRenderer.line(steerableRay.start, steerableRay.end);
         }
         game.shapeRenderer.end();
+
+        engine.update(delta);
     }
 
     @Override
