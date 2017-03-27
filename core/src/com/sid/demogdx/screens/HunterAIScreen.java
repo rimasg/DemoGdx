@@ -115,7 +115,7 @@ public class HunterAIScreen extends AbstractBox2dScreen {
 
         createWorld();
         createSteerable();
-
+        //
         engine = new PooledEngine();
         engine.addSystem(new PlayerSystem());
         engine.addSystem(new RenderingSystem(game.batch, cam));
@@ -131,11 +131,6 @@ public class HunterAIScreen extends AbstractBox2dScreen {
         mapRenderer.setView(cam);
         mapRenderer.render();
         steerable.update(delta);
-
-        game.batch.begin();
-        // TODO: 2017.03.26 commented out to check how Ashley rendering system works
-//        steerable.draw(game.batch);
-        game.batch.end();
 
         game.shapeRenderer.setProjectionMatrix(cam.combined);
         game.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);

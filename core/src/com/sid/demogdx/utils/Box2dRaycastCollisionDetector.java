@@ -13,8 +13,7 @@ import com.badlogic.gdx.physics.box2d.World;
  * Created by Okis on 2017.03.25.
  */
 
-public class Box2dRaycastCollisionDetector implements RaycastCollisionDetector<Vector2> {
-
+public final class Box2dRaycastCollisionDetector implements RaycastCollisionDetector<Vector2> {
     World world;
     Box2dRaycastCallback callback;
 

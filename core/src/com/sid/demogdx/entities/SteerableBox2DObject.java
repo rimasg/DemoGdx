@@ -4,9 +4,7 @@ import com.badlogic.gdx.ai.steer.Steerable;
 import com.badlogic.gdx.ai.steer.SteeringAcceleration;
 import com.badlogic.gdx.ai.steer.SteeringBehavior;
 import com.badlogic.gdx.ai.utils.Location;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.sid.demogdx.utils.SteeringUtils;
@@ -242,18 +240,5 @@ public class SteerableBox2DObject implements Steerable<Vector2> {
                 body.setAngularVelocity(maxAngularVelocity);
             }
         }
-    }
-
-    public void draw(SpriteBatch batch) {
-        final Vector2 pos = body.getPosition();
-        final int w = 1;
-//        final int w = region.getRegionWidth();
-        final int h = 1;
-//        final int h = region.getRegionHeight();
-        final float ox = w / 2f;
-        final float oy = h / 2f;
-
-        batch.draw(region, pos.x - ox, pos.y - oy, ox, oy, w, h, 1f, 1f, body.getAngle() * MathUtils
-                .radiansToDegrees);
     }
 }

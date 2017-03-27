@@ -15,7 +15,6 @@ import com.badlogic.gdx.physics.box2d.World;
  */
 public final class Box2DUtils {
     private static final String TAG = "Box2DUtils";
-    private Box2DUtils() { }
 
     public static Body createBox2dCircleBody(World world, float posX, float posY) {
         return createBox2dBody(world, posX, posY, null, Shape.Type.Circle);
@@ -99,4 +98,6 @@ public final class Box2DUtils {
         shape.dispose();
         return body;
     }
+
+    private Box2DUtils() { }
 }

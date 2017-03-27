@@ -12,7 +12,7 @@ import net.dermetfan.gdx.physics.box2d.Box2DMapObjectParser;
 /**
  * Created by Okis on 2016.03.21 @ 21:07.
  */
-public class Box2DMapObjectParserListenerAdapter extends Box2DMapObjectParser.Listener.Adapter {
+public final class Box2DMapObjectParserListenerAdapter extends Box2DMapObjectParser.Listener.Adapter {
     Box2DMapObjectParser box2DMapObjectParser;
 
     public Box2DMapObjectParserListenerAdapter(Box2DMapObjectParser box2DMapObjectParser) {

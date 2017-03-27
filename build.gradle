@@ -5,6 +5,7 @@ buildscript {
         jcenter()
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url 'https://repo.sebank.se/artifactory/plugins-release' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.0'
@@ -27,9 +28,11 @@ allprojects {
     }
 
     repositories {
+        jcenter()
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+        maven { url 'https://repo.sebank.se/artifactory/plugins-release' }
     }
 }
 

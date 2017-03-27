@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
  */
 
 public final class FontsFactory {
-
     /**
      * Default font color {@link Color#WHITE}
      * @param fontName Font name {@link FontName}
@@ -48,4 +47,6 @@ public final class FontsFactory {
             this.fontName = fontName;
         }
     }
+
+    private FontsFactory() { }
 }

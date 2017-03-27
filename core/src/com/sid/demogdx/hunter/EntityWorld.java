@@ -23,6 +23,10 @@ public class EntityWorld {
     }
 
     public void create() {
+        createPlayer();
+    }
+
+    private void createPlayer() {
         final Entity playerEntity = engine.createEntity();
 
         final PlayerComponent plc = engine.createComponent(PlayerComponent.class);

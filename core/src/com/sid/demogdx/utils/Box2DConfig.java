@@ -4,8 +4,6 @@ package com.sid.demogdx.utils;
  * Created by Okis on 2015.07.08.
  */
 public final class Box2DConfig {
-    private Box2DConfig() { }
-
     public static final boolean DEBUG = false;
     public static final String DEBUG_TEXT = "Running Circle";
     // Samsung S4 Mini resolution
@@ -27,4 +25,6 @@ public final class Box2DConfig {
     public static int metersToPixels(float meters, float scale) {
         return (int) (meters / scale);
     }
+
+    private Box2DConfig() { }
 }

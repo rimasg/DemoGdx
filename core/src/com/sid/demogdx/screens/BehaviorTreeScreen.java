@@ -4,8 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ai.GdxAI;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.sid.demogdx.DemoGdx;
+import com.sid.demogdx.assets.Assets;
+import com.sid.demogdx.assets.RegionNames;
 import com.sid.demogdx.btree.npc.NPC;
 
 import java.nio.ByteBuffer;
@@ -17,7 +19,7 @@ import java.nio.ByteOrder;
 public class BehaviorTreeScreen extends AbstractScreen {
     public static final float AI_STEP_DELAY = 1.5f;
     NPC npc;
-    Texture badlogic;
+    TextureRegion badlogic;
 
     public BehaviorTreeScreen(DemoGdx game) {
         super(game);
@@ -27,7 +29,7 @@ public class BehaviorTreeScreen extends AbstractScreen {
     public void show() {
         super.show();
         npc = new NPC();
-        badlogic = new Texture("badlogic.jpg");
+        badlogic = Assets.getRegion(RegionNames.HERO);
     }
 
     private float runDelayAccumulator;
@@ -101,9 +103,4 @@ public class BehaviorTreeScreen extends AbstractScreen {
         }
     }
 
-    @Override
-    public void dispose() {
-        super.dispose();
-        badlogic.dispose();
-    }
 }

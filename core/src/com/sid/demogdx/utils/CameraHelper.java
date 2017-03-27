@@ -15,8 +15,6 @@ public final class CameraHelper {
     private static GameObject target;
     private static Vector3 targetVec = new Vector3();
 
-    private CameraHelper() { }
-
     public static void setCam(Camera cam) {
         CameraHelper.cam = cam;
     }
@@ -37,4 +35,6 @@ public final class CameraHelper {
             cam.update();
         }
     }
+
+    private CameraHelper() { }
 }
