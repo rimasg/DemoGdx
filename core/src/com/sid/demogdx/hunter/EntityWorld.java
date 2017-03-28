@@ -4,10 +4,17 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.ai.steer.behaviors.PrioritySteering;
 import com.badlogic.gdx.ai.utils.Ray;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.World;
+import com.sid.demogdx.DemoGdx;
+import com.sid.demogdx.assets.AssetDescriptors;
 import com.sid.demogdx.assets.Assets;
 import com.sid.demogdx.assets.RegionNames;
 import com.sid.demogdx.entities.SteerableBox2DObject;
@@ -16,7 +23,10 @@ import com.sid.demogdx.hunter.components.Box2DMapParserComponent;
 import com.sid.demogdx.hunter.components.PlayerComponent;
 import com.sid.demogdx.hunter.components.TextureComponent;
 import com.sid.demogdx.hunter.components.TransformComponent;
+import com.sid.demogdx.utils.Box2DConfig;
+import com.sid.demogdx.utils.HunterCameraHelper;
 
+import net.dermetfan.gdx.physics.box2d.Box2DMapObjectParser;
 import net.dermetfan.gdx.physics.box2d.ContactAdapter;
 
 /**
@@ -24,26 +34,27 @@ import net.dermetfan.gdx.physics.box2d.ContactAdapter;
  */
 
 public class EntityWorld {
+    private DemoGdx game;
     private World world;
     private PooledEngine engine;
     private Body player;
     private Body finish;
+
     private SteerableBox2DObject steerable;
     private Ray<Vector2>[] steerableRays;
 
-    public EntityWorld(World world, PooledEngine engine, Body player, Body finish) {
+    public EntityWorld(DemoGdx game, World world, PooledEngine engine) {
+        this.game = game;
         this.world = world;
         this.engine = engine;
-        this.player = player;
-        this.finish = finish;
 
         create();
     }
 
     private void create() {
         createWorld();
-        createPlayer();
         createBox2DMapParser();
+        createPlayer();
     }
 
     private void createWorld() {
@@ -83,6 +94,46 @@ public class EntityWorld {
         final Entity entity = engine.createEntity();
 
         final Box2DMapParserComponent parserc = engine.createComponent(Box2DMapParserComponent.class);
+        parserc.map = Assets.getTiledMap(AssetDescriptors.MAP_HUNTER);
+        parserc.mapRenderer = new OrthogonalTiledMapRenderer(parserc.map, Box2DConfig.unitScale32, game.batch);
+        parserc.box2DMapObjectParser = new Box2DMapObjectParser(parserc.mapRenderer.getUnitScale());
+        parserc.box2DMapObjectParser.setListener(new Box2DMapObjectParser.Listener.Adapter() {
+
+            Box2DMapObjectParser.Aliases aliases;
+
+            @Override
+            public void init(Box2DMapObjectParser parser) {
+                super.init(parser);
+                aliases = parser.getAliases();
+            }
+
+            @Override
+            public MapObject createObject(MapObject mapObject) {
+                if (mapObject instanceof RectangleMapObject) {
+                    final Rectangle rect = ((RectangleMapObject) mapObject).getRectangle();
+                    float halfWidth = rect.width / 2;
+                    float halfHeight = rect.height / 2;
+
+                    final MapProperties props = mapObject.getProperties();
+                    props.put(aliases.x, props.get(aliases.x, Float.class) + halfWidth);
+                    props.put(aliases.y, props.get(aliases.y, Float.class) + halfHeight);
+                }
+                return super.createObject(mapObject);
+            }
+
+            @Override
+            public void created(Body body, MapObject mapObject) {
+                super.created(body, mapObject);
+                if ("spawn".equals(mapObject.getName())) {
+                    player = body;
+                    HunterCameraHelper.setTarget(body);
+                }
+                if ("finish".equals(mapObject.getName())) {
+                    finish = body;
+                }
+            }
+        });
+        parserc.box2DMapObjectParser.load(world, parserc.map);
 
         entity.add(parserc);
 

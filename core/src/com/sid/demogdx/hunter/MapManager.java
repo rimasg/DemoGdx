@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.assets.AssetDescriptors;
 import com.sid.demogdx.assets.Assets;
+import com.sid.demogdx.hunter.systems.Box2DMapParserSystem;
 import com.sid.demogdx.utils.Box2DConfig;
 import com.sid.demogdx.utils.HunterCameraHelper;
 
@@ -27,9 +28,9 @@ public class MapManager implements Disposable{
 
     private DemoGdx game;
     private World world;
-    private Box2DMapObjectParserCallback callback;
+    private Box2DMapParserSystem.Box2DMapParserCallback callback;
 
-    public MapManager(DemoGdx game, World world, Box2DMapObjectParserCallback callback) {
+    public MapManager(DemoGdx game, World world, Box2DMapParserSystem.Box2DMapParserCallback callback) {
         this.game = game;
         this.world = world;
         this.callback = callback;
@@ -84,11 +85,5 @@ public class MapManager implements Disposable{
     @Override
     public void dispose() {
         mapRenderer.dispose();
-        map.dispose();
-    }
-
-    public interface Box2DMapObjectParserCallback {
-        public void setPlayer(Body body);
-        public void setFinish(Body body);
     }
 }

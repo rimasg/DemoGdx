@@ -14,5 +14,4 @@ public class Box2DMapParserComponent implements Component {
     public TiledMap map;
     public OrthogonalTiledMapRenderer mapRenderer;
     public Box2DMapObjectParser box2DMapObjectParser;
-    // TODO: 2017-03-27 implement this and ParserSystem
 }
