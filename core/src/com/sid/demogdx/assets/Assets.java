@@ -35,10 +35,13 @@ public final class Assets {
         am.load(AssetDescriptors.SKIN);
         am.load(AssetDescriptors.TEXTURE_ATLAS);
         am.load(AssetDescriptors.SOUND_COLLISION);
+        am.load(AssetDescriptors.MUSIC_BG);
+
         am.load(AssetDescriptors.PE_EXPLOSION);
         am.load(AssetDescriptors.PE_GRAVITY_EXPLOSION);
         am.load(AssetDescriptors.PE_STAR_TRAIL);
         am.load(AssetDescriptors.PE_SIMPLE_TRAIL);
+
         am.load(AssetDescriptors.MAP_HUNTER);
     }
 

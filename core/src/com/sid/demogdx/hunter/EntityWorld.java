@@ -20,9 +20,11 @@ import com.sid.demogdx.assets.RegionNames;
 import com.sid.demogdx.entities.SteerableBox2DObject;
 import com.sid.demogdx.entities.SteerableLocation;
 import com.sid.demogdx.hunter.components.Box2DMapParserComponent;
+import com.sid.demogdx.hunter.components.ObstacleComponent;
 import com.sid.demogdx.hunter.components.PlayerComponent;
 import com.sid.demogdx.hunter.components.TextureComponent;
 import com.sid.demogdx.hunter.components.TransformComponent;
+import com.sid.demogdx.hunter.systems.Box2DMapParserSystem;
 import com.sid.demogdx.utils.Box2DConfig;
 import com.sid.demogdx.utils.HunterCameraHelper;
 
@@ -37,16 +39,18 @@ public class EntityWorld {
     private DemoGdx game;
     private World world;
     private PooledEngine engine;
+    private Box2DMapParserSystem.Box2DMapParserCallback parserCallback;
     private Body player;
     private Body finish;
 
     private SteerableBox2DObject steerable;
     private Ray<Vector2>[] steerableRays;
 
-    public EntityWorld(DemoGdx game, World world, PooledEngine engine) {
+    public EntityWorld(DemoGdx game, World world, PooledEngine engine, Box2DMapParserSystem.Box2DMapParserCallback parserCallback) {
         this.game = game;
         this.world = world;
         this.engine = engine;
+        this.parserCallback = parserCallback;
 
         create();
     }
@@ -90,6 +94,23 @@ public class EntityWorld {
         engine.addEntity(entity);
     }
 
+    private void createObstacle(Body body) {
+        final Entity entity = engine.createEntity();
+
+        final ObstacleComponent obc = engine.createComponent(ObstacleComponent.class);
+        final TextureComponent txc = engine.createComponent(TextureComponent.class);
+        final TransformComponent trc = engine.createComponent(TransformComponent.class);
+
+        obc.body = body;
+        txc.region = Assets.getRegion(RegionNames.STAR);
+
+        entity.add(obc);
+        entity.add(txc);
+        entity.add(trc);
+
+        engine.addEntity(entity);
+    }
+
     private void createBox2DMapParser() {
         final Entity entity = engine.createEntity();
 
@@ -126,10 +147,15 @@ public class EntityWorld {
                 super.created(body, mapObject);
                 if ("spawn".equals(mapObject.getName())) {
                     player = body;
+                    parserCallback.setPlayer(player);
                     HunterCameraHelper.setTarget(body);
                 }
                 if ("finish".equals(mapObject.getName())) {
                     finish = body;
+                    parserCallback.setFinish(finish);
+                }
+                if ("obstacle".equals(mapObject.getName())) {
+                    createObstacle(body);
                 }
             }
         });
