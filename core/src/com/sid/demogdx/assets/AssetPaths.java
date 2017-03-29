@@ -12,7 +12,7 @@ public final class AssetPaths {
     static final String SOUND_COLLISION = PATH_SOUND + "click.ogg";
 
     private static final String PATH_MUSIC = "music/";
-    static final String MUSIC_BG = PATH_MUSIC + "the_dojo_short.wav";
+    static final String MUSIC_BG = PATH_MUSIC + "setuniman_guitar_loop.wav";
 
     private static final String PATH_PARTICLE = "particles/";
     static final String PE_EXPLOSION = PATH_PARTICLE + "explosion.p";

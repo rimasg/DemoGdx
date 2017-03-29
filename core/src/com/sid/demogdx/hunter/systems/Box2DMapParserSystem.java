@@ -4,7 +4,6 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Disposable;
 import com.sid.demogdx.hunter.components.Box2DMapParserComponent;
 import com.sid.demogdx.utils.Mappers;
@@ -35,8 +34,4 @@ public class Box2DMapParserSystem extends IteratingSystem implements Disposable 
         parser.mapRenderer.dispose();
     }
 
-    public interface Box2DMapParserCallback {
-        public void setPlayer(Body body);
-        public void setFinish(Body body);
-    }
 }
