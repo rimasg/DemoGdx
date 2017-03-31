@@ -8,6 +8,11 @@ public final class AssetPaths {
     static final String SKIN_JSON = "ui/skin.json";
     static final String TEXTURE_ATLAS = "gameplay/gameplay.atlas";
 
+    private static final String PATH_FONT = "ui/fonts/";
+    static final String FONT_FREE_MONO_BOLD = PATH_FONT + "FreeMonoBold.ttf";
+    static final String FONT_BLACK = PATH_FONT + "black.fnt";
+    static final String FONT_WHITE = PATH_FONT + "white.fnt";
+
     private static final String PATH_SOUND = "sounds/";
     static final String SOUND_COLLISION = PATH_SOUND + "click.ogg";
 

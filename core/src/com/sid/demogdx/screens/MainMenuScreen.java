@@ -2,6 +2,7 @@ package com.sid.demogdx.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -12,6 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.sid.demogdx.DemoGdx;
+import com.sid.demogdx.assets.AssetDescriptors;
+import com.sid.demogdx.assets.AssetsNew;
 import com.sid.demogdx.screens.actors.OverlayMenuActor;
 import com.sid.demogdx.utils.Box2DConfig;
 
@@ -20,9 +23,6 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveBy;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveTo;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveToAligned;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
-import static com.sid.demogdx.utils.FontsFactory.FontName;
-import static com.sid.demogdx.utils.FontsFactory.FontSize;
-import static com.sid.demogdx.utils.FontsFactory.createFont;
 
 /**
  * Created by SID on 2016-03-03 @ 18:09.
@@ -44,7 +44,8 @@ public class MainMenuScreen extends AbstractScreen {
         final Table table = new Table(skin);
         table.setBounds(0, 0 , Box2DConfig.WWP, Box2DConfig.WHP);
 
-        Label.LabelStyle style = new Label.LabelStyle(createFont(FontName.FREE_MONO_BOLD, FontSize.SIZE_32), Color.WHITE);
+        final BitmapFont font = AssetsNew.inst().getFont(AssetDescriptors.FONT_FREE_MONO_BOLD_32);
+        Label.LabelStyle style = new Label.LabelStyle(font, Color.WHITE);
         style.background = skin.getDrawable("button_gold");
         title = new Label("Mover", style);
         title.setAlignment(Align.center);
@@ -58,7 +59,7 @@ public class MainMenuScreen extends AbstractScreen {
                 skin.getDrawable("button_gold"),
                 skin.getDrawable("button_gold_pressed"),
                 skin.getDrawable("button_gold"),
-                createFont(FontName.FREE_MONO_BOLD, FontSize.SIZE_32)
+                font
         );
         btnGoToTarget = new TextButton("Go to Target", buttonStyle);
         lblGoToTarget = new Label("Go to Target", style);
