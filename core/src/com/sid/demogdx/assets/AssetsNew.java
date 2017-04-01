@@ -2,7 +2,6 @@ package com.sid.demogdx.assets;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.BitmapFontLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -11,9 +10,11 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
+import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.I18NBundle;
 
 /**
  * Created by SID on 2017-03-30.
@@ -30,9 +31,7 @@ public final class AssetsNew {
     }
 
     public static synchronized AssetsNew inst() {
-        if (inst == null) {
-            inst = new AssetsNew();
-        }
+        if (inst == null) inst = new AssetsNew();
         return inst;
     }
 
@@ -40,14 +39,19 @@ public final class AssetsNew {
         final InternalFileHandleResolver resolver = new InternalFileHandleResolver();
         am.setLoader(TiledMap.class, new TmxMapLoader(resolver));
         am.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(resolver));
-        am.setLoader(BitmapFont.class, new BitmapFontLoader(resolver));
+        am.setLoader(BitmapFont.class, ".ttf", new FreetypeFontLoader(resolver));
     }
 
     private void load() {
         am.load(AssetDescriptors.SKIN);
         am.load(AssetDescriptors.TEXTURE_ATLAS);
-        am.load(AssetDescriptors.FONT_FREE_MONO_BOLD_32);
-        // TODO: 2017-03-31 add other fonts loading
+
+        am.load(AssetDescriptors.FONT_BLACK);
+        am.load(AssetDescriptors.FONT_WHITE);
+        am.load(AssetDescriptors.FONT_OPEN_SANS_REGULAR_32);
+
+        am.load(AssetDescriptors.I18N);
+
         am.load(AssetDescriptors.SOUND_COLLISION);
         am.load(AssetDescriptors.MUSIC_BG);
 
@@ -73,6 +77,10 @@ public final class AssetsNew {
 
     public BitmapFont getFont(AssetDescriptor<BitmapFont> descriptor) {
         return am.get(descriptor);
+    }
+
+    public I18NBundle getStrings() {
+        return am.get(AssetDescriptors.I18N);
     }
 
     public Sound getSound(AssetDescriptor<Sound> descriptor) {
@@ -105,5 +113,6 @@ public final class AssetsNew {
 
     public void dispose() {
         am.dispose();
+        inst = null;
     }
 }

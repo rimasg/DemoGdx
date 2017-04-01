@@ -10,8 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-
-import static com.sid.demogdx.assets.FontNames.*;
+import com.badlogic.gdx.utils.I18NBundle;
 
 /**
  * Created by SID on 2016-12-01.
@@ -27,13 +26,21 @@ public final class AssetDescriptors {
     private static final Class<TiledMap> TILED_MAP_CLASS = TiledMap.class;
 
     private static final ParticleEffectLoader.ParticleEffectParameter PE_PARAMS = new ParticleEffectLoader.ParticleEffectParameter();
-    public static final FreetypeFontLoader.FreeTypeFontLoaderParameter FONT_PARAM_FREE_MONO_BOLD_32
-            = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
+    public static final FreetypeFontLoader.FreeTypeFontLoaderParameter FONT_PARAM01 = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
 
     public static final AssetDescriptor<Skin> SKIN = new
             AssetDescriptor<>(AssetPaths.SKIN_JSON, SKIN_CLASS);
     public static final AssetDescriptor<TextureAtlas> TEXTURE_ATLAS = new
             AssetDescriptor<>(AssetPaths.TEXTURE_ATLAS, TEXTURE_ATLAS_CLASS);
+
+    public static final AssetDescriptor<BitmapFont> FONT_BLACK = new AssetDescriptor<>
+            (AssetPaths.FONT_BLACK, BITMAP_FONT_CLASS);
+    public static final AssetDescriptor<BitmapFont> FONT_WHITE = new AssetDescriptor<>
+            (AssetPaths.FONT_WHITE, BITMAP_FONT_CLASS);
+    public static final AssetDescriptor<BitmapFont> FONT_OPEN_SANS_REGULAR_32 = new
+            AssetDescriptor<>(AssetPaths.FONT_OPEN_SANS_REGULAR, BITMAP_FONT_CLASS, FONT_PARAM01);
+
+    public static final AssetDescriptor<I18NBundle> I18N = new AssetDescriptor<>(AssetPaths.I18N, I18NBundle.class);
 
     public static final AssetDescriptor<Sound> SOUND_COLLISION = new
             AssetDescriptor<>(AssetPaths.SOUND_COLLISION, SOUND_CLASS);
@@ -52,20 +59,11 @@ public final class AssetDescriptors {
     public static final AssetDescriptor<TiledMap> MAP_HUNTER = new
             AssetDescriptor<>(AssetPaths.MAP_HUNTER, TILED_MAP_CLASS);
 
-    public static final AssetDescriptor<BitmapFont> FONT_BLACK = new AssetDescriptor<>
-            (AssetPaths.FONT_BLACK, BITMAP_FONT_CLASS);
-    public static final AssetDescriptor<BitmapFont> FONT_WHITE = new AssetDescriptor<>
-            (AssetPaths.FONT_WHITE, BITMAP_FONT_CLASS);
-    public static final AssetDescriptor<BitmapFont> FONT_FREE_MONO_BOLD_32 = new
-            AssetDescriptor<>(AssetPaths.FONT_FREE_MONO_BOLD, BITMAP_FONT_CLASS, FONT_PARAM_FREE_MONO_BOLD_32);
-
     static {
         PE_PARAMS.atlasFile = AssetPaths.TEXTURE_ATLAS;
 
-        FONT_PARAM_FREE_MONO_BOLD_32.fontFileName = AssetPaths.FONT_FREE_MONO_BOLD;
-        FONT_PARAM_FREE_MONO_BOLD_32.fontParameters.size = FontSize.SIZE_32.size();
-
-
+        FONT_PARAM01.fontFileName = AssetPaths.FONT_OPEN_SANS_REGULAR;
+        FONT_PARAM01.fontParameters.size = 32;
     }
 
     private AssetDescriptors() { }

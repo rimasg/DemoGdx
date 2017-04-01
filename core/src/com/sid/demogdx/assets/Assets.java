@@ -43,8 +43,6 @@ public final class Assets {
         am.load(AssetDescriptors.PE_SIMPLE_TRAIL);
 
         am.load(AssetDescriptors.MAP_HUNTER);
-
-
     }
 
     public static Skin getSkin() {

@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.I18NBundle;
 import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.assets.AssetDescriptors;
 import com.sid.demogdx.assets.AssetsNew;
@@ -44,10 +45,12 @@ public class MainMenuScreen extends AbstractScreen {
         final Table table = new Table(skin);
         table.setBounds(0, 0 , Box2DConfig.WWP, Box2DConfig.WHP);
 
-        final BitmapFont font = AssetsNew.inst().getFont(AssetDescriptors.FONT_FREE_MONO_BOLD_32);
+        final BitmapFont font = AssetsNew.inst().getFont(AssetDescriptors.FONT_OPEN_SANS_REGULAR_32);
+        final I18NBundle strings = AssetsNew.inst().getStrings();
         Label.LabelStyle style = new Label.LabelStyle(font, Color.WHITE);
         style.background = skin.getDrawable("button_gold");
-        title = new Label("Mover", style);
+        title = new Label(strings.get("gameName"), style);
+//        title = new Label("Mover", style);
         title.setAlignment(Align.center);
         // TODO: 2016.11.09 sequence behave strangle, the 1st move action not executed, this is why I have added delay(0.001f)
         title.addAction(sequence(
