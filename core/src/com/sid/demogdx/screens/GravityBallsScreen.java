@@ -121,18 +121,18 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
 
     private void loadBallsRegions() {
         if (ballsRegions.size > 0) return; /* skip loading assets if they're loaded */
-        ballsRegions.add(Assets.getRegion(RegionNames.RED_BALL_BORDER));
-        ballsRegions.add(Assets.getRegion(RegionNames.GREEN_BALL_BORDER));
-        ballsRegions.add(Assets.getRegion(RegionNames.BLUE_BALL_BORDER));
-        ballsRegions.add(Assets.getRegion(RegionNames.YELLOW_BALL_BORDER));
-        ballsRegions.add(Assets.getRegion(RegionNames.CYAN_BALL_BORDER));
-        ballsRegions.add(Assets.getRegion(RegionNames.MAGENTA_BALL_BORDER));
+        ballsRegions.add(Assets.inst().getRegion(RegionNames.RED_BALL_BORDER));
+        ballsRegions.add(Assets.inst().getRegion(RegionNames.GREEN_BALL_BORDER));
+        ballsRegions.add(Assets.inst().getRegion(RegionNames.BLUE_BALL_BORDER));
+        ballsRegions.add(Assets.inst().getRegion(RegionNames.YELLOW_BALL_BORDER));
+        ballsRegions.add(Assets.inst().getRegion(RegionNames.CYAN_BALL_BORDER));
+        ballsRegions.add(Assets.inst().getRegion(RegionNames.MAGENTA_BALL_BORDER));
     }
 
     private void loadParticles() {
 //        particleEffect = new ParticleEffect();
 //        particleEffect.load(Gdx.files.internal("particles/gravity_explosion.p"), Gdx.files.internal("textures"));
-        particleEffect = Assets.getParticleEffect(AssetDescriptors.PE_GRAVITY_EXPLOSION);
+        particleEffect = Assets.inst().getParticleEffect(AssetDescriptors.PE_GRAVITY_EXPLOSION);
         particleEffectPool = new ParticleEffectPool(particleEffect, 20, 100);
     }
 
@@ -241,7 +241,7 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
     }
 
     private void playCollisionSound() {
-        Assets.getSound(AssetDescriptors.SOUND_COLLISION).play();
+        Assets.inst().getSound(AssetDescriptors.SOUND_COLLISION).play();
     }
 
     private void resetVars() {

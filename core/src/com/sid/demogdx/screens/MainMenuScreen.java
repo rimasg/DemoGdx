@@ -15,7 +15,8 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.assets.AssetDescriptors;
-import com.sid.demogdx.assets.AssetsNew;
+import com.sid.demogdx.assets.Assets;
+import com.sid.demogdx.assets.RegionNames;
 import com.sid.demogdx.screens.actors.OverlayMenuActor;
 import com.sid.demogdx.utils.Box2DConfig;
 
@@ -29,10 +30,20 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
  * Created by SID on 2016-03-03 @ 18:09.
  */
 public class MainMenuScreen extends AbstractScreen {
-    Label title, lblOverlay, lblGoToTarget, lblFallingStars, lblFallingBall, lblGravityBalls,
-            lblBTree, lblFollowTheLine, lblCircleAround, lblDropStack, lblHitBall, lblFollowTheWave,
-            lblAirFight, lblPhysicsBody;
-    TextButton btnGoToTarget, btnHunterAI;
+    Label title;
+    Label lblOverlay;
+    Label lblGoToTarget;
+    Label lblFallingStars;
+    Label lblFallingBall;
+    Label lblGravityBalls;
+    Label lblBTree;
+    Label lblCircleAround;
+    Label lblDropStack;
+    Label lblHitBall;
+    Label lblFollowTheWave;
+    Label lblAirFight;
+    Label lblPhysicsBody;
+    TextButton btnHunterAI;
     Image exitBtn;
 
     public MainMenuScreen(DemoGdx game) {
@@ -45,11 +56,11 @@ public class MainMenuScreen extends AbstractScreen {
         final Table table = new Table(skin);
         table.setBounds(0, 0 , Box2DConfig.WWP, Box2DConfig.WHP);
 
-        final BitmapFont font = AssetsNew.inst().getFont(AssetDescriptors.FONT_OPEN_SANS_REGULAR_26);
-        final I18NBundle strings = AssetsNew.inst().getStrings();
+        final BitmapFont font = Assets.inst().getFont(AssetDescriptors.FONT_OPEN_SANS_REGULAR_26);
+        final I18NBundle strings = Assets.inst().getStrings();
         Label.LabelStyle style = new Label.LabelStyle(font, Color.WHITE);
-        style.background = skin.getDrawable("button_gold");
-        title = new Label(strings.get("gameName"), style);
+        style.background = skin.getDrawable(RegionNames.BTN_GOLD);
+        title = new Label(strings.get("gameName"), skin, "red");
 //        title = new Label("Mover", style);
         title.setAlignment(Align.center);
         // TODO: 2016.11.09 sequence behave strangle, the 1st move action not executed, this is why I have added delay(0.001f)
@@ -58,8 +69,7 @@ public class MainMenuScreen extends AbstractScreen {
                 moveBy(0, stage.getHeight()),
                 moveBy(0, -stage.getHeight(), 1.5f, Interpolation.bounce)));
 
-        btnGoToTarget = new TextButton("Go to Target", skin, "blue");
-        lblGoToTarget = new Label("Go to Target", style);
+        lblGoToTarget = new Label("Go to Target", skin, "blue");
         lblGoToTarget.setAlignment(Align.center);
         lblGoToTarget.addListener(new ClickListener(){
             @Override
@@ -69,7 +79,7 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
-        lblFallingStars = new Label("Falling Stars", style);
+        lblFallingStars = new Label("Falling Stars", skin, "blue");
         lblFallingStars.setAlignment(Align.center);
         lblFallingStars.addListener(new ClickListener(){
             @Override
@@ -79,7 +89,7 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
-        lblFallingBall = new Label("Falling Ball", style);
+        lblFallingBall = new Label("Falling Ball", skin, "blue");
         lblFallingBall.setAlignment(Align.center);
         lblFallingBall.addListener(new ClickListener(){
             @Override
@@ -89,7 +99,7 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
-        lblGravityBalls = new Label("Gravity Ball", style);
+        lblGravityBalls = new Label("Gravity Ball", skin, "blue");
         lblGravityBalls.setAlignment(Align.center);
         lblGravityBalls.addListener(new ClickListener(){
             @Override
@@ -99,7 +109,7 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
-        lblBTree = new Label("BehaviorTree", style);
+        lblBTree = new Label("BehaviorTree", skin, "blue");
         lblBTree.setAlignment(Align.center);
         lblBTree.addListener(new ClickListener(){
             @Override
@@ -109,17 +119,7 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
-        lblFollowTheLine = new Label("Follow the Line", style);
-        lblFollowTheLine.setAlignment(Align.center);
-        lblFollowTheLine.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                game.setScreen(game.getFollowTheLineScreen());
-            }
-        });
-
-        lblCircleAround = new Label("Circle Around", style);
+        lblCircleAround = new Label("Circle Around", skin, "blue");
         lblCircleAround.setAlignment(Align.center);
         lblCircleAround.addListener(new ClickListener(){
             @Override
@@ -129,7 +129,7 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
-        lblDropStack = new Label("Drop Stack", style);
+        lblDropStack = new Label("Drop Stack", skin, "blue");
         lblDropStack.setAlignment(Align.center);
         lblDropStack.addListener(new ClickListener(){
             @Override
@@ -139,7 +139,7 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
-        lblHitBall = new Label("Hit a Ball", style);
+        lblHitBall = new Label("Hit a Ball", skin, "blue");
         lblHitBall.setAlignment(Align.center);
         lblHitBall.addListener(new ClickListener(){
             @Override
@@ -149,7 +149,7 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
-        lblFollowTheWave = new Label("Follow The Wave", style);
+        lblFollowTheWave = new Label("Follow The Wave", skin, "blue");
         lblFollowTheWave.setAlignment(Align.center);
         lblFollowTheWave.addListener(new ClickListener(){
             @Override
@@ -159,7 +159,7 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
-        lblAirFight = new Label("Air Fight", style);
+        lblAirFight = new Label("Air Fight", skin, "blue");
         lblAirFight.setAlignment(Align.center);
         lblAirFight.addListener(new ClickListener(){
             @Override
@@ -169,7 +169,7 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
-        lblPhysicsBody = new Label("Physics Body", style);
+        lblPhysicsBody = new Label("Physics Body", skin, "blue");
         lblPhysicsBody.setAlignment(Align.center);
         lblPhysicsBody.addListener(new ClickListener(){
             @Override
@@ -189,7 +189,7 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
-        lblOverlay = new Label("Overlay Menu", style);
+        lblOverlay = new Label("Overlay Menu", skin, "blue");
         lblOverlay.setAlignment(Align.center);
         lblOverlay.addListener(new ClickListener(){
             @Override
@@ -213,13 +213,11 @@ public class MainMenuScreen extends AbstractScreen {
         });
 
         table.setDebug(false);
-        table.setBackground(skin.getDrawable("button_black"));
+        table.setBackground(skin.getDrawable(RegionNames.BTN_BLACK));
         table.row().expandX().fillX();
         table.add(title);
         table.row().pad(2.0f);
         table.columnDefaults(0).width(Value.percentWidth(0.8f, table));
-        table.add(btnGoToTarget);
-        table.row().pad(2.0f);
         table.add(lblGoToTarget);
         table.row().pad(2.0f);
         table.add(lblFallingStars);
@@ -229,8 +227,6 @@ public class MainMenuScreen extends AbstractScreen {
         table.add(lblGravityBalls);
         table.row().pad(2.0f);
         table.add(lblBTree);
-        table.row().pad(2.0f);
-        table.add(lblFollowTheLine);
         table.row().pad(2.0f);
         table.add(lblCircleAround);
         table.row().pad(2.0f);

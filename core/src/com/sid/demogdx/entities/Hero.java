@@ -15,7 +15,7 @@ public class Hero extends Actor {
     TextureRegion img;
 
     public Hero() {
-        img = Assets.getRegion(RegionNames.HERO);
+        img = Assets.inst().getRegion(RegionNames.HERO);
         setSize(100f, 100f);
         setBounds(getX(), getY(), getWidth(), getHeight());
         setOrigin(Align.center);

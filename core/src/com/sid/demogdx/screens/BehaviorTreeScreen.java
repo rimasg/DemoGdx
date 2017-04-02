@@ -29,7 +29,7 @@ public class BehaviorTreeScreen extends AbstractScreen {
     public void show() {
         super.show();
         npc = new NPC();
-        badlogic = Assets.getRegion(RegionNames.HERO);
+        badlogic = Assets.inst().getRegion(RegionNames.HERO);
     }
 
     private float runDelayAccumulator;

@@ -89,13 +89,13 @@ public class FallingBallScreen extends AbstractBox2dScreen {
     }
 
     private void loadAssets() {
-        starRegion = Assets.getRegion(RegionNames.STAR);
-        circleRainbowRegion = Assets.getRegion(RegionNames.CIRCLE_RAINBOW);
-        collisionSound = Assets.getSound(AssetDescriptors.SOUND_COLLISION);
+        starRegion = Assets.inst().getRegion(RegionNames.STAR);
+        circleRainbowRegion = Assets.inst().getRegion(RegionNames.CIRCLE_RAINBOW);
+        collisionSound = Assets.inst().getSound(AssetDescriptors.SOUND_COLLISION);
     }
 
     private void loadParticles() {
-        particleEffect = Assets.getParticleEffect(AssetDescriptors.PE_EXPLOSION);
+        particleEffect = Assets.inst().getParticleEffect(AssetDescriptors.PE_EXPLOSION);
         particleEffect.start();
     }
 
@@ -139,9 +139,9 @@ public class FallingBallScreen extends AbstractBox2dScreen {
         table.setFillParent(true);
         stage.addActor(table);
 
-        scoreLabel = new Label("", skin, "gold");
+        scoreLabel = new Label("", skin, "red");
         scoreLabel.setAlignment(Align.left);
-        timeLabel = new Label("", skin, "gold");
+        timeLabel = new Label("", skin, "red");
         timeLabel.setAlignment(Align.right);
 
         table.row().expand().top();
@@ -171,7 +171,7 @@ public class FallingBallScreen extends AbstractBox2dScreen {
         cam.position.set(viewport.getWorldWidth() / 2, MathUtils.clamp(ball.getPosition().y, cam.viewportHeight / 2, cam.viewportHeight * 2), 0);
         cam.update();
 
-        b2dr.render(world, cam.combined);
+//        b2dr.render(world, cam.combined);
         mapRenderer.setView(cam);
         mapRenderer.render();
 

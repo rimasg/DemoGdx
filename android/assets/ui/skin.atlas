@@ -19,6 +19,14 @@ bg_gold
   orig: 64, 32
   offset: 0, 0
   index: -1
+btn_black
+  rotate: false
+  xy: 304, 271
+  size: 64, 32
+  split: 6, 6, 3, 3
+  orig: 64, 32
+  offset: 0, 0
+  index: -1
 btn_down_blue
   rotate: false
   xy: 264, 165
@@ -35,6 +43,22 @@ btn_down_red
   orig: 34, 34
   offset: 0, 0
   index: -1
+btn_gold
+  rotate: false
+  xy: 370, 337
+  size: 64, 32
+  split: 6, 6, 3, 3
+  orig: 64, 32
+  offset: 0, 0
+  index: -1
+btn_gold_pressed
+  rotate: false
+  xy: 304, 237
+  size: 64, 32
+  split: 6, 6, 3, 3
+  orig: 64, 32
+  offset: 0, 0
+  index: -1
 btn_up_blue
   rotate: false
   xy: 370, 301
@@ -49,30 +73,6 @@ btn_up_red
   size: 34, 34
   split: 9, 9, 9, 9
   orig: 34, 34
-  offset: 0, 0
-  index: -1
-button_black
-  rotate: false
-  xy: 304, 271
-  size: 64, 32
-  split: 6, 6, 6, 6
-  orig: 64, 32
-  offset: 0, 0
-  index: -1
-button_gold
-  rotate: false
-  xy: 370, 337
-  size: 64, 32
-  split: 6, 6, 6, 6
-  orig: 64, 32
-  offset: 0, 0
-  index: -1
-button_gold_pressed
-  rotate: false
-  xy: 304, 237
-  size: 64, 32
-  split: 6, 6, 6, 6
-  orig: 64, 32
   offset: 0, 0
   index: -1
 exit

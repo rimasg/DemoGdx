@@ -39,8 +39,8 @@ public class HunterAIScreen extends AbstractBox2dScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
+//        b2dr.render(world, cam.combined);
         HunterCameraHelper.update(delta);
-        b2dr.render(world, cam.combined);
         engine.update(delta);
     }
 

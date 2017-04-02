@@ -4,14 +4,12 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.sid.demogdx.assets.Assets;
-import com.sid.demogdx.assets.AssetsNew;
 import com.sid.demogdx.screens.AirFightScreen;
 import com.sid.demogdx.screens.BehaviorTreeScreen;
 import com.sid.demogdx.screens.CircleAroundScreen;
 import com.sid.demogdx.screens.DropStackScreen;
 import com.sid.demogdx.screens.FallingBallScreen;
 import com.sid.demogdx.screens.FallingStarsScreen;
-import com.sid.demogdx.screens.FollowTheLineScreen;
 import com.sid.demogdx.screens.FollowTheWaveScreen;
 import com.sid.demogdx.screens.GravityBallsScreen;
 import com.sid.demogdx.screens.HeroScreen;
@@ -32,7 +30,6 @@ public class DemoGdx extends Game {
     FallingBallScreen fallingBallScreen;
     BehaviorTreeScreen behaviorTreeScreen;
     GravityBallsScreen gravityBallsScreen;
-    FollowTheLineScreen followTheLineScreen;
     CircleAroundScreen circleAroundScreen;
     DropStackScreen dropStackScreen;
     HitBallScreen hitBallScreen;
@@ -53,7 +50,6 @@ public class DemoGdx extends Game {
         fallingBallScreen = new FallingBallScreen(this);
         gravityBallsScreen = new GravityBallsScreen(this);
         behaviorTreeScreen = new BehaviorTreeScreen(this);
-        followTheLineScreen = new FollowTheLineScreen(this);
         circleAroundScreen = new CircleAroundScreen(this);
         dropStackScreen = new DropStackScreen(this);
         hitBallScreen = new HitBallScreen(this);
@@ -65,8 +61,7 @@ public class DemoGdx extends Game {
     }
 
     private void loadAssets() {
-        Assets.finishLoading();
-        AssetsNew.inst().finishLoading();
+        Assets.inst().finishLoading();
     }
 
     public HeroScreen getHeroScreen() {
@@ -91,10 +86,6 @@ public class DemoGdx extends Game {
 
     public BehaviorTreeScreen getBehaviorTreeScreen() {
         return behaviorTreeScreen;
-    }
-
-    public FollowTheLineScreen getFollowTheLineScreen() {
-        return followTheLineScreen;
     }
 
     public CircleAroundScreen getCircleAroundScreen() {
@@ -135,7 +126,6 @@ public class DemoGdx extends Game {
         super.dispose();
         batch.dispose();
         shapeRenderer.dispose();
-        Assets.dispose();
-        AssetsNew.inst().dispose();
+        Assets.inst().dispose();
     }
 }

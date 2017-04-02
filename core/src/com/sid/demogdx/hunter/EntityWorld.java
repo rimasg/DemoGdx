@@ -82,7 +82,7 @@ public class EntityWorld {
 
         plc.body = player;
         plc.steerable = createSteerable();
-        txc.region = Assets.getRegion(RegionNames.HERO);
+        txc.region = Assets.inst().getRegion(RegionNames.HERO);
 
         entity.add(plc);
         entity.add(txc);
@@ -99,7 +99,7 @@ public class EntityWorld {
         final TransformComponent trc = engine.createComponent(TransformComponent.class);
 
         obc.body = body;
-        txc.region = Assets.getRegion(RegionNames.STAR);
+        txc.region = Assets.inst().getRegion(RegionNames.STAR);
 
         entity.add(obc);
         entity.add(txc);
@@ -112,7 +112,7 @@ public class EntityWorld {
         final Entity entity = engine.createEntity();
 
         final Box2DMapParserComponent parserc = engine.createComponent(Box2DMapParserComponent.class);
-        parserc.map = Assets.getTiledMap(AssetDescriptors.MAP_HUNTER);
+        parserc.map = Assets.inst().getTiledMap(AssetDescriptors.MAP_HUNTER);
         parserc.mapRenderer = new OrthogonalTiledMapRenderer(parserc.map, Box2DConfig.unitScale32, game.batch);
         parserc.box2DMapObjectParser = new Box2DMapObjectParser(parserc.mapRenderer.getUnitScale());
         parserc.box2DMapObjectParser.setListener(new Box2DMapObjectParser.Listener.Adapter() {
@@ -162,7 +162,7 @@ public class EntityWorld {
     }
 
     private SteerableBox2DObject createSteerable() {
-        steerable = new SteerableBox2DObject(Assets.getRegion(RegionNames.HERO), player, 0.6f);
+        steerable = new SteerableBox2DObject(Assets.inst().getRegion(RegionNames.HERO), player, 0.6f);
 
         final SteerableLocation location = new SteerableLocation();
         location.setPosition(finish.getPosition());

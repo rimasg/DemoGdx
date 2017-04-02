@@ -148,7 +148,7 @@ public class DropStackScreen extends AbstractBox2dScreen {
     }
 
     private void loadAssets() {
-        blockAtlasRegion = Assets.getRegion(RegionNames.BUTTON_GOLD);
+        blockAtlasRegion = Assets.inst().getRegion(RegionNames.HERO);
     }
 
     @Override

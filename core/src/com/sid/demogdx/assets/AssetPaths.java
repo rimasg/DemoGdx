@@ -10,8 +10,8 @@ public final class AssetPaths {
 
     private static final String PATH_FONT = "ui/fonts/";
     static final String FONT_OPEN_SANS_REGULAR = PATH_FONT + "OpenSans-Regular.ttf";
-    static final String FONT_BLACK = PATH_FONT + "black.fnt";
-    static final String FONT_WHITE = PATH_FONT + "white.fnt";
+    static final String FONT_BLACK = PATH_FONT + "verdana_black_24.fnt";
+    static final String FONT_WHITE = PATH_FONT + "verdana_white_24.fnt";
 
     static final String I18N = "i18n/strings";
 

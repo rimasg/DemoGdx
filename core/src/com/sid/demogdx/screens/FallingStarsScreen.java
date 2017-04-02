@@ -51,10 +51,10 @@ public class FallingStarsScreen extends AbstractBox2dScreen {
 //        createJointBodies();
         spawnContinuousBodies();
 
-        starRegion = Assets.getRegion(RegionNames.STAR);
-        lineDotRegion = Assets.getRegion(RegionNames.LINE_DOT);
+        starRegion = Assets.inst().getRegion(RegionNames.STAR);
+        lineDotRegion = Assets.inst().getRegion(RegionNames.LINE_DOT);
 
-        particleEffect = Assets.getParticleEffect(AssetDescriptors.PE_STAR_TRAIL);
+        particleEffect = Assets.inst().getParticleEffect(AssetDescriptors.PE_STAR_TRAIL);
         particleEffectPool = new ParticleEffectPool(particleEffect, 20, 100);
     }
 

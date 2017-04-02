@@ -139,13 +139,13 @@ public class HitBallScreen extends AbstractBox2dScreen {
     }
 
     private void loadAssets() {
-        starRegion = Assets.getRegion(RegionNames.STAR);
-        circleRainbowRegion = Assets.getRegion(RegionNames.CIRCLE_RAINBOW);
-        collisionSound = Assets.getSound(AssetDescriptors.SOUND_COLLISION);
+        starRegion = Assets.inst().getRegion(RegionNames.STAR);
+        circleRainbowRegion = Assets.inst().getRegion(RegionNames.CIRCLE_RAINBOW);
+        collisionSound = Assets.inst().getSound(AssetDescriptors.SOUND_COLLISION);
     }
 
     private void loadParticles() {
-        particleEffect = Assets.getParticleEffect(AssetDescriptors.PE_EXPLOSION);
+        particleEffect = Assets.inst().getParticleEffect(AssetDescriptors.PE_EXPLOSION);
         particleEffect.start();
     }
 
@@ -226,9 +226,9 @@ public class HitBallScreen extends AbstractBox2dScreen {
         table.setFillParent(true);
         stage.addActor(table);
 
-        scoreLabel = new Label("", skin, "gold");
+        scoreLabel = new Label("", skin, "blue");
         scoreLabel.setAlignment(Align.left);
-        timeLabel = new Label("", skin, "gold");
+        timeLabel = new Label("", skin, "blue");
         timeLabel.setAlignment(Align.right);
 
         table.row().expand().top();

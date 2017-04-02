@@ -5,35 +5,53 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
+import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.I18NBundle;
 
 /**
- * Created by SID on 2017-01-18.
+ * Created by SID on 2017-03-30.
  */
 
 public final class Assets {
-    private static final String TAG = "Assets";
-    private static AssetManager am;
+    private static Assets inst;
+    private AssetManager am;
 
-    static {
+    private Assets() {
         am = new AssetManager();
         setLoaders();
         load();
     }
 
-    private Assets() { }
-
-    private static void setLoaders() {
-        am.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
+    public static synchronized Assets inst() {
+        if (inst == null) inst = new Assets();
+        return inst;
     }
 
-    private static void load() {
+    private void setLoaders() {
+        final InternalFileHandleResolver resolver = new InternalFileHandleResolver();
+        am.setLoader(TiledMap.class, new TmxMapLoader(resolver));
+        am.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(resolver));
+        am.setLoader(BitmapFont.class, ".ttf", new FreetypeFontLoader(resolver));
+    }
+
+    private void load() {
         am.load(AssetDescriptors.SKIN);
         am.load(AssetDescriptors.TEXTURE_ATLAS);
+
+        am.load(AssetDescriptors.FONT_BLACK);
+        am.load(AssetDescriptors.FONT_WHITE);
+        am.load(AssetDescriptors.FONT_OPEN_SANS_REGULAR_26);
+
+        am.load(AssetDescriptors.I18N);
+
         am.load(AssetDescriptors.SOUND_COLLISION);
         am.load(AssetDescriptors.MUSIC_BG);
 
@@ -45,43 +63,56 @@ public final class Assets {
         am.load(AssetDescriptors.MAP_HUNTER);
     }
 
-    public static Skin getSkin() {
+    public Skin getSkin() {
         return am.get(AssetDescriptors.SKIN);
     }
 
-    public static TextureAtlas getAtlas() {
+    public TextureAtlas getAtlas() {
         return am.get(AssetDescriptors.TEXTURE_ATLAS);
     }
 
-    public static TextureAtlas.AtlasRegion getRegion(String regionName) {
+    public TextureAtlas.AtlasRegion getRegion(String regionName) {
         return am.get(AssetDescriptors.TEXTURE_ATLAS).findRegion(regionName);
     }
 
-    public static Sound getSound(AssetDescriptor<Sound> descriptor) {
+    public BitmapFont getFont(AssetDescriptor<BitmapFont> descriptor) {
         return am.get(descriptor);
     }
 
-    public static Music getMusic(AssetDescriptor<Music> descriptor) {
+    public I18NBundle getStrings() {
+        return am.get(AssetDescriptors.I18N);
+    }
+
+    public Sound getSound(AssetDescriptor<Sound> descriptor) {
         return am.get(descriptor);
     }
 
-    public static ParticleEffect getParticleEffect(AssetDescriptor<ParticleEffect> descriptor) {
+    public Music getMusic(AssetDescriptor<Music> descriptor) {
         return am.get(descriptor);
     }
 
-    public static TiledMap getTiledMap(AssetDescriptor<TiledMap> descriptor) {
+    public ParticleEffect getParticleEffect(AssetDescriptor<ParticleEffect> descriptor) {
         return am.get(descriptor);
     }
 
-    public static boolean update() {
+    public TiledMap getTiledMap(AssetDescriptor<TiledMap> descriptor) {
+        return am.get(descriptor);
+    }
+
+    public boolean update() {
         return am.update();
     }
 
-    public static void finishLoading() {
+    public void finishLoading() {
         am.finishLoading();
     }
 
-    public static void dispose() {
+    public float getProgress() {
+        return am.getProgress();
+    }
+
+    public void dispose() {
         am.dispose();
+        inst = null;
     }
 }

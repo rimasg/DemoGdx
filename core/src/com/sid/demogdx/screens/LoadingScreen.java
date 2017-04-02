@@ -10,7 +10,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.assets.Assets;
-import com.sid.demogdx.assets.AssetsNew;
 import com.sid.demogdx.utils.Box2DConfig;
 
 /**
@@ -44,9 +43,9 @@ public class LoadingScreen extends ScreenAdapter {
         game.shapeRenderer.setColor(Color.BLACK);
         game.shapeRenderer.rect(0, lineYpos, lineWidth, lineHeight);
         game.shapeRenderer.setColor(Color.RED);
-        game.shapeRenderer.rect(0, lineYpos, lineWidth * AssetsNew.inst().getProgress(), lineHeight);
+        game.shapeRenderer.rect(0, lineYpos, lineWidth * Assets.inst().getProgress(), lineHeight);
         game.shapeRenderer.end();
-        if (Assets.update() && AssetsNew.inst().update()) {
+        if (Assets.inst().update()) {
             if ((waitTime -= delta) <= 0) {
                 game.setScreen(game.getMainMenuScreen());
             }

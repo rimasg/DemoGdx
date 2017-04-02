@@ -40,10 +40,10 @@ public class AirFightScreen extends AbstractScreen {
         CameraHelper.setCam(stage.getCamera());
 //        CameraHelper.setTarget(); TODO: 2016.11.13 set target
 
-        airplane = new SteerableObject(new Sprite(Assets.getRegion(RegionNames.AIRPLANE)));
+        airplane = new SteerableObject(new Sprite(Assets.inst().getRegion(RegionNames.AIRPLANE)));
         airplane.setPosition(new Vector2(stage.getWidth() / 2, stage.getHeight() / 2));
         airplane.setBounds(stage.getWidth(), stage.getHeight());
-        rocket = new SteerableObject(new Sprite(Assets.getRegion(RegionNames.ROCKET)));
+        rocket = new SteerableObject(new Sprite(Assets.inst().getRegion(RegionNames.ROCKET)));
         rocket.setPosition(new Vector2(stage.getWidth() / 2, 20.f));
         rocket.setBounds(stage.getWidth(), stage.getHeight());
         rocket.setMaxLinearSpeed(100.f);

@@ -48,7 +48,7 @@ public class FollowTheWaveScreen extends AbstractScreen {
         initDataSet();
         initSpline();
         cachePathPoints();
-        runner = new Runner(new Sprite(Assets.getRegion(RegionNames.STAR)));
+        runner = new Runner(new Sprite(Assets.inst().getRegion(RegionNames.STAR)));
         CameraHelper.setCam(stage.getCamera());
         CameraHelper.setTarget(runner);
     }

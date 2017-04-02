@@ -36,7 +36,7 @@ public class PhysicsBodyScreen extends AbstractBox2dScreen {
     public void show() {
         super.show();
         initPhysicsBody();
-        rocketAtlasRegion = Assets.getRegion(RegionNames.ROCKET);
+        rocketAtlasRegion = Assets.inst().getRegion(RegionNames.ROCKET);
     }
 
     @Override
