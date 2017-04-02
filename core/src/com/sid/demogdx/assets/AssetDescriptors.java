@@ -37,7 +37,7 @@ public final class AssetDescriptors {
             (AssetPaths.FONT_BLACK, BITMAP_FONT_CLASS);
     public static final AssetDescriptor<BitmapFont> FONT_WHITE = new AssetDescriptor<>
             (AssetPaths.FONT_WHITE, BITMAP_FONT_CLASS);
-    public static final AssetDescriptor<BitmapFont> FONT_OPEN_SANS_REGULAR_32 = new
+    public static final AssetDescriptor<BitmapFont> FONT_OPEN_SANS_REGULAR_26 = new
             AssetDescriptor<>(AssetPaths.FONT_OPEN_SANS_REGULAR, BITMAP_FONT_CLASS, FONT_PARAM01);
 
     public static final AssetDescriptor<I18NBundle> I18N = new AssetDescriptor<>(AssetPaths.I18N, I18NBundle.class);
@@ -63,7 +63,7 @@ public final class AssetDescriptors {
         PE_PARAMS.atlasFile = AssetPaths.TEXTURE_ATLAS;
 
         FONT_PARAM01.fontFileName = AssetPaths.FONT_OPEN_SANS_REGULAR;
-        FONT_PARAM01.fontParameters.size = 32;
+        FONT_PARAM01.fontParameters.size = 26;
     }
 
     private AssetDescriptors() { }

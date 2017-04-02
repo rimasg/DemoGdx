@@ -61,7 +61,7 @@ public abstract class AbstractScreen implements Screen {
             public void run() {
                 secondsTime++;
             }
-        }, 0, 1f);
+        }, 0, 1.f);
     }
 
     public String getScreenTime() {

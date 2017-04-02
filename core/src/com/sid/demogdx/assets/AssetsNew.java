@@ -48,7 +48,7 @@ public final class AssetsNew {
 
         am.load(AssetDescriptors.FONT_BLACK);
         am.load(AssetDescriptors.FONT_WHITE);
-        am.load(AssetDescriptors.FONT_OPEN_SANS_REGULAR_32);
+        am.load(AssetDescriptors.FONT_OPEN_SANS_REGULAR_26);
 
         am.load(AssetDescriptors.I18N);
 

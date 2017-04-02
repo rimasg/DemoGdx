@@ -45,7 +45,7 @@ public class MainMenuScreen extends AbstractScreen {
         final Table table = new Table(skin);
         table.setBounds(0, 0 , Box2DConfig.WWP, Box2DConfig.WHP);
 
-        final BitmapFont font = AssetsNew.inst().getFont(AssetDescriptors.FONT_OPEN_SANS_REGULAR_32);
+        final BitmapFont font = AssetsNew.inst().getFont(AssetDescriptors.FONT_OPEN_SANS_REGULAR_26);
         final I18NBundle strings = AssetsNew.inst().getStrings();
         Label.LabelStyle style = new Label.LabelStyle(font, Color.WHITE);
         style.background = skin.getDrawable("button_gold");
@@ -58,13 +58,7 @@ public class MainMenuScreen extends AbstractScreen {
                 moveBy(0, stage.getHeight()),
                 moveBy(0, -stage.getHeight(), 1.5f, Interpolation.bounce)));
 
-        final TextButton.TextButtonStyle buttonStyle = new TextButton.TextButtonStyle(
-                skin.getDrawable("button_gold"),
-                skin.getDrawable("button_gold_pressed"),
-                skin.getDrawable("button_gold"),
-                font
-        );
-        btnGoToTarget = new TextButton("Go to Target", buttonStyle);
+        btnGoToTarget = new TextButton("Go to Target", skin, "blue");
         lblGoToTarget = new Label("Go to Target", style);
         lblGoToTarget.setAlignment(Align.center);
         lblGoToTarget.addListener(new ClickListener(){
@@ -185,7 +179,7 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
-        btnHunterAI = new TextButton("Hunter AI", buttonStyle);
+        btnHunterAI = new TextButton("Hunter AI", skin, "red");
         btnHunterAI.align(Align.center);
         btnHunterAI.addListener(new ClickListener(){
             @Override

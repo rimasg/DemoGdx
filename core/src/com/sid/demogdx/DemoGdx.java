@@ -17,6 +17,7 @@ import com.sid.demogdx.screens.GravityBallsScreen;
 import com.sid.demogdx.screens.HeroScreen;
 import com.sid.demogdx.screens.HitBallScreen;
 import com.sid.demogdx.screens.HunterAIScreen;
+import com.sid.demogdx.screens.LoadingScreen;
 import com.sid.demogdx.screens.MainMenuScreen;
 import com.sid.demogdx.screens.PhysicsBodyScreen;
 
@@ -24,8 +25,9 @@ public class DemoGdx extends Game {
 
     public SpriteBatch batch;
     public ShapeRenderer shapeRenderer;
-    HeroScreen heroScreen;
+    LoadingScreen loadingScreen;
     MainMenuScreen mainMenuScreen;
+    HeroScreen heroScreen;
     FallingStarsScreen fallingStarsScreen;
     FallingBallScreen fallingBallScreen;
     BehaviorTreeScreen behaviorTreeScreen;
@@ -43,7 +45,8 @@ public class DemoGdx extends Game {
     public void create() {
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
-        loadAssets();
+//        loadAssets();
+        loadingScreen = new LoadingScreen(this);
         mainMenuScreen = new MainMenuScreen(this);
         heroScreen = new HeroScreen(this);
         fallingStarsScreen = new FallingStarsScreen(this);
@@ -58,7 +61,7 @@ public class DemoGdx extends Game {
         airFightScreen = new AirFightScreen(this);
         physicsBodyScreen = new PhysicsBodyScreen(this);
         hunterAIScreen = new HunterAIScreen(this);
-        setScreen(mainMenuScreen);
+        setScreen(loadingScreen);
     }
 
     private void loadAssets() {

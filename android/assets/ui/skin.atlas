@@ -19,6 +19,38 @@ bg_gold
   orig: 64, 32
   offset: 0, 0
   index: -1
+btn_down_blue
+  rotate: false
+  xy: 264, 165
+  size: 34, 34
+  split: 9, 9, 9, 9
+  orig: 34, 34
+  offset: 0, 0
+  index: -1
+btn_down_red
+  rotate: false
+  xy: 436, 401
+  size: 34, 34
+  split: 9, 9, 9, 9
+  orig: 34, 34
+  offset: 0, 0
+  index: -1
+btn_up_blue
+  rotate: false
+  xy: 370, 301
+  size: 34, 34
+  split: 9, 9, 9, 9
+  orig: 34, 34
+  offset: 0, 0
+  index: -1
+btn_up_red
+  rotate: false
+  xy: 304, 201
+  size: 34, 34
+  split: 9, 9, 9, 9
+  orig: 34, 34
+  offset: 0, 0
+  index: -1
 button_black
   rotate: false
   xy: 304, 271
@@ -74,7 +106,7 @@ play
   index: -1
 popup_bg
   rotate: false
-  xy: 264, 167
+  xy: 68, 2
   size: 32, 32
   split: 5, 5, 5, 5
   orig: 32, 32
@@ -82,7 +114,7 @@ popup_bg
   index: -1
 pre_particle
   rotate: false
-  xy: 436, 403
+  xy: 300, 167
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

@@ -6,13 +6,25 @@
     red: { a: 1, b: 0, g: 0, r: 1 },
   },
   com.badlogic.gdx.graphics.g2d.BitmapFont: {
-    default-font: {file: fonts/black.fnt},
+    default-font: {file: fonts/white.fnt},
     black-font: {file: fonts/black.fnt},
     white-font: {file: fonts/white.fnt}
   },
   com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
-    default: {font: black-font, fontColor: black, background: button_black},
+    default: {font: black-font, fontColor: black, background: btn_up_blue},
     gold: {font: white-font, fontColor: white, background: button_gold}
+  },
+  com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+    blue: {
+        up: btn_up_blue,
+        down: btn_down_blue,
+        font: white-font
+     },
+    red: {
+        up: btn_up_red,
+        down: btn_down_red,
+        font: white-font
+    }
   },
   com.badlogic.gdx.scenes.scene2d.ui.Touchpad$TouchpadStyle: {
     default: {background: touch_pad, knob: touch_knob}
