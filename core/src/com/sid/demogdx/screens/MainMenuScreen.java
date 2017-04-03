@@ -42,7 +42,6 @@ public class MainMenuScreen extends AbstractScreen {
     Label lblHitBall;
     Label lblFollowTheWave;
     Label lblAirFight;
-    Label lblPhysicsBody;
     TextButton btnHunterAI;
     Image exitBtn;
 
@@ -169,16 +168,6 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
-        lblPhysicsBody = new Label("Physics Body", skin, "blue");
-        lblPhysicsBody.setAlignment(Align.center);
-        lblPhysicsBody.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                game.setScreen(game.getPhysicsBodyScreen());
-            }
-        });
-
         btnHunterAI = new TextButton("Hunter AI", skin, "red");
         btnHunterAI.align(Align.center);
         btnHunterAI.addListener(new ClickListener(){
@@ -197,8 +186,8 @@ public class MainMenuScreen extends AbstractScreen {
                 final OverlayMenuActor overlayMenuActor = new OverlayMenuActor();
                 overlayMenuActor.addAction(sequence(
                         moveTo(overlayMenuActor.getX(), Box2DConfig.WHP + 200),
-                        moveToAligned(Box2DConfig.WWP / 2, Box2DConfig.WHP / 2, Align.center, 1.5f,
-                                Interpolation.bounceOut))) ;
+                        moveToAligned(Box2DConfig.WWP / 2, Box2DConfig.WHP / 2, Align.center, 0.5f,
+                                Interpolation.sineOut))) ;
                 stage.addActor(overlayMenuActor);
             }
         });
@@ -237,8 +226,6 @@ public class MainMenuScreen extends AbstractScreen {
         table.add(lblFollowTheWave);
         table.row().pad(2.0f);
         table.add(lblAirFight);
-        table.row().pad(2.0f);
-        table.add(lblPhysicsBody);
         table.row().pad(2.0f);
         table.add(btnHunterAI);
         table.row().pad(2.0f);

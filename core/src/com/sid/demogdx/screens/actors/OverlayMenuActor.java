@@ -19,8 +19,8 @@ public class OverlayMenuActor extends Table {
         setSize(400.0f, 200.0f);
         center();
 
-        final Label label = new Label("Overlay menu", skin, "gold");
-        final Label btnExit = new Label("EXIT", skin, "gold");
+        final Label label = new Label("Overlay menu", skin);
+        final Label btnExit = new Label("EXIT", skin);
         btnExit.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {

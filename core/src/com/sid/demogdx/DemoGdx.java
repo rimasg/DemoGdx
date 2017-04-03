@@ -17,33 +17,29 @@ import com.sid.demogdx.screens.HitBallScreen;
 import com.sid.demogdx.screens.HunterAIScreen;
 import com.sid.demogdx.screens.LoadingScreen;
 import com.sid.demogdx.screens.MainMenuScreen;
-import com.sid.demogdx.screens.PhysicsBodyScreen;
 
 public class DemoGdx extends Game {
 
     public SpriteBatch batch;
     public ShapeRenderer shapeRenderer;
-    LoadingScreen loadingScreen;
-    MainMenuScreen mainMenuScreen;
-    HeroScreen heroScreen;
-    FallingStarsScreen fallingStarsScreen;
-    FallingBallScreen fallingBallScreen;
-    BehaviorTreeScreen behaviorTreeScreen;
-    GravityBallsScreen gravityBallsScreen;
-    CircleAroundScreen circleAroundScreen;
-    DropStackScreen dropStackScreen;
-    HitBallScreen hitBallScreen;
-    FollowTheWaveScreen followTheWaveScreen;
-    AirFightScreen airFightScreen;
-    PhysicsBodyScreen physicsBodyScreen;
-    HunterAIScreen hunterAIScreen;
+    private MainMenuScreen mainMenuScreen;
+    private HeroScreen heroScreen;
+    private FallingStarsScreen fallingStarsScreen;
+    private FallingBallScreen fallingBallScreen;
+    private BehaviorTreeScreen behaviorTreeScreen;
+    private GravityBallsScreen gravityBallsScreen;
+    private CircleAroundScreen circleAroundScreen;
+    private DropStackScreen dropStackScreen;
+    private HitBallScreen hitBallScreen;
+    private FollowTheWaveScreen followTheWaveScreen;
+    private AirFightScreen airFightScreen;
+    private HunterAIScreen hunterAIScreen;
 
     @Override
     public void create() {
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
-//        loadAssets();
-        loadingScreen = new LoadingScreen(this);
+        LoadingScreen loadingScreen = new LoadingScreen(this);
         mainMenuScreen = new MainMenuScreen(this);
         heroScreen = new HeroScreen(this);
         fallingStarsScreen = new FallingStarsScreen(this);
@@ -55,13 +51,8 @@ public class DemoGdx extends Game {
         hitBallScreen = new HitBallScreen(this);
         followTheWaveScreen = new FollowTheWaveScreen(this);
         airFightScreen = new AirFightScreen(this);
-        physicsBodyScreen = new PhysicsBodyScreen(this);
         hunterAIScreen = new HunterAIScreen(this);
         setScreen(loadingScreen);
-    }
-
-    private void loadAssets() {
-        Assets.inst().finishLoading();
     }
 
     public HeroScreen getHeroScreen() {
@@ -108,17 +99,8 @@ public class DemoGdx extends Game {
         return airFightScreen;
     }
 
-    public PhysicsBodyScreen getPhysicsBodyScreen() {
-        return physicsBodyScreen;
-    }
-
     public HunterAIScreen getHunterAIScreen() {
         return hunterAIScreen;
-    }
-
-    @Override
-    public void render() {
-        super.render();
     }
 
     @Override
