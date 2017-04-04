@@ -76,17 +76,17 @@ public class EntityWorld {
     private void createPlayer() {
         final Entity entity = engine.createEntity();
 
-        final PlayerComponent plc = engine.createComponent(PlayerComponent.class);
-        final TextureComponent txc = engine.createComponent(TextureComponent.class);
-        final TransformComponent trc = engine.createComponent(TransformComponent.class);
+        final PlayerComponent player = engine.createComponent(PlayerComponent.class);
+        final TextureComponent texture = engine.createComponent(TextureComponent.class);
+        final TransformComponent transform = engine.createComponent(TransformComponent.class);
 
-        plc.body = player;
-        plc.steerable = createSteerable();
-        txc.region = Assets.inst().getRegion(RegionNames.HERO);
+        player.body = this.player;
+        player.steerable = createSteerable();
+        texture.region = Assets.inst().getRegion(RegionNames.HERO);
 
-        entity.add(plc);
-        entity.add(txc);
-        entity.add(trc);
+        entity.add(player);
+        entity.add(texture);
+        entity.add(transform);
 
         engine.addEntity(entity);
     }
@@ -94,16 +94,16 @@ public class EntityWorld {
     private void createObstacle(Body body) {
         final Entity entity = engine.createEntity();
 
-        final ObstacleComponent obc = engine.createComponent(ObstacleComponent.class);
-        final TextureComponent txc = engine.createComponent(TextureComponent.class);
-        final TransformComponent trc = engine.createComponent(TransformComponent.class);
+        final ObstacleComponent obstacle = engine.createComponent(ObstacleComponent.class);
+        final TextureComponent texture = engine.createComponent(TextureComponent.class);
+        final TransformComponent transform = engine.createComponent(TransformComponent.class);
 
-        obc.body = body;
-        txc.region = Assets.inst().getRegion(RegionNames.STAR);
+        obstacle.body = body;
+        texture.region = Assets.inst().getRegion(RegionNames.STAR);
 
-        entity.add(obc);
-        entity.add(txc);
-        entity.add(trc);
+        entity.add(obstacle);
+        entity.add(texture);
+        entity.add(transform);
 
         engine.addEntity(entity);
     }
@@ -111,11 +111,11 @@ public class EntityWorld {
     private void createBox2DMapParser() {
         final Entity entity = engine.createEntity();
 
-        final Box2DMapParserComponent parserc = engine.createComponent(Box2DMapParserComponent.class);
-        parserc.map = Assets.inst().getTiledMap(AssetDescriptors.MAP_HUNTER);
-        parserc.mapRenderer = new OrthogonalTiledMapRenderer(parserc.map, Box2DConfig.unitScale32, game.batch);
-        parserc.box2DMapObjectParser = new Box2DMapObjectParser(parserc.mapRenderer.getUnitScale());
-        parserc.box2DMapObjectParser.setListener(new Box2DMapObjectParser.Listener.Adapter() {
+        final Box2DMapParserComponent box2DMapParser = engine.createComponent(Box2DMapParserComponent.class);
+        box2DMapParser.map = Assets.inst().getTiledMap(AssetDescriptors.MAP_HUNTER);
+        box2DMapParser.mapRenderer = new OrthogonalTiledMapRenderer(box2DMapParser.map, Box2DConfig.unitScale32, game.batch);
+        box2DMapParser.box2DMapObjectParser = new Box2DMapObjectParser(box2DMapParser.mapRenderer.getUnitScale());
+        box2DMapParser.box2DMapObjectParser.setListener(new Box2DMapObjectParser.Listener.Adapter() {
 
             Box2DMapObjectParser.Aliases aliases;
 
@@ -154,9 +154,9 @@ public class EntityWorld {
                 }
             }
         });
-        parserc.box2DMapObjectParser.load(world, parserc.map);
+        box2DMapParser.box2DMapObjectParser.load(world, box2DMapParser.map);
 
-        entity.add(parserc);
+        entity.add(box2DMapParser);
 
         engine.addEntity(entity);
     }
