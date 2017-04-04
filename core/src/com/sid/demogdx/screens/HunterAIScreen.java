@@ -35,7 +35,6 @@ public class HunterAIScreen extends AbstractBox2dScreen {
         engine.addSystem(new PlayerSystem());
         engine.addSystem(new ObstacleSystem());
         engine.addSystem(new ShapeRendererSystem(game.shapeRenderer, cam, entityWorld));
-
     }
 
     @Override

@@ -312,9 +312,9 @@ public class HitBallScreen extends AbstractBox2dScreen {
         if (displacement != null && touchedPlayer) {
             game.shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
             for (Vector2 point : displacement) {
-                worldCoords.set(point.x, point.y, 0);
-                cam.project(worldCoords);
-                game.shapeRenderer.circle(worldCoords.x, worldCoords.y, 3.0f);
+                worldPos.set(point.x, point.y, 0);
+                cam.project(worldPos);
+                game.shapeRenderer.circle(worldPos.x, worldPos.y, 3.0f);
             }
         }
     }

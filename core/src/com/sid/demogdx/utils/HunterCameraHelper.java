@@ -12,7 +12,7 @@ public final class HunterCameraHelper {
     public static float VELOCITY = 4.f;
 
     private static Camera cam;
-    private  static Body target;
+    private static Body target;
     private static Vector3 targetVec = new Vector3();
 
     public static void setCam(Camera cam) {
@@ -30,7 +30,7 @@ public final class HunterCameraHelper {
 
     public static void update(float delta) {
         if ((null != cam) && (null != target)) {
-            targetVec.set(cam.viewportWidth / 2, target.getPosition().y, 0);
+            targetVec.set(cam.viewportWidth / 2.f, target.getPosition().y, 0);
             cam.position.lerp(targetVec, delta * VELOCITY);
             cam.update();
         }
