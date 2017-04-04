@@ -206,15 +206,14 @@ public class FallingBallScreen extends AbstractBox2dScreen {
         }
 
         if (Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer)) {
-//            ball.applyForceToCenter(-Gdx.input.getAccelerometerX(), 0, true);
-            moveBallOnXAxis(-Gdx.input.getAccelerometerX());
+            moveBallOnXAxis(-Gdx.input.getAccelerometerX() * 10.f);
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            moveBallOnXAxis(-3.0f);
+            moveBallOnXAxis(-10.0f);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            moveBallOnXAxis(3.0f);
+            moveBallOnXAxis(10.0f);
         }
     }
 

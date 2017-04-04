@@ -13,19 +13,19 @@ public final class CameraHelper {
 
     private static Camera cam;
     private static GameObject target;
-    private static Vector3 targetVec = new Vector3();
+    private static final Vector3 targetVec = new Vector3();
 
     public static void setCam(Camera cam) {
         CameraHelper.cam = cam;
     }
 
+    public static void setTarget(GameObject target) {
+        CameraHelper.target = target;
+    }
+
     public static void reset() {
         cam = null;
         target = null;
-    }
-
-    public static void setTarget(GameObject target) {
-        CameraHelper.target = target;
     }
 
     public static void update(float delta) {

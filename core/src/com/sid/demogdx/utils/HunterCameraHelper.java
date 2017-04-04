@@ -13,7 +13,7 @@ public final class HunterCameraHelper {
 
     private static Camera cam;
     private static Body target;
-    private static Vector3 targetVec = new Vector3();
+    private static final Vector3 targetVec = new Vector3();
 
     public static void setCam(Camera cam) {
         HunterCameraHelper.cam = cam;
