@@ -1,6 +1,7 @@
 package com.sid.demogdx.screens;
 
 import com.badlogic.ashley.core.PooledEngine;
+import com.badlogic.gdx.ai.GdxAI;
 import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.hunter.EntityWorld;
 import com.sid.demogdx.hunter.systems.Box2DMapParserSystem;
@@ -40,6 +41,7 @@ public class HunterAIScreen extends AbstractBox2dScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
+        GdxAI.getTimepiece().update(delta);
 //        b2dr.render(world, cam.combined);
         HunterCameraHelper.update(delta);
         engine.update(delta);

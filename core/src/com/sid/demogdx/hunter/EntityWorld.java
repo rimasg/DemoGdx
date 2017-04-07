@@ -17,7 +17,6 @@ import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.assets.AssetDescriptors;
 import com.sid.demogdx.assets.Assets;
 import com.sid.demogdx.assets.RegionNames;
-import com.sid.demogdx.entities.SteerableBox2DObject;
 import com.sid.demogdx.entities.SteerableLocation;
 import com.sid.demogdx.hunter.components.Box2DMapParserComponent;
 import com.sid.demogdx.hunter.components.ObstacleComponent;
@@ -41,7 +40,7 @@ public class EntityWorld {
     private Body player;
     private Body finish;
 
-    private SteerableBox2DObject steerable;
+    private HunterSteerableObject steerable;
     private Ray<Vector2>[] steerableRays;
 
     public EntityWorld(DemoGdx game, World world, PooledEngine engine) {
@@ -161,14 +160,15 @@ public class EntityWorld {
         engine.addEntity(entity);
     }
 
-    private SteerableBox2DObject createSteerable() {
-        steerable = new SteerableBox2DObject(Assets.inst().getRegion(RegionNames.HERO), player, 0.6f);
+    private HunterSteerableObject createSteerable() {
+        steerable = new HunterSteerableObject(Assets.inst().getRegion(RegionNames.HERO), player, 0.6f);
 
         final SteerableLocation location = new SteerableLocation();
         location.setPosition(finish.getPosition());
 
         final SeekAndAvoidSB seekAndAvoidSB = new SeekAndAvoidSB()
                 .initSteering(world, steerable, location);
+        steerable.setSeekAndAvoidSB(seekAndAvoidSB);
         final PrioritySteering<Vector2> steering = seekAndAvoidSB.getSteering();
         steerableRays = seekAndAvoidSB.getRays();
 
@@ -177,7 +177,7 @@ public class EntityWorld {
         return steerable;
     }
 
-    public SteerableBox2DObject getSteerable() {
+    public HunterSteerableObject getSteerable() {
         return steerable;
     }
 

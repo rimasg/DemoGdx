@@ -22,6 +22,7 @@ public final class SeekAndAvoidSB {
 
     private PrioritySteering<Vector2> steering;
     private RayConfigurationBase<Vector2> rayConfiguration;
+    private Seek<Vector2> seekSB;
 
     public SeekAndAvoidSB initSteering(World world, Steerable<Vector2> owner, Location<Vector2> target) {
         rayConfiguration = new CentralRayWithWhiskersConfiguration<>(owner, 1.f, 0.8f, 35 * MathUtils.degreesToRadians);
@@ -29,12 +30,16 @@ public final class SeekAndAvoidSB {
         //
         final RaycastObstacleAvoidance<Vector2> avoidanceSB = new RaycastObstacleAvoidance<>(owner, rayConfiguration, raycastCollisionDetector);
         //
-        final Seek<Vector2> seekSB = new Seek<>(owner, target);
+        seekSB = new Seek<>(owner, target);
         //
         steering = new PrioritySteering<>(owner, 0.0001f)
                 .add(avoidanceSB)
                 .add(seekSB);
         return this;
+    }
+
+    public Seek<Vector2> setTarget(Location<Vector2> target) {
+        return seekSB.setTarget(target);
     }
 
     public PrioritySteering<Vector2> getSteering() {
