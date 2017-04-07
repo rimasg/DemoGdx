@@ -3,6 +3,7 @@ package com.sid.demogdx.hunter.components;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.sid.demogdx.hunter.HunterSteerableObject;
+import com.sid.demogdx.hunter.fsm.PlayerAgent;
 
 /**
  * Created by Okis on 2017.03.26.
@@ -11,4 +12,5 @@ import com.sid.demogdx.hunter.HunterSteerableObject;
 public class PlayerComponent implements Component {
     public Body body;
     public HunterSteerableObject steerable;
+    public PlayerAgent playerAgent;
 }

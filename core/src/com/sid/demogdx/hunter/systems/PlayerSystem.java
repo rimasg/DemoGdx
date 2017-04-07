@@ -23,6 +23,7 @@ public class PlayerSystem extends IteratingSystem {
         final PlayerComponent player = Mappers.player.get(entity);
         final TransformComponent transform = Mappers.transform.get(entity);
         player.steerable.update(deltaTime);
+        player.playerAgent.update(deltaTime);
         transform.pos.set(player.body.getPosition());
         transform.rotation = player.body.getAngle();
     }

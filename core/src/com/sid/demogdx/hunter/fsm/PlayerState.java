@@ -2,6 +2,7 @@ package com.sid.demogdx.hunter.fsm;
 
 import com.badlogic.gdx.ai.fsm.State;
 import com.badlogic.gdx.ai.msg.Telegram;
+import com.sid.demogdx.hunter.SeekAndAvoidSB;
 
 /**
  * Created by Okis on 2017.04.06.
@@ -11,13 +12,15 @@ public enum PlayerState implements State<PlayerAgent> {
     GO_TO_TARGET() {
         @Override
         public void enter(PlayerAgent entity) {
-            // TODO: 2017.04.07  need to provide Finish Location
-            entity.playerComponent.steerable.getSeekAndAvoidSB().setTarget(null);
+            final SeekAndAvoidSB seekAndAvoidSB = entity.playerComponent.steerable.getSeekAndAvoidSB();
+            seekAndAvoidSB.setTarget(seekAndAvoidSB.finish);
         }
 
         @Override
         public void update(PlayerAgent entity) {
-
+            if (entity.arrivedToTarget()) {
+                entity.stateMachine.changeState(GO_TO_START);
+            }
         }
 
         @Override
@@ -28,13 +31,15 @@ public enum PlayerState implements State<PlayerAgent> {
     GO_TO_START() {
         @Override
         public void enter(PlayerAgent entity) {
-            // TODO: 2017.04.07  need to provide Start Location
-            entity.playerComponent.steerable.getSeekAndAvoidSB().setTarget(null);
+            final SeekAndAvoidSB seekAndAvoidSB = entity.playerComponent.steerable.getSeekAndAvoidSB();
+            seekAndAvoidSB.setTarget(seekAndAvoidSB.start);
         }
 
         @Override
         public void update(PlayerAgent entity) {
-
+            if (entity.arrivedToTarget()) {
+                entity.stateMachine.changeState(GO_TO_TARGET);
+            }
         }
 
         @Override

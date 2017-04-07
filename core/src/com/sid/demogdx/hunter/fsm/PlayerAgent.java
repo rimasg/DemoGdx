@@ -1,6 +1,7 @@
 package com.sid.demogdx.hunter.fsm;
 
 import com.badlogic.gdx.ai.fsm.DefaultStateMachine;
+import com.badlogic.gdx.math.Vector2;
 import com.sid.demogdx.hunter.components.PlayerComponent;
 
 /**
@@ -11,17 +12,20 @@ public class PlayerAgent {
 
     public final PlayerComponent playerComponent;
     public final DefaultStateMachine<PlayerAgent, PlayerState> stateMachine;
+    private final float proximity = 0.5f;
 
     public PlayerAgent(PlayerComponent playerComponent) {
         this.playerComponent = playerComponent;
-        stateMachine = new DefaultStateMachine<>(this, PlayerState.GO_TO_START);
+        stateMachine = new DefaultStateMachine<>(this, PlayerState.GO_TO_TARGET);
     }
 
     public void update(float delta) {
         stateMachine.update();
     }
 
-    public DefaultStateMachine<PlayerAgent, PlayerState> getStateMachine() {
-        return stateMachine;
+    public boolean arrivedToTarget() {
+        final Vector2 currPos = playerComponent.body.getPosition();
+        final Vector2 targetPos = playerComponent.steerable.getSeekAndAvoidSB().getTarget().getPosition();
+        return currPos.dst2(targetPos) < proximity * proximity;
     }
 }

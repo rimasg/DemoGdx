@@ -23,6 +23,7 @@ import com.sid.demogdx.hunter.components.ObstacleComponent;
 import com.sid.demogdx.hunter.components.PlayerComponent;
 import com.sid.demogdx.hunter.components.TextureComponent;
 import com.sid.demogdx.hunter.components.TransformComponent;
+import com.sid.demogdx.hunter.fsm.PlayerAgent;
 import com.sid.demogdx.utils.Box2DConfig;
 import com.sid.demogdx.utils.HunterCameraHelper;
 
@@ -66,7 +67,7 @@ public class EntityWorld {
                 final Body bodyA = contact.getFixtureA().getBody();
                 final Body bodyB = contact.getFixtureB().getBody();
                 if ((player == bodyA) && (finish == bodyB) || (finish == bodyA) && (player == bodyB)) {
-                    steerable.setSteeringBehavior(null);
+                    // no-op
                 }
             }
         });
@@ -81,6 +82,7 @@ public class EntityWorld {
 
         player.body = this.player;
         player.steerable = createSteerable();
+        player.playerAgent = new PlayerAgent(player);
         texture.region = Assets.inst().getRegion(RegionNames.HERO);
 
         entity.add(player);
@@ -163,11 +165,14 @@ public class EntityWorld {
     private HunterSteerableObject createSteerable() {
         steerable = new HunterSteerableObject(Assets.inst().getRegion(RegionNames.HERO), player, 0.6f);
 
-        final SteerableLocation location = new SteerableLocation();
-        location.setPosition(finish.getPosition());
+        final SteerableLocation startLocation = new SteerableLocation();
+        startLocation.setPosition(player.getPosition());
+
+        final SteerableLocation targetLocation = new SteerableLocation();
+        targetLocation.setPosition(finish.getPosition());
 
         final SeekAndAvoidSB seekAndAvoidSB = new SeekAndAvoidSB()
-                .initSteering(world, steerable, location);
+                .initSteering(world, steerable, startLocation, targetLocation);
         steerable.setSeekAndAvoidSB(seekAndAvoidSB);
         final PrioritySteering<Vector2> steering = seekAndAvoidSB.getSteering();
         steerableRays = seekAndAvoidSB.getRays();
