@@ -3,7 +3,6 @@ package com.sid.demogdx.hunter;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.ai.steer.behaviors.PrioritySteering;
-import com.badlogic.gdx.ai.utils.Ray;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -40,9 +39,6 @@ public class EntityWorld {
     private PooledEngine engine;
     private Body player;
     private Body finish;
-
-    private HunterSteerableObject steerable;
-    private Ray<Vector2>[] steerableRays;
 
     public EntityWorld(DemoGdx game, World world, PooledEngine engine) {
         this.game = game;
@@ -163,7 +159,7 @@ public class EntityWorld {
     }
 
     private HunterSteerableObject createSteerable() {
-        steerable = new HunterSteerableObject(Assets.inst().getRegion(RegionNames.HERO), player, 0.6f);
+        HunterSteerableObject steerable = new HunterSteerableObject(Assets.inst().getRegion(RegionNames.HERO), player, 0.6f);
 
         final SteerableLocation startLocation = new SteerableLocation();
         startLocation.setPosition(player.getPosition());
@@ -175,18 +171,9 @@ public class EntityWorld {
                 .initSteering(world, steerable, startLocation, targetLocation);
         steerable.setSeekAndAvoidSB(seekAndAvoidSB);
         final PrioritySteering<Vector2> steering = seekAndAvoidSB.getSteering();
-        steerableRays = seekAndAvoidSB.getRays();
 
         steerable.setSteeringBehavior(steering);
 
         return steerable;
-    }
-
-    public HunterSteerableObject getSteerable() {
-        return steerable;
-    }
-
-    public Ray<Vector2>[] getSteerableRays() {
-        return steerableRays;
     }
 }

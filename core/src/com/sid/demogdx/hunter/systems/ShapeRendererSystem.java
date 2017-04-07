@@ -37,8 +37,9 @@ public class ShapeRendererSystem extends IteratingSystem {
         shapeRenderer.setProjectionMatrix(cam.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(Color.RED);
-        shapeRenderer.circle(player.body.getPosition().x, player.body.getPosition().y, entityWorld.getSteerable().getBoundingRadius());
-        for (Ray<Vector2> steerableRay : entityWorld.getSteerableRays()) {
+        shapeRenderer.circle(player.body.getPosition().x, player.body.getPosition().y, player.steerable.getBoundingRadius());
+        final Ray<Vector2>[] rays = player.steerable.getSeekAndAvoidSB().getRays();
+        for (Ray<Vector2> steerableRay : rays) {
             shapeRenderer.line(steerableRay.start, steerableRay.end);
         }
         shapeRenderer.end();
