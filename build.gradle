@@ -9,7 +9,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.1'
-        classpath "com.badlogicgames.gdx:gdx-tools:1.9.5"
+        classpath 'com.badlogicgames.gdx:gdx-tools:1.9.6'
     }
 }
 
@@ -19,7 +19,7 @@ allprojects {
     version = '1.0'
     ext {
         appName = "DemoGdx"
-        gdxVersion = '1.9.5'
+        gdxVersion = '1.9.6'
         roboVMVersion = '1.12.0'
         box2DLightsVersion = '1.4'
         ashleyVersion = '1.7.3'
@@ -69,14 +69,14 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-arm64-v8a"
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86"
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86_64"
-        compile "com.badlogicgames.ashley:ashley:$ashleyVersion"
-        compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-armeabi"
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-armeabi-v7a"
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-arm64-v8a"
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86"
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86_64"
+        compile "com.badlogicgames.ashley:ashley:$ashleyVersion"
+        compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
     }
 }
 
@@ -87,11 +87,11 @@ project(":core") {
         compile fileTree(dir: '../libs', include: ['*.jar'])
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         compile "com.badlogicgames.ashley:ashley:$ashleyVersion"
         compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
         compile "net.dermetfan.libgdx-utils:libgdx-utils:$gdxUtilsVersion"
-        compile "net.dermetfan.libgdx-utils:libgdx-utils-box2d:$gdxUtilsVersion" // Box2D module
-        compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+        compile "net.dermetfan.libgdx-utils:libgdx-utils-box2d:$gdxUtilsVersion"
     }
 
     task packGamePlayTextures {

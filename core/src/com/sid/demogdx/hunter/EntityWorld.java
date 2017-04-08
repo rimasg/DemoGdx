@@ -4,8 +4,10 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.ai.steer.behaviors.PrioritySteering;
 import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -21,8 +23,12 @@ import com.sid.demogdx.hunter.components.Box2DMapParserComponent;
 import com.sid.demogdx.hunter.components.ObstacleComponent;
 import com.sid.demogdx.hunter.components.PlayerComponent;
 import com.sid.demogdx.hunter.components.TextureComponent;
+import com.sid.demogdx.hunter.components.TiledPathFinderComponent;
 import com.sid.demogdx.hunter.components.TransformComponent;
 import com.sid.demogdx.hunter.fsm.PlayerAgent;
+import com.sid.demogdx.hunter.pfa.TiledGraph;
+import com.sid.demogdx.hunter.pfa.TiledNode;
+import com.sid.demogdx.hunter.pfa.TiledPathFinder;
 import com.sid.demogdx.utils.Box2DConfig;
 import com.sid.demogdx.utils.HunterCameraHelper;
 
@@ -52,6 +58,7 @@ public class EntityWorld {
         createWorld();
         createBox2DMapParser();
         createPlayer();
+        createAStarMap();
     }
 
     private void createWorld() {
@@ -67,42 +74,6 @@ public class EntityWorld {
                 }
             }
         });
-    }
-
-    private void createPlayer() {
-        final Entity entity = engine.createEntity();
-
-        final PlayerComponent player = engine.createComponent(PlayerComponent.class);
-        final TextureComponent texture = engine.createComponent(TextureComponent.class);
-        final TransformComponent transform = engine.createComponent(TransformComponent.class);
-
-        player.body = this.player;
-        player.steerable = createSteerable();
-        player.playerAgent = new PlayerAgent(player);
-        texture.region = Assets.inst().getRegion(RegionNames.HERO);
-
-        entity.add(player);
-        entity.add(texture);
-        entity.add(transform);
-
-        engine.addEntity(entity);
-    }
-
-    private void createObstacle(Body body) {
-        final Entity entity = engine.createEntity();
-
-        final ObstacleComponent obstacle = engine.createComponent(ObstacleComponent.class);
-        final TextureComponent texture = engine.createComponent(TextureComponent.class);
-        final TransformComponent transform = engine.createComponent(TransformComponent.class);
-
-        obstacle.body = body;
-        texture.region = Assets.inst().getRegion(RegionNames.STAR);
-
-        entity.add(obstacle);
-        entity.add(texture);
-        entity.add(transform);
-
-        engine.addEntity(entity);
     }
 
     private void createBox2DMapParser() {
@@ -154,6 +125,91 @@ public class EntityWorld {
         box2DMapParser.box2DMapObjectParser.load(world, box2DMapParser.map);
 
         entity.add(box2DMapParser);
+
+        engine.addEntity(entity);
+    }
+
+    private void createPlayer() {
+        final Entity entity = engine.createEntity();
+
+        final PlayerComponent player = engine.createComponent(PlayerComponent.class);
+        final TextureComponent texture = engine.createComponent(TextureComponent.class);
+        final TransformComponent transform = engine.createComponent(TransformComponent.class);
+
+        player.body = this.player;
+        player.steerable = createSteerable();
+        player.playerAgent = new PlayerAgent(player);
+        texture.region = Assets.inst().getRegion(RegionNames.HERO);
+
+        entity.add(player);
+        entity.add(texture);
+        entity.add(transform);
+
+        engine.addEntity(entity);
+    }
+
+    private void createAStarMap() {
+        final Entity entity = engine.createEntity();
+
+        final TiledPathFinderComponent pathFinder = engine.createComponent(TiledPathFinderComponent.class);
+
+        final TiledMap tiledMap = Assets.inst().getTiledMap(AssetDescriptors.MAP_HUNTER);
+        final MapProperties mapProperties = tiledMap.getProperties();
+        final int width = (int) mapProperties.get("width");
+        final int height = (int) mapProperties.get("height");
+        pathFinder.pathFinder = new TiledPathFinder(width, height);
+        //
+        final TiledGraph graph = pathFinder.pathFinder.getGraph();
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                graph.nodes.add(
+                        new TiledNode(graph, x, y, TiledNode.Tile.FLOOR));
+            }
+        }
+        //
+        final MapObjects obstacles = tiledMap.getLayers().get("obstacles").getObjects();
+        for (MapObject obstacle : obstacles) {
+            if (obstacle instanceof RectangleMapObject) {
+                RectangleMapObject object = (RectangleMapObject) obstacle;
+                final int x = (int) (object.getRectangle().x / 32f);
+                final int y = (int) (object.getRectangle().y / 32f);
+                graph.getNode(x, y).type = TiledNode.Tile.OBSTACLE;
+            }
+        }
+        //
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                final TiledNode node = graph.getNode(x, y);
+                if (x > 0) graph.addConnection(node, -1, 0);
+                if (y > 0) graph.addConnection(node, 0, -1);
+                if (x < width - 1) graph.addConnection(node, 1, 0);
+                if (y < height - 1) graph.addConnection(node, 0, 1);
+            }
+        }
+        //
+        final TiledNode startNode = graph.getNode((int) player.getPosition().x, (int) player.getPosition().y);
+        final TiledNode targetNode = graph.getNode((int) finish.getPosition().x, (int) finish.getPosition().y);
+        pathFinder.pathFinder.initPathFinder();
+        pathFinder.pathFinder.findPath(startNode, targetNode);
+        //
+        entity.add(pathFinder);
+
+        engine.addEntity(entity);
+    }
+
+    private void createObstacle(Body body) {
+        final Entity entity = engine.createEntity();
+
+        final ObstacleComponent obstacle = engine.createComponent(ObstacleComponent.class);
+        final TextureComponent texture = engine.createComponent(TextureComponent.class);
+        final TransformComponent transform = engine.createComponent(TransformComponent.class);
+
+        obstacle.body = body;
+        texture.region = Assets.inst().getRegion(RegionNames.STAR);
+
+        entity.add(obstacle);
+        entity.add(texture);
+        entity.add(transform);
 
         engine.addEntity(entity);
     }

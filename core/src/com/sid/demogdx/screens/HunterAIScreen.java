@@ -9,6 +9,7 @@ import com.sid.demogdx.hunter.systems.ObstacleSystem;
 import com.sid.demogdx.hunter.systems.PlayerSystem;
 import com.sid.demogdx.hunter.systems.RenderingSystem;
 import com.sid.demogdx.hunter.systems.ShapeRendererSystem;
+import com.sid.demogdx.hunter.systems.TiledPathFinderRenderingSystem;
 import com.sid.demogdx.utils.HunterCameraHelper;
 
 /**
@@ -36,6 +37,7 @@ public class HunterAIScreen extends AbstractBox2dScreen {
         engine.addSystem(new PlayerSystem());
         engine.addSystem(new ObstacleSystem());
         engine.addSystem(new ShapeRendererSystem(game.shapeRenderer, cam, entityWorld));
+        engine.addSystem(new TiledPathFinderRenderingSystem(game.shapeRenderer, cam, entityWorld));
     }
 
     @Override

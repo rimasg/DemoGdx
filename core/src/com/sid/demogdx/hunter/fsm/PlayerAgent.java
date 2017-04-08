@@ -12,7 +12,7 @@ public class PlayerAgent {
 
     public final PlayerComponent playerComponent;
     public final DefaultStateMachine<PlayerAgent, PlayerState> stateMachine;
-    private final float proximity = 0.5f;
+    private final float proximity = 1.0f;
 
     public PlayerAgent(PlayerComponent playerComponent) {
         this.playerComponent = playerComponent;
