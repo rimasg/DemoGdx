@@ -4,12 +4,13 @@ import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.ai.GdxAI;
 import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.hunter.EntityWorld;
+import com.sid.demogdx.hunter.systems.BoundsSystem;
 import com.sid.demogdx.hunter.systems.Box2DMapParserSystem;
-import com.sid.demogdx.hunter.systems.ObstacleSystem;
+import com.sid.demogdx.hunter.systems.PhysicsSystem;
 import com.sid.demogdx.hunter.systems.PlayerSystem;
 import com.sid.demogdx.hunter.systems.RenderingSystem;
-import com.sid.demogdx.hunter.systems.ShapeRendererSystem;
-import com.sid.demogdx.hunter.systems.TiledPathFinderRenderingSystem;
+import com.sid.demogdx.hunter.systems.PlayerRendererSystem;
+import com.sid.demogdx.hunter.systems.TiledPathRenderingSystem;
 import com.sid.demogdx.utils.HunterCameraHelper;
 
 /**
@@ -32,12 +33,13 @@ public class HunterAIScreen extends AbstractBox2dScreen {
         engine = new PooledEngine();
         entityWorld = new EntityWorld(game, world, engine);
 
+        engine.addSystem(new PlayerSystem());
+        engine.addSystem(new PhysicsSystem());
+        engine.addSystem(new BoundsSystem());
         engine.addSystem(new Box2DMapParserSystem(cam));
         engine.addSystem(new RenderingSystem(game.batch, cam));
-        engine.addSystem(new PlayerSystem());
-        engine.addSystem(new ObstacleSystem());
-        engine.addSystem(new ShapeRendererSystem(game.shapeRenderer, cam, entityWorld));
-        engine.addSystem(new TiledPathFinderRenderingSystem(game.shapeRenderer, cam, entityWorld));
+        engine.addSystem(new PlayerRendererSystem(game.shapeRenderer, cam));
+        engine.addSystem(new TiledPathRenderingSystem(game.shapeRenderer, cam));
     }
 
     @Override

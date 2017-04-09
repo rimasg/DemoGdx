@@ -22,6 +22,7 @@ public class BoundsSystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         final BoundsComponent bounds = Mappers.bounds.get(entity);
         final TransformComponent transform = Mappers.transform.get(entity);
+
         bounds.bounds.x = transform.pos.x - bounds.bounds.width * 0.5f;
         bounds.bounds.y = transform.pos.y - bounds.bounds.height * 0.5f;
     }

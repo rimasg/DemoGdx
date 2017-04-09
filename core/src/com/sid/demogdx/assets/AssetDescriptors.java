@@ -55,6 +55,10 @@ public final class AssetDescriptors {
             AssetDescriptor<>(AssetPaths.PE_STAR_TRAIL, PE_CLASS, PE_PARAMS);
     public static final AssetDescriptor<ParticleEffect> PE_SIMPLE_TRAIL = new
             AssetDescriptor<>(AssetPaths.PE_SIMPLE_TRAIL, PE_CLASS, PE_PARAMS);
+    public static final AssetDescriptor<ParticleEffect> PE_SIMPLE_TRAIL_BOX2D = new
+            AssetDescriptor<>(AssetPaths.PE_SIMPLE_TRAIL_BOX2D, PE_CLASS, PE_PARAMS);
+    public static final AssetDescriptor<ParticleEffect> PE_DEFAULT_BOX2D = new
+            AssetDescriptor<>(AssetPaths.PE_DEFAULT_BOX2D, PE_CLASS, PE_PARAMS);
 
     public static final AssetDescriptor<TiledMap> MAP_HUNTER = new
             AssetDescriptor<>(AssetPaths.MAP_HUNTER, TILED_MAP_CLASS);

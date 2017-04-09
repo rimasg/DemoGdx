@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
+import com.sid.demogdx.hunter.components.ParticleComponent;
 import com.sid.demogdx.hunter.components.TextureComponent;
 import com.sid.demogdx.hunter.components.TransformComponent;
 import com.sid.demogdx.utils.Mappers;
@@ -16,18 +17,20 @@ import com.sid.demogdx.utils.Mappers;
  */
 
 public class RenderingSystem extends IteratingSystem {
-    private static Family family = Family.all(TextureComponent.class, TransformComponent.class).get();
+    private static Family family = Family
+            .one(TextureComponent.class, ParticleComponent.class)
+            .all(TransformComponent.class).get();
 
     private SpriteBatch batch;
     private OrthographicCamera cam;
-    private Array<Entity> renderArray;
+    private Array<Entity> renderQueue;
 
     public RenderingSystem(SpriteBatch batch, OrthographicCamera cam) {
         super(family);
         this.batch = batch;
         this.cam = cam;
 
-        renderArray = new Array<>();
+        renderQueue = new Array<>();
     }
 
     @Override
@@ -37,26 +40,32 @@ public class RenderingSystem extends IteratingSystem {
         cam.update();
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
-        for (Entity entity : renderArray) {
-            final TextureComponent texture = Mappers.texture.get(entity);
-            if (texture.region == null) {
-                continue;
-            }
+        for (Entity entity : renderQueue) {
             final TransformComponent transform = Mappers.transform.get(entity);
+            final TextureComponent texture = Mappers.texture.get(entity);
+            final ParticleComponent particle = Mappers.particle.get(entity);
 
-            final int w = 1;
-//            final int w = texture.region.getRegionWidth();
-            final int h = 1;
-//            final int h = texture.region.getRegionHeight();
-            final float ox = w / 2.f;
-            final float oy = h / 2.f;
-            batch.draw(texture.region, transform.pos.x - ox, transform.pos.y - oy, ox, oy, w, h, transform.scale.x, transform.scale.y, transform.rotation * MathUtils.radiansToDegrees);
+            if (texture != null && texture.region != null) {
+                final int w = 1;
+                final int h = 1;
+                final float ox = w / 2.f;
+                final float oy = h / 2.f;
+                batch.draw(texture.region, transform.pos.x - ox, transform.pos.y - oy, ox, oy, w, h, transform.scale.x, transform.scale.y, transform.rotation * MathUtils.radiansToDegrees);
+            }
+
+            if (particle != null && particle.effect != null) {
+                if (!particle.effect.isComplete()) {
+                    particle.effect.setPosition(transform.pos.x, transform.pos.y);
+                    particle.effect.draw(batch, deltaTime);
+                }
+            }
         }
         batch.end();
+        renderQueue.clear();
     }
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        renderArray.add(entity);
+        renderQueue.add(entity);
     }
 }

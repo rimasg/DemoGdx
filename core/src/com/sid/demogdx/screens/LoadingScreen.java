@@ -24,7 +24,7 @@ public class LoadingScreen extends ScreenAdapter {
     private float lineWidth = Box2DConfig.WWV;
     private float lineHeight = Box2DConfig.WHV * 0.1f;
     private float lineYpos = Box2DConfig.WHV / 2.0f;
-    private float waitTime = 0.5f;
+    private float waitTime = 0.25f;
 
     public LoadingScreen(DemoGdx game) {
         this.game = game;

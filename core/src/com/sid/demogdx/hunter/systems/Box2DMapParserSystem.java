@@ -25,6 +25,7 @@ public class Box2DMapParserSystem extends IteratingSystem implements Disposable 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
         parser = Mappers.box2DMapParser.get(entity);
+
         parser.mapRenderer.setView(cam);
         parser.mapRenderer.render();
     }

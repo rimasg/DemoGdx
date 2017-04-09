@@ -59,6 +59,8 @@ public final class Assets {
         am.load(AssetDescriptors.PE_GRAVITY_EXPLOSION);
         am.load(AssetDescriptors.PE_STAR_TRAIL);
         am.load(AssetDescriptors.PE_SIMPLE_TRAIL);
+        am.load(AssetDescriptors.PE_SIMPLE_TRAIL_BOX2D);
+        am.load(AssetDescriptors.PE_DEFAULT_BOX2D);
 
         am.load(AssetDescriptors.MAP_HUNTER);
     }

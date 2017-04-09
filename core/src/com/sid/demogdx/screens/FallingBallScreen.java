@@ -235,11 +235,13 @@ public class FallingBallScreen extends AbstractBox2dScreen {
                 }
 
 //                final float radius = body.getFixtureList().get(0).getShape().getRadius();
-                game.batch.draw(bodyRegion,
-                        body.getPosition().x,
-                        body.getPosition().y,
-                        0, 0, 1, 1, 1, 1,
-                        body.getAngle() * MathUtils.radiansToDegrees);
+                if (bodyRegion != null) {
+                    game.batch.draw(bodyRegion,
+                            body.getPosition().x,
+                            body.getPosition().y,
+                            0, 0, 1, 1, 1, 1,
+                            body.getAngle() * MathUtils.radiansToDegrees);
+                }
             }
         }
     }

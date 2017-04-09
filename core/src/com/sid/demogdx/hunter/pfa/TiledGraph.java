@@ -19,6 +19,15 @@ public class TiledGraph implements IndexedGraph<TiledNode> {
         this.sizeX = sizeX;
         this.sizeY = sizeY;
         this.nodes = new Array<>(sizeX * sizeY);
+        initGraph();
+    }
+
+    private void initGraph() {
+        for (int x = 0; x < sizeX; x++) {
+            for (int y = 0; y < sizeY; y++) {
+                nodes.add(new TiledNode(this, x, y, TiledNode.Tile.FLOOR));
+            }
+        }
     }
 
     @Override

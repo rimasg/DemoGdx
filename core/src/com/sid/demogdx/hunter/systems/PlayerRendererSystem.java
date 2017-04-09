@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.sid.demogdx.hunter.EntityWorld;
 import com.sid.demogdx.hunter.components.PlayerComponent;
 import com.sid.demogdx.utils.Mappers;
 
@@ -16,18 +15,16 @@ import com.sid.demogdx.utils.Mappers;
  * Created by Okis on 2017.03.26.
  */
 
-public class ShapeRendererSystem extends IteratingSystem {
+public class PlayerRendererSystem extends IteratingSystem {
     private static Family family = Family.all(PlayerComponent.class).get();
 
     private ShapeRenderer shapeRenderer;
     private OrthographicCamera cam;
-    private EntityWorld entityWorld;
 
-    public ShapeRendererSystem(ShapeRenderer shapeRenderer, OrthographicCamera cam, EntityWorld entityWorld) {
+    public PlayerRendererSystem(ShapeRenderer shapeRenderer, OrthographicCamera cam) {
         super(family);
         this.shapeRenderer = shapeRenderer;
         this.cam = cam;
-        this.entityWorld = entityWorld;
     }
 
     @Override

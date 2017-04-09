@@ -20,7 +20,8 @@ import com.sid.demogdx.assets.Assets;
 import com.sid.demogdx.assets.RegionNames;
 import com.sid.demogdx.entities.SteerableLocation;
 import com.sid.demogdx.hunter.components.Box2DMapParserComponent;
-import com.sid.demogdx.hunter.components.ObstacleComponent;
+import com.sid.demogdx.hunter.components.ParticleComponent;
+import com.sid.demogdx.hunter.components.PhysicsComponent;
 import com.sid.demogdx.hunter.components.PlayerComponent;
 import com.sid.demogdx.hunter.components.TextureComponent;
 import com.sid.demogdx.hunter.components.TiledPathFinderComponent;
@@ -133,19 +134,41 @@ public class EntityWorld {
         final Entity entity = engine.createEntity();
 
         final PlayerComponent player = engine.createComponent(PlayerComponent.class);
-        final TextureComponent texture = engine.createComponent(TextureComponent.class);
         final TransformComponent transform = engine.createComponent(TransformComponent.class);
+        final TextureComponent texture = engine.createComponent(TextureComponent.class);
+        final ParticleComponent particle = engine.createComponent(ParticleComponent.class);
 
         player.body = this.player;
         player.steerable = createSteerable();
         player.playerAgent = new PlayerAgent(player);
         texture.region = Assets.inst().getRegion(RegionNames.HERO);
+        particle.effect = Assets.inst().getParticleEffect(AssetDescriptors.PE_DEFAULT_BOX2D);
 
         entity.add(player);
-        entity.add(texture);
         entity.add(transform);
+        entity.add(texture);
+        entity.add(particle);
 
         engine.addEntity(entity);
+    }
+
+    private HunterSteerableObject createSteerable() {
+        HunterSteerableObject steerable = new HunterSteerableObject(Assets.inst().getRegion(RegionNames.HERO), player, 0.6f);
+
+        final SteerableLocation startLocation = new SteerableLocation();
+        startLocation.setPosition(player.getPosition());
+
+        final SteerableLocation targetLocation = new SteerableLocation();
+        targetLocation.setPosition(finish.getPosition());
+
+        final SeekAndAvoidSB seekAndAvoidSB = new SeekAndAvoidSB()
+                .initSteering(world, steerable, startLocation, targetLocation);
+        steerable.setSeekAndAvoidSB(seekAndAvoidSB);
+        final PrioritySteering<Vector2> steering = seekAndAvoidSB.getSteering();
+
+        steerable.setSteeringBehavior(steering);
+
+        return steerable;
     }
 
     private void createAStarMap() {
@@ -160,12 +183,6 @@ public class EntityWorld {
         pathFinder.pathFinder = new TiledPathFinder(width, height);
         //
         final TiledGraph graph = pathFinder.pathFinder.getGraph();
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                graph.nodes.add(
-                        new TiledNode(graph, x, y, TiledNode.Tile.FLOOR));
-            }
-        }
         //
         final MapObjects obstacles = tiledMap.getLayers().get("obstacles").getObjects();
         for (MapObject obstacle : obstacles) {
@@ -189,7 +206,6 @@ public class EntityWorld {
         //
         final TiledNode startNode = graph.getNode((int) player.getPosition().x, (int) player.getPosition().y);
         final TiledNode targetNode = graph.getNode((int) finish.getPosition().x, (int) finish.getPosition().y);
-        pathFinder.pathFinder.initPathFinder();
         pathFinder.pathFinder.findPath(startNode, targetNode);
         //
         entity.add(pathFinder);
@@ -200,36 +216,17 @@ public class EntityWorld {
     private void createObstacle(Body body) {
         final Entity entity = engine.createEntity();
 
-        final ObstacleComponent obstacle = engine.createComponent(ObstacleComponent.class);
-        final TextureComponent texture = engine.createComponent(TextureComponent.class);
         final TransformComponent transform = engine.createComponent(TransformComponent.class);
+        final PhysicsComponent physics = engine.createComponent(PhysicsComponent.class);
+        final TextureComponent texture = engine.createComponent(TextureComponent.class);
 
-        obstacle.body = body;
+        physics.body = body;
         texture.region = Assets.inst().getRegion(RegionNames.STAR);
 
-        entity.add(obstacle);
-        entity.add(texture);
         entity.add(transform);
+        entity.add(physics);
+        entity.add(texture);
 
         engine.addEntity(entity);
-    }
-
-    private HunterSteerableObject createSteerable() {
-        HunterSteerableObject steerable = new HunterSteerableObject(Assets.inst().getRegion(RegionNames.HERO), player, 0.6f);
-
-        final SteerableLocation startLocation = new SteerableLocation();
-        startLocation.setPosition(player.getPosition());
-
-        final SteerableLocation targetLocation = new SteerableLocation();
-        targetLocation.setPosition(finish.getPosition());
-
-        final SeekAndAvoidSB seekAndAvoidSB = new SeekAndAvoidSB()
-                .initSteering(world, steerable, startLocation, targetLocation);
-        steerable.setSeekAndAvoidSB(seekAndAvoidSB);
-        final PrioritySteering<Vector2> steering = seekAndAvoidSB.getSteering();
-
-        steerable.setSteeringBehavior(steering);
-
-        return steerable;
     }
 }

@@ -21,15 +21,14 @@ public class TiledPathFinder {
         graph = new TiledGraph(sizeX, sizeY);
         path = new DefaultGraphPath<>();
         heuristic = new TiledManhattanDistance<>();
-    }
-
-    /**
-     * Call only after TiledGraph has been set up
-     */
-    public void initPathFinder() {
         pathFinder = new IndexedAStarPathFinder<>(graph);
     }
 
+    /**
+     * @param start Start Node
+     * @param target Target Node
+     * @return true if path found; to get path call {@link #getPath()}
+     */
     public boolean findPath(TiledNode start, TiledNode target) {
         return pathFinder.searchNodePath(start, target, heuristic, path);
     }
