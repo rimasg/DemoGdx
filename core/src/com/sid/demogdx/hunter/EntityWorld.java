@@ -19,7 +19,9 @@ import com.sid.demogdx.assets.AssetDescriptors;
 import com.sid.demogdx.assets.Assets;
 import com.sid.demogdx.assets.RegionNames;
 import com.sid.demogdx.entities.SteerableLocation;
-import com.sid.demogdx.hunter.components.Box2DMapParserComponent;
+import com.sid.demogdx.hunter.components.Box2DMapRendererComponent;
+import com.sid.demogdx.hunter.components.CameraComponent;
+import com.sid.demogdx.hunter.components.CameraFollowComponent;
 import com.sid.demogdx.hunter.components.ParticleComponent;
 import com.sid.demogdx.hunter.components.PhysicsComponent;
 import com.sid.demogdx.hunter.components.PlayerComponent;
@@ -30,8 +32,8 @@ import com.sid.demogdx.hunter.fsm.PlayerAgent;
 import com.sid.demogdx.hunter.pfa.TiledGraph;
 import com.sid.demogdx.hunter.pfa.TiledNode;
 import com.sid.demogdx.hunter.pfa.TiledPathFinder;
+import com.sid.demogdx.hunter.systems.RenderingSystem;
 import com.sid.demogdx.utils.Box2DConfig;
-import com.sid.demogdx.utils.HunterCameraHelper;
 
 import net.dermetfan.gdx.physics.box2d.Box2DMapObjectParser;
 import net.dermetfan.gdx.physics.box2d.ContactAdapter;
@@ -51,14 +53,12 @@ public class EntityWorld {
         this.game = game;
         this.world = world;
         this.engine = engine;
-
-        create();
     }
 
-    private void create() {
+    public void create() {
         createWorld();
         createBox2DMapParser();
-        createPlayer();
+        createFollowCamera(createPlayer());
         createAStarMap();
     }
 
@@ -80,11 +80,13 @@ public class EntityWorld {
     private void createBox2DMapParser() {
         final Entity entity = engine.createEntity();
 
-        final Box2DMapParserComponent box2DMapParser = engine.createComponent(Box2DMapParserComponent.class);
-        box2DMapParser.map = Assets.inst().getTiledMap(AssetDescriptors.MAP_HUNTER);
-        box2DMapParser.mapRenderer = new OrthogonalTiledMapRenderer(box2DMapParser.map, Box2DConfig.unitScale32, game.batch);
-        box2DMapParser.box2DMapObjectParser = new Box2DMapObjectParser(box2DMapParser.mapRenderer.getUnitScale());
-        box2DMapParser.box2DMapObjectParser.setListener(new Box2DMapObjectParser.Listener.Adapter() {
+        final Box2DMapRendererComponent box2DMapRenderer = engine.createComponent(Box2DMapRendererComponent.class);
+        final CameraComponent camera = engine.createComponent(CameraComponent.class);
+
+        box2DMapRenderer.map = Assets.inst().getTiledMap(AssetDescriptors.MAP_HUNTER);
+        box2DMapRenderer.mapRenderer = new OrthogonalTiledMapRenderer(box2DMapRenderer.map, Box2DConfig.unitScale32, game.batch);
+        box2DMapRenderer.box2DMapObjectParser = new Box2DMapObjectParser(box2DMapRenderer.mapRenderer.getUnitScale());
+        box2DMapRenderer.box2DMapObjectParser.setListener(new Box2DMapObjectParser.Listener.Adapter() {
 
             Box2DMapObjectParser.Aliases aliases;
 
@@ -113,7 +115,6 @@ public class EntityWorld {
                 super.created(body, mapObject);
                 if ("spawn".equals(mapObject.getName())) {
                     player = body;
-                    HunterCameraHelper.setTarget(body);
                 }
                 if ("finish".equals(mapObject.getName())) {
                     finish = body;
@@ -123,14 +124,16 @@ public class EntityWorld {
                 }
             }
         });
-        box2DMapParser.box2DMapObjectParser.load(world, box2DMapParser.map);
+        box2DMapRenderer.box2DMapObjectParser.load(world, box2DMapRenderer.map);
+        camera.cam = engine.getSystem(RenderingSystem.class).getCamera();
 
-        entity.add(box2DMapParser);
+        entity.add(box2DMapRenderer);
+        entity.add(camera);
 
         engine.addEntity(entity);
     }
 
-    private void createPlayer() {
+    private Entity createPlayer() {
         final Entity entity = engine.createEntity();
 
         final PlayerComponent player = engine.createComponent(PlayerComponent.class);
@@ -148,6 +151,20 @@ public class EntityWorld {
         entity.add(transform);
         entity.add(texture);
         entity.add(particle);
+
+        engine.addEntity(entity);
+
+        return entity;
+    }
+
+    private void createFollowCamera(Entity player) {
+        final Entity entity = engine.createEntity();
+
+        final CameraFollowComponent camera = engine.createComponent(CameraFollowComponent.class);
+        camera.cam = engine.getSystem(RenderingSystem.class).getCamera();
+        camera.target = player;
+
+        entity.add(camera);
 
         engine.addEntity(entity);
     }

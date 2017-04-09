@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="9" height="128" tilewidth="32" tileheight="32" nextobjectid="422">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="9" height="128" tilewidth="32" tileheight="32" nextobjectid="434">
  <tileset firstgid="1" source="tilesets/desert.tsx"/>
  <layer name="background" width="9" height="128">
   <data encoding="base64" compression="zlib">
@@ -9,12 +9,6 @@
  <objectgroup name="obstacles">
   <object id="4" type="object" x="128" y="96" width="32" height="32"/>
   <object id="21" type="object" x="128" y="3648" width="32" height="96"/>
-  <object id="27" type="object" x="64" y="2816" width="64" height="32"/>
-  <object id="28" type="object" x="160" y="2816" width="64" height="32"/>
-  <object id="29" type="object" x="32" y="2848" width="64" height="32"/>
-  <object id="30" type="object" x="192" y="2848" width="64" height="32"/>
-  <object id="32" type="object" x="64" y="2912" width="64" height="32"/>
-  <object id="34" type="object" x="160" y="2912" width="64" height="32"/>
   <object id="47" type="object" x="96" y="2016" width="32" height="32"/>
   <object id="48" type="object" x="128" y="2016" width="32" height="32"/>
   <object id="50" type="object" x="160" y="2016" width="32" height="32"/>
@@ -158,6 +152,18 @@
   <object id="419" type="object" x="192" y="3168" width="32" height="32"/>
   <object id="420" type="object" x="128" y="3168" width="32" height="32"/>
   <object id="421" type="object" x="224" y="3168" width="32" height="32"/>
+  <object id="422" type="object" x="96" y="2816" width="32" height="32"/>
+  <object id="423" type="object" x="64" y="2816" width="32" height="32"/>
+  <object id="424" type="object" x="224" y="2848" width="32" height="32"/>
+  <object id="425" type="object" x="192" y="2848" width="32" height="32"/>
+  <object id="426" type="object" x="64" y="2848" width="32" height="32"/>
+  <object id="427" type="object" x="32" y="2848" width="32" height="32"/>
+  <object id="428" type="object" x="192" y="2816" width="32" height="32"/>
+  <object id="429" type="object" x="160" y="2816" width="32" height="32"/>
+  <object id="430" type="object" x="64" y="2912" width="32" height="32"/>
+  <object id="431" type="object" x="96" y="2912" width="32" height="32"/>
+  <object id="432" type="object" x="160" y="2912" width="32" height="32"/>
+  <object id="433" type="object" x="192" y="2912" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="border">
   <object id="3" name="border" type="object" x="0" y="4096">

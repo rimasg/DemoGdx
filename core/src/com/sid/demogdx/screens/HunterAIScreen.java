@@ -5,13 +5,13 @@ import com.badlogic.gdx.ai.GdxAI;
 import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.hunter.EntityWorld;
 import com.sid.demogdx.hunter.systems.BoundsSystem;
-import com.sid.demogdx.hunter.systems.Box2DMapParserSystem;
+import com.sid.demogdx.hunter.systems.Box2DMapRendererSystem;
+import com.sid.demogdx.hunter.systems.CameraFollowSystem;
 import com.sid.demogdx.hunter.systems.PhysicsSystem;
+import com.sid.demogdx.hunter.systems.PlayerRendererSystem;
 import com.sid.demogdx.hunter.systems.PlayerSystem;
 import com.sid.demogdx.hunter.systems.RenderingSystem;
-import com.sid.demogdx.hunter.systems.PlayerRendererSystem;
 import com.sid.demogdx.hunter.systems.TiledPathRenderingSystem;
-import com.sid.demogdx.utils.HunterCameraHelper;
 
 /**
  * Created by Okis on 2017.03.24.
@@ -28,33 +28,32 @@ public class HunterAIScreen extends AbstractBox2dScreen {
     @Override
     public void show() {
         super.show();
-        HunterCameraHelper.setCam(cam);
-        //
+
         engine = new PooledEngine();
         entityWorld = new EntityWorld(game, world, engine);
 
         engine.addSystem(new PlayerSystem());
         engine.addSystem(new PhysicsSystem());
         engine.addSystem(new BoundsSystem());
-        engine.addSystem(new Box2DMapParserSystem(cam));
+        engine.addSystem(new CameraFollowSystem());
+        engine.addSystem(new Box2DMapRendererSystem());
         engine.addSystem(new RenderingSystem(game.batch, cam));
         engine.addSystem(new PlayerRendererSystem(game.shapeRenderer, cam));
         engine.addSystem(new TiledPathRenderingSystem(game.shapeRenderer, cam));
+
+        entityWorld.create();
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
         GdxAI.getTimepiece().update(delta);
-//        b2dr.render(world, cam.combined);
-        HunterCameraHelper.update(delta);
         engine.update(delta);
     }
 
     @Override
     public void hide() {
         super.hide();
-        engine.getSystem(Box2DMapParserSystem.class).dispose();
-        HunterCameraHelper.reset();
+        engine.getSystem(Box2DMapRendererSystem.class).dispose();
     }
 }

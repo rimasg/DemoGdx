@@ -10,7 +10,7 @@ import net.dermetfan.gdx.physics.box2d.Box2DMapObjectParser;
  * Created by SID on 2017-03-27.
  */
 
-public class Box2DMapParserComponent implements Component {
+public class Box2DMapRendererComponent implements Component {
     public TiledMap map;
     public OrthogonalTiledMapRenderer mapRenderer;
     public Box2DMapObjectParser box2DMapObjectParser;

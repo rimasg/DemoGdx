@@ -1,7 +1,6 @@
 package com.sid.demogdx.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
@@ -259,6 +258,7 @@ public class HitBallScreen extends AbstractBox2dScreen {
 //        drawParticles();
         game.batch.end();
 
+        game.shapeRenderer.setProjectionMatrix(stage.getCamera().combined);
         game.shapeRenderer.setAutoShapeType(true);
         game.shapeRenderer.begin();
         drawProjectile();
@@ -270,15 +270,6 @@ public class HitBallScreen extends AbstractBox2dScreen {
 
     private void updateHUD() {
         timeLabel.setText(getScreenTime());
-    }
-
-    @Override
-    protected void handleInput() {
-        super.handleInput();
-        if (Gdx.input.isKeyPressed(Input.Keys.BACK) || Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            game.setScreen(game.getMainMenuScreen());
-        }
-
     }
 
     private void drawBodies() {
