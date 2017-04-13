@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.ai.GdxAI;
 import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.hunter.EntityWorld;
+import com.sid.demogdx.hunter.systems.AnimationSystem;
 import com.sid.demogdx.hunter.systems.BoundsSystem;
 import com.sid.demogdx.hunter.systems.Box2DMapRendererSystem;
 import com.sid.demogdx.hunter.systems.CameraFollowSystem;
@@ -11,6 +12,7 @@ import com.sid.demogdx.hunter.systems.PhysicsSystem;
 import com.sid.demogdx.hunter.systems.PlayerRendererSystem;
 import com.sid.demogdx.hunter.systems.PlayerSystem;
 import com.sid.demogdx.hunter.systems.RenderingSystem;
+import com.sid.demogdx.hunter.systems.StateSystem;
 import com.sid.demogdx.hunter.systems.TiledPathRenderingSystem;
 
 /**
@@ -37,6 +39,8 @@ public class HunterAIScreen extends AbstractBox2dScreen {
         engine.addSystem(new BoundsSystem());
         engine.addSystem(new CameraFollowSystem());
         engine.addSystem(new Box2DMapRendererSystem());
+        engine.addSystem(new StateSystem());
+        engine.addSystem(new AnimationSystem());
         engine.addSystem(new RenderingSystem(game.batch, cam));
         engine.addSystem(new PlayerRendererSystem(game.shapeRenderer, cam));
         engine.addSystem(new TiledPathRenderingSystem(game.shapeRenderer, cam));

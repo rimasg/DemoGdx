@@ -3,6 +3,9 @@ package com.sid.demogdx.hunter;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.ai.steer.behaviors.PrioritySteering;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
@@ -14,17 +17,20 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.assets.AssetDescriptors;
 import com.sid.demogdx.assets.Assets;
 import com.sid.demogdx.assets.RegionNames;
 import com.sid.demogdx.entities.SteerableLocation;
+import com.sid.demogdx.hunter.components.AnimationComponent;
 import com.sid.demogdx.hunter.components.Box2DMapRendererComponent;
 import com.sid.demogdx.hunter.components.CameraComponent;
 import com.sid.demogdx.hunter.components.CameraFollowComponent;
 import com.sid.demogdx.hunter.components.ParticleComponent;
 import com.sid.demogdx.hunter.components.PhysicsComponent;
 import com.sid.demogdx.hunter.components.PlayerComponent;
+import com.sid.demogdx.hunter.components.StateComponent;
 import com.sid.demogdx.hunter.components.TextureComponent;
 import com.sid.demogdx.hunter.components.TiledPathFinderComponent;
 import com.sid.demogdx.hunter.components.TransformComponent;
@@ -138,19 +144,36 @@ public class EntityWorld {
 
         final PlayerComponent player = engine.createComponent(PlayerComponent.class);
         final TransformComponent transform = engine.createComponent(TransformComponent.class);
+        final StateComponent state = engine.createComponent(StateComponent.class);
         final TextureComponent texture = engine.createComponent(TextureComponent.class);
         final ParticleComponent particle = engine.createComponent(ParticleComponent.class);
+        final AnimationComponent anim = engine.createComponent(AnimationComponent.class);
 
         player.body = this.player;
         player.steerable = createSteerable();
         player.playerAgent = new PlayerAgent(player);
+        state.state = 0;
         texture.region = Assets.inst().getRegion(RegionNames.HERO);
         particle.effect = Assets.inst().getParticleEffect(AssetDescriptors.PE_DEFAULT_BOX2D);
 
+        // TODO: 2017-04-13 Create factory for Animations
+        final TextureAtlas.AtlasRegion region = Assets.inst().getAtlas().findRegion(RegionNames.ANIM_SLIME);
+        final TextureRegion[][] regions = region.split(32, 32);
+        final Array<TextureRegion> keyframes = new Array<>();
+        for (TextureRegion[] textureRegions : regions) {
+            for (TextureRegion textureRegion : textureRegions) {
+                keyframes.add(textureRegion);
+            }
+        }
+
+        anim.anim.put(state.state, new Animation<>(0.2f, keyframes, Animation.PlayMode.LOOP));
+
         entity.add(player);
         entity.add(transform);
+        entity.add(state);
         entity.add(texture);
         entity.add(particle);
+        entity.add(anim);
 
         engine.addEntity(entity);
 

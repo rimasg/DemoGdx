@@ -6,7 +6,7 @@ filter: Nearest,Nearest
 repeat: none
 airplane
   rotate: false
-  xy: 2, 36
+  xy: 2, 2
   size: 83, 64
   orig: 83, 64
   offset: 0, 0
@@ -27,7 +27,7 @@ blue_ball_border
   index: -1
 button_gold
   rotate: false
-  xy: 2, 2
+  xy: 154, 106
   size: 64, 32
   split: 6, 6, 6, 6
   orig: 64, 32
@@ -35,7 +35,7 @@ button_gold
   index: -1
 circle_rainbow
   rotate: false
-  xy: 68, 2
+  xy: 132, 68
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -70,21 +70,21 @@ magenta_ball_border
   index: -1
 particle
   rotate: false
-  xy: 102, 2
+  xy: 220, 220
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 particle-star
   rotate: false
-  xy: 260, 294
+  xy: 87, 2
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 particle_dark
   rotate: false
-  xy: 136, 2
+  xy: 260, 260
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -103,9 +103,16 @@ rocket
   orig: 64, 112
   offset: 0, 0
   index: -1
+slime_front
+  rotate: false
+  xy: 2, 68
+  size: 128, 32
+  orig: 128, 32
+  offset: 0, 0
+  index: -1
 star
   rotate: false
-  xy: 87, 36
+  xy: 260, 294
   size: 64, 64
   orig: 64, 64
   offset: 0, 0

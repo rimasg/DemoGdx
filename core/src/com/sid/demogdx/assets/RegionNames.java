@@ -19,6 +19,9 @@ public final class RegionNames {
     public static final String BTN_UP_RED = "btn_up_blue";
     public static final String BTN_DOWN_RED = "btn_down_blue";
 
+    public static final String ANIM_HERO = "badlogic";
+    public static final String ANIM_SLIME = "slime_front";
+
     public static final String RED_BALL_BORDER = "red_ball_border";
     public static final String GREEN_BALL_BORDER = "green_ball_border";
     public static final String BLUE_BALL_BORDER = "blue_ball_border";
