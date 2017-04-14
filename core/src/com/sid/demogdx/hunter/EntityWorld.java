@@ -27,6 +27,9 @@ import com.sid.demogdx.hunter.components.AnimationComponent;
 import com.sid.demogdx.hunter.components.Box2DMapRendererComponent;
 import com.sid.demogdx.hunter.components.CameraComponent;
 import com.sid.demogdx.hunter.components.CameraFollowComponent;
+import com.sid.demogdx.hunter.components.EnemyComponent;
+import com.sid.demogdx.hunter.components.ExplosionComponent;
+import com.sid.demogdx.hunter.components.ObstacleComponent;
 import com.sid.demogdx.hunter.components.ParticleComponent;
 import com.sid.demogdx.hunter.components.PhysicsComponent;
 import com.sid.demogdx.hunter.components.PlayerComponent;
@@ -40,6 +43,7 @@ import com.sid.demogdx.hunter.pfa.TiledNode;
 import com.sid.demogdx.hunter.pfa.TiledPathFinder;
 import com.sid.demogdx.hunter.systems.RenderingSystem;
 import com.sid.demogdx.utils.Box2DConfig;
+import com.sid.demogdx.utils.Mappers;
 
 import net.dermetfan.gdx.physics.box2d.Box2DMapObjectParser;
 import net.dermetfan.gdx.physics.box2d.ContactAdapter;
@@ -79,6 +83,35 @@ public class EntityWorld {
                 if ((player == bodyA) && (finish == bodyB) || (finish == bodyA) && (player == bodyB)) {
                     // no-op
                 }
+
+                final Object userDataA = bodyA.getUserData();
+                final Object userDataB = bodyB.getUserData();
+                Entity entityA = null;
+                if (userDataA instanceof Entity) {
+                    entityA = (Entity) userDataA;
+                }
+                final ObstacleComponent obstacleA;
+                if (entityA != null) {
+                    obstacleA = Mappers.obstacle.get(entityA);
+                    if (obstacleA != null) {
+                        final PhysicsComponent physics = Mappers.physics.get(entityA);
+                        createExplosion(physics.body);
+                    }
+                }
+                //
+                Entity entityB = null;
+                if (userDataA instanceof Entity) {
+                    entityB = (Entity) userDataB;
+                }
+                final ObstacleComponent obstacleB;
+                if (entityB != null) {
+                    obstacleB = Mappers.obstacle.get(entityB);
+                    if (obstacleB != null) {
+                        final PhysicsComponent physics = Mappers.physics.get(entityB);
+                        createExplosion(physics.body);
+                    }
+                }
+
             }
         });
     }
@@ -125,8 +158,14 @@ public class EntityWorld {
                 if ("finish".equals(mapObject.getName())) {
                     finish = body;
                 }
+                if ("enemy".equals(mapObject.getName())) {
+                    createEnemy(body);
+                }
                 if ("obstacle".equals(mapObject.getName())) {
                     createObstacle(body);
+                }
+                if ("wall".equals(mapObject.getName())) {
+                    createEnemy(body);
                 }
             }
         });
@@ -137,47 +176,6 @@ public class EntityWorld {
         entity.add(camera);
 
         engine.addEntity(entity);
-    }
-
-    private Entity createPlayer() {
-        final Entity entity = engine.createEntity();
-
-        final PlayerComponent player = engine.createComponent(PlayerComponent.class);
-        final TransformComponent transform = engine.createComponent(TransformComponent.class);
-        final StateComponent state = engine.createComponent(StateComponent.class);
-        final TextureComponent texture = engine.createComponent(TextureComponent.class);
-        final ParticleComponent particle = engine.createComponent(ParticleComponent.class);
-        final AnimationComponent anim = engine.createComponent(AnimationComponent.class);
-
-        player.body = this.player;
-        player.steerable = createSteerable();
-        player.playerAgent = new PlayerAgent(player);
-        state.state = 0;
-        texture.region = Assets.inst().getRegion(RegionNames.HERO);
-        particle.effect = Assets.inst().getParticleEffect(AssetDescriptors.PE_DEFAULT_BOX2D);
-
-        // TODO: 2017-04-13 Create factory for Animations
-        final TextureAtlas.AtlasRegion region = Assets.inst().getAtlas().findRegion(RegionNames.ANIM_SLIME);
-        final TextureRegion[][] regions = region.split(32, 32);
-        final Array<TextureRegion> keyframes = new Array<>();
-        for (TextureRegion[] textureRegions : regions) {
-            for (TextureRegion textureRegion : textureRegions) {
-                keyframes.add(textureRegion);
-            }
-        }
-
-        anim.anim.put(state.state, new Animation<>(0.2f, keyframes, Animation.PlayMode.LOOP));
-
-        entity.add(player);
-        entity.add(transform);
-        entity.add(state);
-        entity.add(texture);
-        entity.add(particle);
-        entity.add(anim);
-
-        engine.addEntity(entity);
-
-        return entity;
     }
 
     private void createFollowCamera(Entity player) {
@@ -253,9 +251,51 @@ public class EntityWorld {
         engine.addEntity(entity);
     }
 
+    private Entity createPlayer() {
+        final Entity entity = engine.createEntity();
+
+        final PlayerComponent player = engine.createComponent(PlayerComponent.class);
+        final TransformComponent transform = engine.createComponent(TransformComponent.class);
+        final StateComponent state = engine.createComponent(StateComponent.class);
+        final TextureComponent texture = engine.createComponent(TextureComponent.class);
+        final ParticleComponent particle = engine.createComponent(ParticleComponent.class);
+        final AnimationComponent anim = engine.createComponent(AnimationComponent.class);
+
+        player.body = this.player;
+        player.steerable = createSteerable();
+        player.playerAgent = new PlayerAgent(player);
+        state.state = 0;
+        texture.region = Assets.inst().getRegion(RegionNames.HERO);
+        particle.effect = Assets.inst().getParticleEffect(AssetDescriptors.PE_DEFAULT_BOX2D);
+
+        // TODO: 2017-04-13 Create factory for Animations
+        final TextureAtlas.AtlasRegion region = Assets.inst().getAtlas().findRegion(RegionNames.ANIM_SLIME);
+        final TextureRegion[][] regions = region.split(32, 32);
+        final Array<TextureRegion> keyframes = new Array<>();
+        for (TextureRegion[] textureRegions : regions) {
+            for (TextureRegion textureRegion : textureRegions) {
+                keyframes.add(textureRegion);
+            }
+        }
+
+        anim.anim.put(state.state, new Animation<>(0.2f, keyframes, Animation.PlayMode.LOOP));
+
+        entity.add(player);
+        entity.add(transform);
+        entity.add(state);
+        entity.add(texture);
+        entity.add(particle);
+        entity.add(anim);
+
+        engine.addEntity(entity);
+
+        return entity;
+    }
+
     private void createObstacle(Body body) {
         final Entity entity = engine.createEntity();
 
+        final ObstacleComponent obstacle = engine.createComponent(ObstacleComponent.class);
         final TransformComponent transform = engine.createComponent(TransformComponent.class);
         final PhysicsComponent physics = engine.createComponent(PhysicsComponent.class);
         final TextureComponent texture = engine.createComponent(TextureComponent.class);
@@ -263,9 +303,49 @@ public class EntityWorld {
         physics.body = body;
         texture.region = Assets.inst().getRegion(RegionNames.STAR);
 
+        entity.add(obstacle);
         entity.add(transform);
         entity.add(physics);
         entity.add(texture);
+
+        engine.addEntity(entity);
+    }
+
+    private void createEnemy(Body body) {
+        final Entity entity = engine.createEntity();
+
+        final EnemyComponent enemy = engine.createComponent(EnemyComponent.class);
+        final TransformComponent transform = engine.createComponent(TransformComponent.class);
+        final PhysicsComponent physics = engine.createComponent(PhysicsComponent.class);
+        final TextureComponent texture = engine.createComponent(TextureComponent.class);
+
+        physics.body = body;
+        physics.body.setUserData(entity);
+        texture.region = Assets.inst().getRegion(RegionNames.STAR);
+
+        entity.add(enemy);
+        entity.add(transform);
+        entity.add(physics);
+        entity.add(texture);
+
+        engine.addEntity(entity);
+    }
+
+    private void createExplosion(Body body) {
+        final Entity entity = engine.createEntity();
+
+        final ExplosionComponent explosion = engine.createComponent(ExplosionComponent.class);
+        final ParticleComponent particle = engine.createComponent(ParticleComponent.class);
+        final TransformComponent transform = engine.createComponent(TransformComponent.class);
+        final StateComponent state = engine.createComponent(StateComponent.class);
+
+        particle.effect = Assets.inst().getParticleEffect(AssetDescriptors.PE_EXPLOSION);
+        transform.pos.set(body.getPosition());
+
+        entity.add(explosion);
+        entity.add(particle);
+        entity.add(transform);
+        entity.add(state);
 
         engine.addEntity(entity);
     }

@@ -8,6 +8,7 @@ import com.sid.demogdx.hunter.systems.AnimationSystem;
 import com.sid.demogdx.hunter.systems.BoundsSystem;
 import com.sid.demogdx.hunter.systems.Box2DMapRendererSystem;
 import com.sid.demogdx.hunter.systems.CameraFollowSystem;
+import com.sid.demogdx.hunter.systems.ExplosionSystem;
 import com.sid.demogdx.hunter.systems.PhysicsSystem;
 import com.sid.demogdx.hunter.systems.PlayerRendererSystem;
 import com.sid.demogdx.hunter.systems.PlayerSystem;
@@ -41,6 +42,7 @@ public class HunterAIScreen extends AbstractBox2dScreen {
         engine.addSystem(new Box2DMapRendererSystem());
         engine.addSystem(new StateSystem());
         engine.addSystem(new AnimationSystem());
+        engine.addSystem(new ExplosionSystem());
         engine.addSystem(new RenderingSystem(game.batch, cam));
         engine.addSystem(new PlayerRendererSystem(game.shapeRenderer, cam));
         engine.addSystem(new TiledPathRenderingSystem(game.shapeRenderer, cam));
