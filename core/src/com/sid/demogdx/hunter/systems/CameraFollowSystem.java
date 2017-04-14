@@ -15,7 +15,7 @@ import com.sid.demogdx.utils.Mappers;
 public class CameraFollowSystem extends IteratingSystem {
     private static Family family = Family.all(CameraFollowComponent.class).get();
 
-    public static final float VELOCITY = 4.0f;
+    public static float VELOCITY = 4.0f;
     private static final Vector3 targetVec = new Vector3();
 
     public CameraFollowSystem() {

@@ -25,8 +25,8 @@ import com.sid.demogdx.hunter.components.WallComponent;
 public final class Mappers {
     public static final ComponentMapper<TransformComponent> transform = ComponentMapper.getFor(TransformComponent.class);
     public static final ComponentMapper<PhysicsComponent> physics = ComponentMapper.getFor(PhysicsComponent.class);
-    public static final ComponentMapper<CameraFollowComponent> cameraFollow = ComponentMapper.getFor(CameraFollowComponent.class);
     public static final ComponentMapper<CameraComponent> camera = ComponentMapper.getFor(CameraComponent.class);
+    public static final ComponentMapper<CameraFollowComponent> cameraFollow = ComponentMapper.getFor(CameraFollowComponent.class);
     public static final ComponentMapper<TextureComponent> texture = ComponentMapper.getFor(TextureComponent.class);
     public static final ComponentMapper<AnimationComponent> anim = ComponentMapper.getFor(AnimationComponent.class);
     public static final ComponentMapper<ParticleComponent> particle = ComponentMapper.getFor(ParticleComponent.class);

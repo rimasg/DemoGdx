@@ -5,7 +5,6 @@ import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.ai.steer.behaviors.PrioritySteering;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
@@ -18,7 +17,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.assets.AssetDescriptors;
 import com.sid.demogdx.assets.Assets;
@@ -43,6 +41,7 @@ import com.sid.demogdx.hunter.pfa.TiledGraph;
 import com.sid.demogdx.hunter.pfa.TiledNode;
 import com.sid.demogdx.hunter.pfa.TiledPathFinder;
 import com.sid.demogdx.hunter.systems.RenderingSystem;
+import com.sid.demogdx.utils.AnimationCreator;
 import com.sid.demogdx.utils.Box2DConfig;
 import com.sid.demogdx.utils.Mappers;
 
@@ -82,20 +81,14 @@ public class EntityWorld {
             @Override
             public void beginContact(Contact contact) {
                 super.beginContact(contact);
-                final Body bodyA = contact.getFixtureA().getBody();
-                final Body bodyB = contact.getFixtureB().getBody();
-                if ((player == bodyA) && (finish == bodyB) || (finish == bodyA) && (player == bodyB)) {
-                    // no-op
-                }
 
-                final Object userDataA = bodyA.getUserData();
-                final Object userDataB = bodyB.getUserData();
+                final Object userDataA = contact.getFixtureA().getBody().getUserData();
+                final Object userDataB = contact.getFixtureB().getBody().getUserData();
+                //
                 Entity entityA = null;
                 if (userDataA instanceof Entity) {
                     entityA = (Entity) userDataA;
-                }
-                final EnemyComponent enemyA;
-                if (entityA != null) {
+                    final EnemyComponent enemyA;
                     enemyA = Mappers.enemy.get(entityA);
                     if (enemyA != null) {
                         final PhysicsComponent physics = Mappers.physics.get(entityA);
@@ -104,18 +97,15 @@ public class EntityWorld {
                 }
                 //
                 Entity entityB = null;
-                if (userDataA instanceof Entity) {
+                if (userDataB instanceof Entity) {
                     entityB = (Entity) userDataB;
-                }
-                final EnemyComponent enemyB;
-                if (entityB != null) {
+                    final EnemyComponent enemyB;
                     enemyB = Mappers.enemy.get(entityB);
                     if (enemyB != null) {
                         final PhysicsComponent physics = Mappers.physics.get(entityB);
                         createExplosion(physics.body);
                     }
                 }
-
             }
         });
     }
@@ -194,25 +184,6 @@ public class EntityWorld {
         engine.addEntity(entity);
     }
 
-    private HunterSteerableObject createSteerable() {
-        HunterSteerableObject steerable = new HunterSteerableObject(Assets.inst().getRegion(RegionNames.HERO), player, 0.6f);
-
-        final SteerableLocation startLocation = new SteerableLocation();
-        startLocation.setPosition(player.getPosition());
-
-        final SteerableLocation targetLocation = new SteerableLocation();
-        targetLocation.setPosition(finish.getPosition());
-
-        final SeekAndAvoidSB seekAndAvoidSB = new SeekAndAvoidSB()
-                .initSteering(world, steerable, startLocation, targetLocation);
-        steerable.setSeekAndAvoidSB(seekAndAvoidSB);
-        final PrioritySteering<Vector2> steering = seekAndAvoidSB.getSteering();
-
-        steerable.setSteeringBehavior(steering);
-
-        return steerable;
-    }
-
     private void createAStarMap() {
         final Entity entity = engine.createEntity();
 
@@ -268,28 +239,19 @@ public class EntityWorld {
         player.body = this.player;
         player.steerable = createSteerable();
         player.playerAgent = new PlayerAgent(player);
-        state.state = 0;
-        texture.region = Assets.inst().getRegion(RegionNames.HERO);
         particle.effect = Assets.inst().getParticleEffect(AssetDescriptors.PE_DEFAULT_BOX2D);
 
-        // TODO: 2017-04-13 Create factory for Animations
-        final TextureAtlas.AtlasRegion region = Assets.inst().getAtlas().findRegion(RegionNames.ANIM_SLIME);
-        final TextureRegion[][] regions = region.split(32, 32);
-        final Array<TextureRegion> keyframes = new Array<>();
-        for (TextureRegion[] textureRegions : regions) {
-            for (TextureRegion textureRegion : textureRegions) {
-                keyframes.add(textureRegion);
-            }
-        }
-
-        anim.anim.put(state.state, new Animation<>(0.2f, keyframes, Animation.PlayMode.LOOP));
+        final Animation<TextureRegion> slime_front_anim =
+                AnimationCreator.getAnimationFromSingleTexture(
+                        Assets.inst().getAtlas(), RegionNames.ANIM_SLIME, 4, 0.2f, false, false);
+        slime_front_anim.setPlayMode(Animation.PlayMode.LOOP);
+        anim.anim.put(state.state, slime_front_anim);
 
         entity.add(player);
         entity.add(transform);
         entity.add(state);
         entity.add(texture);
-        // TODO: 2017-04-14 uncomment later
-//        entity.add(particle);
+        entity.add(particle);
         entity.add(anim);
 
         engine.addEntity(entity);
@@ -352,5 +314,24 @@ public class EntityWorld {
 
     private void createWall(Body body) {
         // TODO: 2017.04.14 impl
+    }
+
+    private HunterSteerableObject createSteerable() {
+        HunterSteerableObject steerable = new HunterSteerableObject(Assets.inst().getRegion(RegionNames.HERO), player, 0.6f);
+
+        final SteerableLocation startLocation = new SteerableLocation();
+        startLocation.setPosition(player.getPosition());
+
+        final SteerableLocation targetLocation = new SteerableLocation();
+        targetLocation.setPosition(finish.getPosition());
+
+        final SeekAndAvoidSB seekAndAvoidSB = new SeekAndAvoidSB()
+                .initSteering(world, steerable, startLocation, targetLocation);
+        steerable.setSeekAndAvoidSB(seekAndAvoidSB);
+        final PrioritySteering<Vector2> steering = seekAndAvoidSB.getSteering();
+
+        steerable.setSteeringBehavior(steering);
+
+        return steerable;
     }
 }
