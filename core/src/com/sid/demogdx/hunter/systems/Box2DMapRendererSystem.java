@@ -14,6 +14,7 @@ import com.sid.demogdx.utils.Mappers;
 
 public class Box2DMapRendererSystem extends IteratingSystem implements Disposable {
     private static Family family = Family.all(Box2DMapRendererComponent.class, CameraComponent.class).get();
+
     private Box2DMapRendererComponent renderer;
 
     public Box2DMapRendererSystem() {
@@ -33,5 +34,4 @@ public class Box2DMapRendererSystem extends IteratingSystem implements Disposabl
     public void dispose() {
         renderer.mapRenderer.dispose();
     }
-
 }

@@ -14,4 +14,9 @@ public class StateComponent implements Component {
         this.state = state;
         this.time = 0.0f;
     }
+
+    public void resetState() {
+        this.state = 0;
+        this.time = 0.0f;
+    }
 }

@@ -61,6 +61,7 @@ public final class Assets {
         am.load(AssetDescriptors.PE_SIMPLE_TRAIL);
         am.load(AssetDescriptors.PE_SIMPLE_TRAIL_BOX2D);
         am.load(AssetDescriptors.PE_DEFAULT_BOX2D);
+        am.load(AssetDescriptors.PE_EXPLOSION_BOX2D);
 
         am.load(AssetDescriptors.MAP_HUNTER);
     }

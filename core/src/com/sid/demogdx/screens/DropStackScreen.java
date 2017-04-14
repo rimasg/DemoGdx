@@ -247,9 +247,4 @@ public class DropStackScreen extends AbstractBox2dScreen {
     public void hide() {
         super.hide();
     }
-
-    @Override
-    public void dispose() {
-        super.dispose();
-    }
 }

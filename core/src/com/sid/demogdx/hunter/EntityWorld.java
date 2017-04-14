@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.ai.steer.behaviors.PrioritySteering;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
@@ -53,11 +54,13 @@ import net.dermetfan.gdx.physics.box2d.ContactAdapter;
  */
 
 public class EntityWorld {
+    private static final String TAG = "EntityWorld";
     private DemoGdx game;
     private World world;
     private PooledEngine engine;
     private Body player;
     private Body finish;
+    private ParticleEffectPool particleExplosionEffectPool;
 
     public EntityWorld(DemoGdx game, World world, PooledEngine engine) {
         this.game = game;
@@ -66,6 +69,7 @@ public class EntityWorld {
     }
 
     public void create() {
+        particleExplosionEffectPool = new ParticleEffectPool(Assets.inst().getParticleEffect(AssetDescriptors.PE_EXPLOSION_BOX2D), 5, 20);
         createWorld();
         createBox2DMapParser();
         createFollowCamera(createPlayer());
@@ -90,10 +94,10 @@ public class EntityWorld {
                 if (userDataA instanceof Entity) {
                     entityA = (Entity) userDataA;
                 }
-                final ObstacleComponent obstacleA;
+                final EnemyComponent enemyA;
                 if (entityA != null) {
-                    obstacleA = Mappers.obstacle.get(entityA);
-                    if (obstacleA != null) {
+                    enemyA = Mappers.enemy.get(entityA);
+                    if (enemyA != null) {
                         final PhysicsComponent physics = Mappers.physics.get(entityA);
                         createExplosion(physics.body);
                     }
@@ -103,10 +107,10 @@ public class EntityWorld {
                 if (userDataA instanceof Entity) {
                     entityB = (Entity) userDataB;
                 }
-                final ObstacleComponent obstacleB;
+                final EnemyComponent enemyB;
                 if (entityB != null) {
-                    obstacleB = Mappers.obstacle.get(entityB);
-                    if (obstacleB != null) {
+                    enemyB = Mappers.enemy.get(entityB);
+                    if (enemyB != null) {
                         final PhysicsComponent physics = Mappers.physics.get(entityB);
                         createExplosion(physics.body);
                     }
@@ -284,7 +288,8 @@ public class EntityWorld {
         entity.add(transform);
         entity.add(state);
         entity.add(texture);
-        entity.add(particle);
+        // TODO: 2017-04-14 uncomment later
+//        entity.add(particle);
         entity.add(anim);
 
         engine.addEntity(entity);
@@ -315,18 +320,13 @@ public class EntityWorld {
         final Entity entity = engine.createEntity();
 
         final EnemyComponent enemy = engine.createComponent(EnemyComponent.class);
-        final TransformComponent transform = engine.createComponent(TransformComponent.class);
         final PhysicsComponent physics = engine.createComponent(PhysicsComponent.class);
-        final TextureComponent texture = engine.createComponent(TextureComponent.class);
 
         physics.body = body;
         physics.body.setUserData(entity);
-        texture.region = Assets.inst().getRegion(RegionNames.STAR);
 
         entity.add(enemy);
-        entity.add(transform);
         entity.add(physics);
-        entity.add(texture);
 
         engine.addEntity(entity);
     }
@@ -339,7 +339,7 @@ public class EntityWorld {
         final TransformComponent transform = engine.createComponent(TransformComponent.class);
         final StateComponent state = engine.createComponent(StateComponent.class);
 
-        particle.effect = Assets.inst().getParticleEffect(AssetDescriptors.PE_EXPLOSION);
+        particle.effect = particleExplosionEffectPool.obtain();
         transform.pos.set(body.getPosition());
 
         entity.add(explosion);

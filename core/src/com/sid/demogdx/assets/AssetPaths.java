@@ -28,6 +28,7 @@ public final class AssetPaths {
     static final String PE_SIMPLE_TRAIL = PATH_PARTICLE + "trail_simple.p";
     static final String PE_SIMPLE_TRAIL_BOX2D = PATH_PARTICLE + "trail_simple_box2d.p";
     static final String PE_DEFAULT_BOX2D = PATH_PARTICLE + "default_box2d.p";
+    static final String PE_EXPLOSION_BOX2D = PATH_PARTICLE + "explosion_box2d.p";
 
     private static final String PATH_MAP = "maps/";
     static final String MAP_HUNTER = PATH_MAP + "hunter.tmx";

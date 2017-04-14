@@ -269,9 +269,4 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
         super.hide();
         resetVars();
     }
-
-    @Override
-    public void dispose() {
-        super.dispose();
-    }
 }

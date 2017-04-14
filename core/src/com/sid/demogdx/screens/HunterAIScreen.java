@@ -61,5 +61,6 @@ public class HunterAIScreen extends AbstractBox2dScreen {
     public void hide() {
         super.hide();
         engine.getSystem(Box2DMapRendererSystem.class).dispose();
+        engine.removeAllEntities();
     }
 }

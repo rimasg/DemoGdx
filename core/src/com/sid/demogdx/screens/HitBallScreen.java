@@ -340,9 +340,4 @@ public class HitBallScreen extends AbstractBox2dScreen {
         map.dispose();
         collisionSound.dispose();
     }
-
-    @Override
-    public void dispose() {
-        super.dispose();
-    }
 }
