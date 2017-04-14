@@ -42,7 +42,7 @@ public class ExplosionSystem extends IteratingSystem {
             } else {
                 particle.effect.reset();
             }
-            state.resetState();
+            state.reset();
         }
     }
 }

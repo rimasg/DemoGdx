@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="9" height="128" tilewidth="32" tileheight="32" nextobjectid="438">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="9" height="128" tilewidth="32" tileheight="32" nextobjectid="439">
  <tileset firstgid="1" source="tilesets/desert.tsx"/>
  <layer name="background" width="9" height="128">
   <data encoding="base64" compression="zlib">
-   eJztWEEOwCAI8yWy8IL9/3W7eDLqBFmZxENjrEoDiEZzSikLcSvWtHAtrOWCN05iixdsSDRmeGvNXfwipV8W/hFA4+DfqHNNgPyj65QHnHe8T33Fhtc+tLLPVdsb7/W/jqd1DL3uwHP3xkKr3nvjI85CS2MLcS6h9jpCM+p7xwNe5y9qjkVcZvhdczED7Z/MA3lsiaI=
+   eJztWDESwCAI8yXY8wX9/+u6OPUoVUihcg5ZUImIEZVKKTSJUzGGw2EY2zrebDO+msHHDMeIHc25SlxVGRcivurAsfFvcLlG5F/a1946RcaFntfWV25E6OvOYZ0/CX64Oui5nmgNRdXAXXtzgdP7U7tkQ3BpfH219yLumR6cWd87EYg6f736INZlxL5qLkag/ZO5AIJciaM=
   </data>
  </layer>
  <objectgroup name="enemies">
@@ -17,7 +17,12 @@
     <property name="isSensor" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="437" name="enemy" type="object" x="128" y="1152" width="32" height="32">
+  <object id="437" name="enemy" type="object" x="128" y="1216" width="32" height="32">
+   <properties>
+    <property name="isSensor" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="438" name="enemy" type="object" x="128" y="1984" width="32" height="32">
    <properties>
     <property name="isSensor" type="bool" value="true"/>
    </properties>

@@ -2,8 +2,12 @@ package com.sid.demogdx.screens;
 
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.ai.GdxAI;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Align;
 import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.hunter.EntityWorld;
+import com.sid.demogdx.hunter.components.HealthComponent;
 import com.sid.demogdx.hunter.systems.AnimationSystem;
 import com.sid.demogdx.hunter.systems.BoundsSystem;
 import com.sid.demogdx.hunter.systems.Box2DMapRendererSystem;
@@ -24,6 +28,8 @@ public class HunterAIScreen extends AbstractBox2dScreen {
     private PooledEngine engine;
     private EntityWorld entityWorld;
 
+    private Label lblHealh;
+
     public HunterAIScreen(DemoGdx game) {
         super(game);
     }
@@ -31,6 +37,8 @@ public class HunterAIScreen extends AbstractBox2dScreen {
     @Override
     public void show() {
         super.show();
+
+        createHud();
 
         engine = new PooledEngine();
         entityWorld = new EntityWorld(game, world, engine);
@@ -50,17 +58,36 @@ public class HunterAIScreen extends AbstractBox2dScreen {
         entityWorld.create();
     }
 
+    private void createHud() {
+        final Table table = new Table(skin);
+        table.setFillParent(true);
+        stage.addActor(table);
+
+        lblHealh = new Label("", skin, "red");
+        lblHealh.setAlignment(Align.center);
+
+        table.row().expand().top();
+        table.add(lblHealh);
+    }
+
+    private void updateHud() {
+        final int health = entityWorld.getPlayerEntity().getComponent(HealthComponent.class).health;
+        lblHealh.setText("Health: " + health);
+    }
+
     @Override
     public void render(float delta) {
         super.render(delta);
         GdxAI.getTimepiece().update(delta);
         engine.update(delta);
+        updateHud();
+        stage.act();
+        stage.draw();
     }
 
     @Override
     public void hide() {
         super.hide();
         engine.getSystem(Box2DMapRendererSystem.class).dispose();
-        engine.removeAllEntities();
     }
 }

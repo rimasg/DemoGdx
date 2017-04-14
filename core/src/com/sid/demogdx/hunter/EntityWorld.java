@@ -28,6 +28,7 @@ import com.sid.demogdx.hunter.components.CameraComponent;
 import com.sid.demogdx.hunter.components.CameraFollowComponent;
 import com.sid.demogdx.hunter.components.EnemyComponent;
 import com.sid.demogdx.hunter.components.ExplosionComponent;
+import com.sid.demogdx.hunter.components.HealthComponent;
 import com.sid.demogdx.hunter.components.ObstacleComponent;
 import com.sid.demogdx.hunter.components.ParticleComponent;
 import com.sid.demogdx.hunter.components.PhysicsComponent;
@@ -53,13 +54,19 @@ import net.dermetfan.gdx.physics.box2d.ContactAdapter;
  */
 
 public class EntityWorld {
-    private static final String TAG = "EntityWorld";
+    public static final int NOTHING_BIT = 0;
+    public static final int WALL_BIT = 1;
+    public static final int PLAYER_BIT = 1 << 1;
+    public static final int ENEMY_BIT = 1 << 2;
+    public static final int OBSTACLE_BIT = 1 << 3;
+
     private DemoGdx game;
     private World world;
     private PooledEngine engine;
     private Body player;
     private Body finish;
     private ParticleEffectPool particleExplosionEffectPool;
+    private Entity playerEntity;
 
     public EntityWorld(DemoGdx game, World world, PooledEngine engine) {
         this.game = game;
@@ -71,7 +78,8 @@ public class EntityWorld {
         particleExplosionEffectPool = new ParticleEffectPool(Assets.inst().getParticleEffect(AssetDescriptors.PE_EXPLOSION_BOX2D), 5, 20);
         createWorld();
         createBox2DMapParser();
-        createFollowCamera(createPlayer());
+        playerEntity = createPlayer();
+        createFollowCamera(playerEntity);
         createAStarMap();
     }
 
@@ -85,25 +93,26 @@ public class EntityWorld {
                 final Object userDataA = contact.getFixtureA().getBody().getUserData();
                 final Object userDataB = contact.getFixtureB().getBody().getUserData();
                 //
-                Entity entityA = null;
-                if (userDataA instanceof Entity) {
-                    entityA = (Entity) userDataA;
-                    final EnemyComponent enemyA;
-                    enemyA = Mappers.enemy.get(entityA);
-                    if (enemyA != null) {
-                        final PhysicsComponent physics = Mappers.physics.get(entityA);
-                        createExplosion(physics.body);
-                    }
-                }
-                //
-                Entity entityB = null;
-                if (userDataB instanceof Entity) {
-                    entityB = (Entity) userDataB;
-                    final EnemyComponent enemyB;
-                    enemyB = Mappers.enemy.get(entityB);
-                    if (enemyB != null) {
-                        final PhysicsComponent physics = Mappers.physics.get(entityB);
-                        createExplosion(physics.body);
+                if ((userDataA instanceof Entity) && (userDataB instanceof Entity)) {
+                    Entity entityA = (Entity) userDataA;
+                    Entity entityB = (Entity) userDataB;
+                    if ((entityA.flags == PLAYER_BIT) && (entityB.flags == ENEMY_BIT) || (entityB.flags == PLAYER_BIT) && (entityA.flags == ENEMY_BIT)) {
+                        if (Mappers.player.get(entityA) != null) {
+                            final HealthComponent health = Mappers.health.get(entityA);
+                            health.health--;
+                        }
+                        if (Mappers.player.get(entityB) != null) {
+                            final HealthComponent health = Mappers.health.get(entityB);
+                            health.health--;
+                        }
+                        if (Mappers.enemy.get(entityA) != null) {
+                            final PhysicsComponent physics = Mappers.physics.get(entityA);
+                            createExplosion(physics.body);
+                        }
+                        if (Mappers.enemy.get(entityB) != null) {
+                            final PhysicsComponent physics = Mappers.physics.get(entityB);
+                            createExplosion(physics.body);
+                        }
                     }
                 }
             }
@@ -229,14 +238,17 @@ public class EntityWorld {
     private Entity createPlayer() {
         final Entity entity = engine.createEntity();
 
+        entity.flags = PLAYER_BIT;
         final PlayerComponent player = engine.createComponent(PlayerComponent.class);
         final TransformComponent transform = engine.createComponent(TransformComponent.class);
         final StateComponent state = engine.createComponent(StateComponent.class);
         final TextureComponent texture = engine.createComponent(TextureComponent.class);
         final ParticleComponent particle = engine.createComponent(ParticleComponent.class);
         final AnimationComponent anim = engine.createComponent(AnimationComponent.class);
+        final HealthComponent health = engine.createComponent(HealthComponent.class);
 
         player.body = this.player;
+        player.body.setUserData(entity);
         player.steerable = createSteerable();
         player.playerAgent = new PlayerAgent(player);
         particle.effect = Assets.inst().getParticleEffect(AssetDescriptors.PE_DEFAULT_BOX2D);
@@ -246,6 +258,7 @@ public class EntityWorld {
                         Assets.inst().getAtlas(), RegionNames.ANIM_SLIME, 4, 0.2f, false, false);
         slime_front_anim.setPlayMode(Animation.PlayMode.LOOP);
         anim.anim.put(state.state, slime_front_anim);
+        health.health = 5;
 
         entity.add(player);
         entity.add(transform);
@@ -253,6 +266,7 @@ public class EntityWorld {
         entity.add(texture);
         entity.add(particle);
         entity.add(anim);
+        entity.add(health);
 
         engine.addEntity(entity);
 
@@ -281,6 +295,7 @@ public class EntityWorld {
     private void createEnemy(Body body) {
         final Entity entity = engine.createEntity();
 
+        entity.flags = ENEMY_BIT;
         final EnemyComponent enemy = engine.createComponent(EnemyComponent.class);
         final PhysicsComponent physics = engine.createComponent(PhysicsComponent.class);
 
@@ -333,5 +348,9 @@ public class EntityWorld {
         steerable.setSteeringBehavior(steering);
 
         return steerable;
+    }
+
+    public Entity getPlayerEntity() {
+        return playerEntity;
     }
 }
