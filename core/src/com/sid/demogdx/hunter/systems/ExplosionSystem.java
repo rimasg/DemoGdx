@@ -26,8 +26,8 @@ public class ExplosionSystem extends IteratingSystem {
 
     @Override
     public void addedToEngine(Engine engine) {
-        this.engine = engine;
         super.addedToEngine(engine);
+        this.engine = engine;
     }
 
     @Override
