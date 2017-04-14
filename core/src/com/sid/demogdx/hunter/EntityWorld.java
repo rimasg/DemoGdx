@@ -165,7 +165,7 @@ public class EntityWorld {
                     createObstacle(body);
                 }
                 if ("wall".equals(mapObject.getName())) {
-                    createEnemy(body);
+                    createWall(body);
                 }
             }
         });
@@ -348,5 +348,9 @@ public class EntityWorld {
         entity.add(state);
 
         engine.addEntity(entity);
+    }
+
+    private void createWall(Body body) {
+        // TODO: 2017.04.14 impl
     }
 }
