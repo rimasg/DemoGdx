@@ -4,7 +4,6 @@ import com.badlogic.gdx.ai.steer.Steerable;
 import com.badlogic.gdx.ai.steer.SteeringAcceleration;
 import com.badlogic.gdx.ai.steer.SteeringBehavior;
 import com.badlogic.gdx.ai.utils.Location;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.sid.demogdx.utils.SteeringUtils;
@@ -17,28 +16,18 @@ public class SteerableBox2DObject implements Steerable<Vector2> {
     private static final SteeringAcceleration<Vector2> steeringOutput = new SteeringAcceleration<>(new Vector2());
     private SteeringBehavior<Vector2> steeringBehavior;
 
-    private TextureRegion region;
     private Body body;
-
-    private Vector2 position = new Vector2();
-    private Vector2 linearVelocity = new Vector2();
-    private float angularVelocity;
 
     private float boundingRadius;
     private float maxLinearSpeed = 6.f;
-//    private float maxLinearSpeed = 200.f;
-    private float maxLinearAcceleration = 10.f;
-//    private float maxLinearAcceleration = 300.f;
+    private float maxLinearAcceleration = 9.f;
     private float maxAngularSpeed = 3.f;
-//    private float maxAngularSpeed = 5.f;
     private float maxAngularAcceleration = 60.f;
-//    private float maxAngularAcceleration = 100.f;
 
     private boolean tagged = false;
     private boolean independentFacing = false;
 
-    public SteerableBox2DObject(TextureRegion region, Body body, float boundingRadius) {
-        this.region = region;
+    public SteerableBox2DObject(Body body, float boundingRadius) {
         this.body = body;
         this.boundingRadius = boundingRadius;
     }
@@ -123,10 +112,6 @@ public class SteerableBox2DObject implements Steerable<Vector2> {
         return body.getPosition();
     }
 
-    public void setPosition(Vector2 position) {
-        this.position = position;
-    }
-
     @Override
     public float getOrientation() {
         return body.getAngle();
@@ -150,14 +135,6 @@ public class SteerableBox2DObject implements Steerable<Vector2> {
     @Override
     public Location<Vector2> newLocation() {
         return new SteerableLocation();
-    }
-
-    public TextureRegion getRegion() {
-        return region;
-    }
-
-    public void setRegion(TextureRegion region) {
-        this.region = region;
     }
 
     public Body getBody() {
@@ -190,7 +167,7 @@ public class SteerableBox2DObject implements Steerable<Vector2> {
             applySteering(steeringOutput, delta);
         }
 
-//        wrapAround();
+//        wrapAround(Box2DConfig.WWV, Box2DConfig.WHV);
     }
 
     private void wrapAround(float maxX, float maxY) {

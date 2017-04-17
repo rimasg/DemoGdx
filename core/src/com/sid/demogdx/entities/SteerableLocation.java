@@ -9,14 +9,8 @@ import com.sid.demogdx.utils.SteeringUtils;
  */
 
 public class SteerableLocation implements Location<Vector2> {
-
-    private Vector2 position;
-    private float orientation;
-
-    public SteerableLocation() {
-        this.position = new Vector2();
-        this.orientation = 0;
-    }
+    private final Vector2 position = new Vector2();
+    private float orientation = 0;
 
     @Override
     public Vector2 getPosition() {
