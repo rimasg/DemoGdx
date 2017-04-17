@@ -14,7 +14,6 @@ import com.badlogic.gdx.physics.box2d.World;
  * Created by Okis on 2016.03.06 @ 20:28.
  */
 public final class Box2DUtils {
-    private static final String TAG = "Box2DUtils";
 
     public static Body createBox2dCircleBody(World world, float posX, float posY) {
         return createBox2dBody(world, posX, posY, null, Shape.Type.Circle);

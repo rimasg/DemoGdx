@@ -12,7 +12,6 @@ import com.badlogic.gdx.utils.Align;
  * Created by Okis on 2016.05.27 @ 14:51.
  */
 public abstract class AbstractCircle {
-    protected static final String TAG = AbstractCircle.class.getSimpleName();
     public static final float VELOCITY = 500f;
     public static final float RADIUS = 15f;
     private Vector2 pos = new Vector2();

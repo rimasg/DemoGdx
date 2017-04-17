@@ -19,7 +19,7 @@ import com.sid.demogdx.utils.Box2DConfig;
  * Created by SID on 2016-03-03 @ 17:13 @ 17:19.
  */
 public abstract class AbstractScreen implements Screen {
-    String TAG;
+    protected String TAG;
 
     final DemoGdx game;
     final OrthographicCamera cam;
