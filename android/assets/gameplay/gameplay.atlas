@@ -1,33 +1,40 @@
 
 gameplay.png
-size: 1024,512
+size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 airplane
   rotate: false
-  xy: 2, 2
+  xy: 260, 231
   size: 83, 64
   orig: 83, 64
   offset: 0, 0
   index: -1
+arrow_up
+  rotate: false
+  xy: 2, 449
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
 badlogic
   rotate: false
-  xy: 2, 254
+  xy: 2, 191
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 blue_ball_border
   rotate: false
-  xy: 2, 102
+  xy: 516, 811
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
 button_gold
   rotate: false
-  xy: 154, 106
+  xy: 820, 929
   size: 64, 32
   split: 6, 6, 6, 6
   orig: 64, 32
@@ -35,91 +42,91 @@ button_gold
   index: -1
 circle_rainbow
   rotate: false
-  xy: 132, 68
+  xy: 516, 473
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 cyan_ball_border
   rotate: false
-  xy: 260, 360
+  xy: 2, 39
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
 green_ball_border
   rotate: false
-  xy: 412, 360
+  xy: 260, 297
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
 line_dot
   rotate: false
-  xy: 1020, 509
+  xy: 2, 2
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
   index: -1
 magenta_ball_border
   rotate: false
-  xy: 564, 360
+  xy: 516, 659
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
 particle
   rotate: false
-  xy: 220, 220
+  xy: 154, 43
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 particle-star
   rotate: false
-  xy: 87, 2
+  xy: 412, 383
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 particle_dark
   rotate: false
-  xy: 260, 260
+  xy: 220, 157
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 red_ball_border
   rotate: false
-  xy: 716, 360
+  xy: 668, 811
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
 rocket
   rotate: false
-  xy: 154, 140
+  xy: 154, 77
   size: 64, 112
   orig: 64, 112
   offset: 0, 0
   index: -1
 slime_front
   rotate: false
-  xy: 2, 68
+  xy: 2, 5
   size: 128, 32
   orig: 128, 32
   offset: 0, 0
   index: -1
 star
   rotate: false
-  xy: 260, 294
+  xy: 668, 745
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 yellow_ball_border
   rotate: false
-  xy: 868, 360
+  xy: 516, 507
   size: 150, 150
   orig: 150, 150
   offset: 0, 0

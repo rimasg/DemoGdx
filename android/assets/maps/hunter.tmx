@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="9" height="128" tilewidth="32" tileheight="32" nextobjectid="439">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="9" height="128" tilewidth="32" tileheight="32" nextobjectid="443">
  <tileset firstgid="1" source="tilesets/desert.tsx"/>
  <layer name="background" width="9" height="128">
   <data encoding="base64" compression="zlib">
@@ -25,6 +25,24 @@
   <object id="438" name="enemy" type="object" x="128" y="1984" width="32" height="32">
    <properties>
     <property name="isSensor" type="bool" value="true"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="towers">
+  <object id="439" name="tower" type="object" x="10" y="560" width="8" height="8">
+   <properties>
+    <property name="awake" type="bool" value="true"/>
+    <property name="bodyType" value="DynamicBody"/>
+    <property name="density" type="float" value="1"/>
+    <property name="isSensor" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="440" name="tower" type="object" x="270" y="560" width="8" height="8">
+   <properties>
+    <property name="awake" type="bool" value="true"/>
+    <property name="bodyType" value="DynamicBody"/>
+    <property name="density" type="float" value="1"/>
+    <property name="isSensor" type="bool" value="false"/>
    </properties>
   </object>
  </objectgroup>
@@ -197,7 +215,6 @@
     <property name="bodyType" value="DynamicBody"/>
     <property name="density" type="float" value="1"/>
     <property name="friction" type="float" value="0.2"/>
-    <property name="isSensor" type="bool" value="false"/>
     <property name="restitution" type="float" value="0.2"/>
    </properties>
   </object>
