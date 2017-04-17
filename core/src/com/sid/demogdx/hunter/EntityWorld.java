@@ -2,6 +2,7 @@ package com.sid.demogdx.hunter;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
+import com.badlogic.gdx.ai.steer.behaviors.Face;
 import com.badlogic.gdx.ai.steer.behaviors.PrioritySteering;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
@@ -9,18 +10,25 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.maps.objects.CircleMapObject;
+import com.badlogic.gdx.maps.objects.EllipseMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Ellipse;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.assets.AssetDescriptors;
 import com.sid.demogdx.assets.Assets;
 import com.sid.demogdx.assets.RegionNames;
+import com.sid.demogdx.entities.SteerableBox2DObject;
 import com.sid.demogdx.entities.SteerableLocation;
 import com.sid.demogdx.hunter.components.AnimationComponent;
 import com.sid.demogdx.hunter.components.Box2DMapRendererComponent;
@@ -34,6 +42,7 @@ import com.sid.demogdx.hunter.components.ParticleComponent;
 import com.sid.demogdx.hunter.components.PhysicsComponent;
 import com.sid.demogdx.hunter.components.PlayerComponent;
 import com.sid.demogdx.hunter.components.StateComponent;
+import com.sid.demogdx.hunter.components.SteerableComponent;
 import com.sid.demogdx.hunter.components.TextureComponent;
 import com.sid.demogdx.hunter.components.TiledPathFinderComponent;
 import com.sid.demogdx.hunter.components.TransformComponent;
@@ -54,19 +63,20 @@ import net.dermetfan.gdx.physics.box2d.ContactAdapter;
  */
 
 public class EntityWorld {
-    public static final int NOTHING_BIT = 0;
-    public static final int WALL_BIT = 1;
-    public static final int PLAYER_BIT = 1 << 1;
-    public static final int ENEMY_BIT = 1 << 2;
-    public static final int OBSTACLE_BIT = 1 << 3;
+    private static final int NOTHING_BIT = 0;
+    private static final int WALL_BIT = 1;
+    private static final int PLAYER_BIT = 2;
+    private static final int ENEMY_BIT = 3;
+    private static final int OBSTACLE_BIT = 4;
 
     private DemoGdx game;
     private World world;
     private PooledEngine engine;
     private Body player;
     private Body finish;
-    private ParticleEffectPool particleExplosionEffectPool;
     private Entity playerEntity;
+    private Array<Entity> towers = new Array<>();
+    private ParticleEffectPool particleExplosionEffectPool;
 
     public EntityWorld(DemoGdx game, World world, PooledEngine engine) {
         this.game = game;
@@ -80,6 +90,7 @@ public class EntityWorld {
         createBox2DMapParser();
         playerEntity = createPlayer();
         createFollowCamera(playerEntity);
+        setTowersTarget(playerEntity);
         createAStarMap();
     }
 
@@ -149,6 +160,21 @@ public class EntityWorld {
                     props.put(aliases.x, props.get(aliases.x, Float.class) + halfWidth);
                     props.put(aliases.y, props.get(aliases.y, Float.class) + halfHeight);
                 }
+                if (mapObject instanceof CircleMapObject || mapObject instanceof EllipseMapObject) {
+                    float width, height;
+                    if (mapObject instanceof CircleMapObject) {
+                        Circle circle = ((CircleMapObject) mapObject).getCircle();
+                        width = circle.radius * 2;
+                        height = circle.radius * 2;
+                    } else {
+                        Ellipse ellipse = ((EllipseMapObject) mapObject).getEllipse();
+                        width = ellipse.width;
+                        height = ellipse.height;
+                    }
+                    MapProperties props = mapObject.getProperties();
+                    props.put(aliases.x, props.get(aliases.x, Float.class) + width / 2);
+                    props.put(aliases.y, props.get(aliases.y, Float.class) + height / 2);
+                }
                 return super.createObject(mapObject);
             }
 
@@ -169,6 +195,9 @@ public class EntityWorld {
                 }
                 if ("wall".equals(mapObject.getName())) {
                     createWall(body);
+                }
+                if ("tower".equals(mapObject.getName())) {
+                    towers.add(createTower(body));
                 }
             }
         });
@@ -249,7 +278,7 @@ public class EntityWorld {
 
         player.body = this.player;
         player.body.setUserData(entity);
-        player.steerable = createSteerable();
+        player.steerable = createSteerablePlayer();
         player.playerAgent = new PlayerAgent(player);
         particle.effect = Assets.inst().getParticleEffect(AssetDescriptors.PE_DEFAULT_BOX2D);
 
@@ -271,6 +300,25 @@ public class EntityWorld {
         engine.addEntity(entity);
 
         return entity;
+    }
+
+    private HunterSteerableObject createSteerablePlayer() {
+        HunterSteerableObject steerable = new HunterSteerableObject(player, 0.5f);
+
+        final SteerableLocation startLocation = new SteerableLocation();
+        startLocation.setPosition(player.getPosition());
+
+        final SteerableLocation targetLocation = new SteerableLocation();
+        targetLocation.setPosition(finish.getPosition());
+
+        final SeekAndAvoidSB seekAndAvoidSB = new SeekAndAvoidSB()
+                .initSteering(world, steerable, startLocation, targetLocation);
+        steerable.setSeekAndAvoidSB(seekAndAvoidSB);
+        final PrioritySteering<Vector2> steering = seekAndAvoidSB.getSteering();
+
+        steerable.setSteeringBehavior(steering);
+
+        return steerable;
     }
 
     private void createObstacle(Body body) {
@@ -331,23 +379,44 @@ public class EntityWorld {
         // TODO: 2017.04.14 impl
     }
 
-    private HunterSteerableObject createSteerable() {
-        HunterSteerableObject steerable = new HunterSteerableObject(Assets.inst().getRegion(RegionNames.HERO), player, 0.6f);
+    private Entity createTower(Body body) {
+        final Entity entity = engine.createEntity();
 
-        final SteerableLocation startLocation = new SteerableLocation();
-        startLocation.setPosition(player.getPosition());
+        final TransformComponent transform = engine.createComponent(TransformComponent.class);
+        final PhysicsComponent physics = engine.createComponent(PhysicsComponent.class);
+        final TextureComponent texture = engine.createComponent(TextureComponent.class);
+        final SteerableComponent steerable = engine.createComponent(SteerableComponent.class);
 
-        final SteerableLocation targetLocation = new SteerableLocation();
-        targetLocation.setPosition(finish.getPosition());
+        physics.body = body;
+        texture.region = Assets.inst().getRegion(RegionNames.ARROW_UP);
+        steerable.steerable = new SteerableBox2DObject(physics.body, 0.5f);
+        steerable.steerable.setIndependentFacing(true); // very important set to "true"
+        steerable.steerable.setMaxAngularSpeed(6f);
+        steerable.steerable.setMaxAngularAcceleration(4f);
+        //
+        final Face<Vector2> faceSB = new Face<>(steerable.steerable, null)
+                .setTimeToTarget(0.01f)
+                .setAlignTolerance(0.0001f)
+                .setDecelerationRadius(120f * MathUtils.degreesToRadians);
+        //
+        steerable.steerable.setSteeringBehavior(faceSB);
 
-        final SeekAndAvoidSB seekAndAvoidSB = new SeekAndAvoidSB()
-                .initSteering(world, steerable, startLocation, targetLocation);
-        steerable.setSeekAndAvoidSB(seekAndAvoidSB);
-        final PrioritySteering<Vector2> steering = seekAndAvoidSB.getSteering();
+        entity.add(transform);
+        entity.add(physics);
+        entity.add(texture);
+        entity.add(steerable);
 
-        steerable.setSteeringBehavior(steering);
+        engine.addEntity(entity);
 
-        return steerable;
+        return entity;
+    }
+
+    private void setTowersTarget(Entity targetEntity) {
+        final HunterSteerableObject target = Mappers.player.get(targetEntity).steerable;
+        for (Entity tower : towers) {
+            final SteerableComponent steerable = Mappers.steerable.get(tower);
+            ((Face<Vector2>) steerable.steerable.getSteeringBehavior()).setTarget(target);
+        }
     }
 
     public Entity getPlayerEntity() {
