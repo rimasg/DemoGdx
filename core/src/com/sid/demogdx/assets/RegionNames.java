@@ -11,6 +11,7 @@ public final class RegionNames {
     public static final String AIRPLANE = "airplane";
     public static final String ROCKET = "rocket";
     public static final String CIRCLE_RAINBOW = "circle_rainbow";
+    public static final String ARROW_UP = "arrow_up";
     public static final String BTN_GOLD = "btn_gold";
     public static final String BTN_GOLD_PRESSED = "btn_gold_pressed";
     public static final String BTN_BLACK = "btn_black";

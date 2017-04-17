@@ -1,6 +1,5 @@
 package com.sid.demogdx.hunter;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.sid.demogdx.entities.SteerableBox2DObject;
 
@@ -12,8 +11,8 @@ public class HunterSteerableObject extends SteerableBox2DObject {
 
     private SeekAndAvoidSB seekAndAvoidSB;
 
-    public HunterSteerableObject(TextureRegion region, Body body, float boundingRadius) {
-        super(region, body, boundingRadius);
+    public HunterSteerableObject(Body body, float boundingRadius) {
+        super(body, boundingRadius);
     }
 
     public SeekAndAvoidSB getSeekAndAvoidSB() {

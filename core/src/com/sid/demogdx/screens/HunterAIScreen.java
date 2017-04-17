@@ -1,13 +1,17 @@
 package com.sid.demogdx.screens;
 
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.ai.GdxAI;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.hunter.EntityWorld;
 import com.sid.demogdx.hunter.components.HealthComponent;
+import com.sid.demogdx.hunter.components.PhysicsComponent;
 import com.sid.demogdx.hunter.systems.AnimationSystem;
 import com.sid.demogdx.hunter.systems.BoundsSystem;
 import com.sid.demogdx.hunter.systems.Box2DMapRendererSystem;
@@ -18,7 +22,9 @@ import com.sid.demogdx.hunter.systems.PlayerRendererSystem;
 import com.sid.demogdx.hunter.systems.PlayerSystem;
 import com.sid.demogdx.hunter.systems.RenderingSystem;
 import com.sid.demogdx.hunter.systems.StateSystem;
+import com.sid.demogdx.hunter.systems.SteerableBox2DSystem;
 import com.sid.demogdx.hunter.systems.TiledPathRenderingSystem;
+import com.sid.demogdx.utils.Mappers;
 
 /**
  * Created by Okis on 2017.03.24.
@@ -28,7 +34,7 @@ public class HunterAIScreen extends AbstractBox2dScreen {
     private PooledEngine engine;
     private EntityWorld entityWorld;
 
-    private Label lblHealh;
+    private Label lblHealh, lblTowers;
 
     public HunterAIScreen(DemoGdx game) {
         super(game);
@@ -51,6 +57,7 @@ public class HunterAIScreen extends AbstractBox2dScreen {
         engine.addSystem(new StateSystem());
         engine.addSystem(new AnimationSystem());
         engine.addSystem(new ExplosionSystem());
+        engine.addSystem(new SteerableBox2DSystem());
         engine.addSystem(new RenderingSystem(game.batch, cam));
         engine.addSystem(new PlayerRendererSystem(game.shapeRenderer, cam));
         engine.addSystem(new TiledPathRenderingSystem(game.shapeRenderer, cam));
@@ -64,15 +71,30 @@ public class HunterAIScreen extends AbstractBox2dScreen {
         stage.addActor(table);
 
         lblHealh = new Label("", skin, "red");
-        lblHealh.setAlignment(Align.center);
+        lblHealh.setAlignment(Align.right);
+
+        lblTowers = new Label("", skin, "red");
+        lblTowers.setAlignment(Align.left);
 
         table.row().expand().top();
         table.add(lblHealh);
+        table.add(lblTowers);
     }
 
     private void updateHud() {
         final int health = entityWorld.getPlayerEntity().getComponent(HealthComponent.class).health;
         lblHealh.setText("Health: " + health);
+
+        int i = 1;
+        String towersPos = "";
+        final Array<Entity> towers = entityWorld.getTowers();
+        for (Entity tower : towers) {
+            final PhysicsComponent physics = Mappers.physics.get(tower);
+            final float angle = physics.body.getAngle() * MathUtils.radiansToDegrees;
+            towersPos += i + " - " + angle + "\n";
+            i++;
+        }
+        lblTowers.setText(towersPos);
     }
 
     @Override

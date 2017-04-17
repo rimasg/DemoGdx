@@ -14,6 +14,7 @@ import com.sid.demogdx.hunter.components.ParticleComponent;
 import com.sid.demogdx.hunter.components.PhysicsComponent;
 import com.sid.demogdx.hunter.components.PlayerComponent;
 import com.sid.demogdx.hunter.components.StateComponent;
+import com.sid.demogdx.hunter.components.SteerableComponent;
 import com.sid.demogdx.hunter.components.TextureComponent;
 import com.sid.demogdx.hunter.components.TiledPathFinderComponent;
 import com.sid.demogdx.hunter.components.TransformComponent;
@@ -35,6 +36,7 @@ public final class Mappers {
     public static final ComponentMapper<StateComponent> state = ComponentMapper.getFor(StateComponent.class);
     public static final ComponentMapper<Box2DMapRendererComponent> box2DMapParser = ComponentMapper.getFor(Box2DMapRendererComponent.class);
     public static final ComponentMapper<TiledPathFinderComponent> tiledPath = ComponentMapper.getFor(TiledPathFinderComponent.class);
+    public static final ComponentMapper<SteerableComponent> steerable = ComponentMapper.getFor(SteerableComponent.class);
     public static final ComponentMapper<HealthComponent> health = ComponentMapper.getFor(HealthComponent.class);
     public static final ComponentMapper<PlayerComponent> player = ComponentMapper.getFor(PlayerComponent.class);
     public static final ComponentMapper<EnemyComponent> enemy = ComponentMapper.getFor(EnemyComponent.class);
