@@ -53,6 +53,7 @@ import com.sid.demogdx.hunter.pfa.TiledPathFinder;
 import com.sid.demogdx.hunter.systems.RenderingSystem;
 import com.sid.demogdx.utils.AnimationCreator;
 import com.sid.demogdx.utils.Box2DConfig;
+import com.sid.demogdx.utils.EntityUtils;
 import com.sid.demogdx.utils.Mappers;
 
 import net.dermetfan.gdx.physics.box2d.Box2DMapObjectParser;
@@ -108,19 +109,19 @@ public class EntityWorld {
                     Entity entityA = (Entity) userDataA;
                     Entity entityB = (Entity) userDataB;
                     if ((entityA.flags == PLAYER_BIT) && (entityB.flags == ENEMY_BIT) || (entityB.flags == PLAYER_BIT) && (entityA.flags == ENEMY_BIT)) {
-                        if (Mappers.player.get(entityA) != null) {
+                        if (EntityUtils.isPlayer(entityA)) {
                             final HealthComponent health = Mappers.health.get(entityA);
                             health.health--;
                         }
-                        if (Mappers.player.get(entityB) != null) {
+                        if (EntityUtils.isPlayer(entityB)) {
                             final HealthComponent health = Mappers.health.get(entityB);
                             health.health--;
                         }
-                        if (Mappers.enemy.get(entityA) != null) {
+                        if (EntityUtils.isEnemy(entityA)) {
                             final PhysicsComponent physics = Mappers.physics.get(entityA);
                             createExplosion(physics.body);
                         }
-                        if (Mappers.enemy.get(entityB) != null) {
+                        if (EntityUtils.isEnemy(entityB)) {
                             final PhysicsComponent physics = Mappers.physics.get(entityB);
                             createExplosion(physics.body);
                         }
