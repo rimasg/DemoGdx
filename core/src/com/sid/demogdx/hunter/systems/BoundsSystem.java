@@ -5,7 +5,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.sid.demogdx.hunter.components.BoundsComponent;
 import com.sid.demogdx.hunter.components.TransformComponent;
-import com.sid.demogdx.utils.Mappers;
+import com.sid.demogdx.utils.entity.Mappers;
 
 /**
  * Created by Okis on 2017.04.08.

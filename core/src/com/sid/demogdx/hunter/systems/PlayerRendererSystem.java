@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.sid.demogdx.hunter.components.PlayerComponent;
-import com.sid.demogdx.utils.Mappers;
+import com.sid.demogdx.utils.entity.Mappers;
 
 /**
  * Created by Okis on 2017.03.26.

@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
 import com.sid.demogdx.hunter.components.TiledPathFinderComponent;
 import com.sid.demogdx.hunter.pfa.TiledNode;
-import com.sid.demogdx.utils.Mappers;
+import com.sid.demogdx.utils.entity.Mappers;
 
 /**
  * Created by Okis on 2017.04.08.

@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.Array;
 import com.sid.demogdx.hunter.components.ParticleComponent;
 import com.sid.demogdx.hunter.components.TextureComponent;
 import com.sid.demogdx.hunter.components.TransformComponent;
-import com.sid.demogdx.utils.Mappers;
+import com.sid.demogdx.utils.entity.Mappers;
 
 /**
  * Created by Okis on 2017.03.26.

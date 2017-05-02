@@ -6,7 +6,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.utils.Disposable;
 import com.sid.demogdx.hunter.components.Box2DMapRendererComponent;
 import com.sid.demogdx.hunter.components.CameraComponent;
-import com.sid.demogdx.utils.Mappers;
+import com.sid.demogdx.utils.entity.Mappers;
 
 /**
  * Created by SID on 2017-03-27.

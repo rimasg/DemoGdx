@@ -1,4 +1,4 @@
-package com.sid.demogdx.utils;
+package com.sid.demogdx.utils.entity;
 
 import com.badlogic.ashley.core.ComponentMapper;
 import com.sid.demogdx.hunter.components.AnimationComponent;

@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.sid.demogdx.hunter.components.AnimationComponent;
 import com.sid.demogdx.hunter.components.StateComponent;
 import com.sid.demogdx.hunter.components.TextureComponent;
-import com.sid.demogdx.utils.Mappers;
+import com.sid.demogdx.utils.entity.Mappers;
 
 /**
  * Created by SID on 2017-04-13.

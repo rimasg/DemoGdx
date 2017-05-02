@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.sid.demogdx.hunter.components.ExplosionComponent;
 import com.sid.demogdx.hunter.components.ParticleComponent;
 import com.sid.demogdx.hunter.components.StateComponent;
-import com.sid.demogdx.utils.Mappers;
+import com.sid.demogdx.utils.entity.Mappers;
 
 /**
  * Created by Okis on 2017.04.08.

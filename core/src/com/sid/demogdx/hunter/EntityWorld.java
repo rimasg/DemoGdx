@@ -53,8 +53,8 @@ import com.sid.demogdx.hunter.pfa.TiledPathFinder;
 import com.sid.demogdx.hunter.systems.RenderingSystem;
 import com.sid.demogdx.utils.AnimationCreator;
 import com.sid.demogdx.utils.Box2DConfig;
-import com.sid.demogdx.utils.EntityUtils;
-import com.sid.demogdx.utils.Mappers;
+import com.sid.demogdx.utils.entity.EntityUtils;
+import com.sid.demogdx.utils.entity.Mappers;
 
 import net.dermetfan.gdx.physics.box2d.Box2DMapObjectParser;
 import net.dermetfan.gdx.physics.box2d.ContactAdapter;

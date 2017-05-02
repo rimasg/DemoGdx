@@ -20,7 +20,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-public class AnimationCreator {
+public final class AnimationCreator {
 
 	/**
 	 * Get animation from texture atlas (Based on TexturePacker). Each frames'
@@ -137,4 +137,6 @@ public class AnimationCreator {
 		//
 		return new Animation<>(frameDuration, keyFrames);
 	}
+
+	private AnimationCreator() { }
 }

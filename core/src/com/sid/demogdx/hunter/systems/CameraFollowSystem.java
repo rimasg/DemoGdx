@@ -6,7 +6,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.math.Vector3;
 import com.sid.demogdx.hunter.components.CameraFollowComponent;
 import com.sid.demogdx.hunter.components.TransformComponent;
-import com.sid.demogdx.utils.Mappers;
+import com.sid.demogdx.utils.entity.Mappers;
 
 /**
  * Created by Okis on 2017.04.09.
