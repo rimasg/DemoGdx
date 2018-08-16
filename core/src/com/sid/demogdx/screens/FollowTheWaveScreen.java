@@ -125,8 +125,8 @@ public class FollowTheWaveScreen extends AbstractScreen {
 
     private void drawStar(float delta, Vector2[] points) {
         current += delta * speed;
-        if (current >= 1) {
-            current -= 1;
+        if (current >= 1.0f) {
+            current -= 1.0f;
         }
         float place = current * k;
         Vector2 first = points[(int) place];
