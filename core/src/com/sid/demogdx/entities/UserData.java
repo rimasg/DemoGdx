@@ -51,8 +51,9 @@ public class UserData {
         Player("player"),
         Enemy("enemy"),
         Obstacle("obstacle"),
-        Finish("finish"),
-        Respawn("respawn");
+        Wall("wall"),
+        Respawn("respawn"),
+        Finish("finish");
 
         public String type;
 
