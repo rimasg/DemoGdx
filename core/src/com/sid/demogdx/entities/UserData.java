@@ -11,6 +11,33 @@ public class UserData {
     public Sprite sprite;
     public ParticleEffect particleEffect;
 
+    public UserData(String id) {
+        this.id = id;
+    }
+
+    public UserData(String id, UserType type) {
+        this.id = id;
+        this.type = type;
+    }
+
+    public UserData(String id, UserType type, TextureAtlas.AtlasRegion atlasRegion) {
+        this.id = id;
+        this.type = type;
+        this.atlasRegion = atlasRegion;
+    }
+
+    public UserData(String id, UserType type, Sprite sprite) {
+        this.id = id;
+        this.type = type;
+        this.sprite = sprite;
+    }
+
+    public UserData(String id, UserType type, ParticleEffect particleEffect) {
+        this.id = id;
+        this.type = type;
+        this.particleEffect = particleEffect;
+    }
+
     private UserData(String id, UserType type, TextureAtlas.AtlasRegion atlasRegion, Sprite sprite, ParticleEffect
             particleEffect) {
         this.id = id;
@@ -18,43 +45,6 @@ public class UserData {
         this.atlasRegion = atlasRegion;
         this.sprite = sprite;
         this.particleEffect = particleEffect;
-    }
-
-    public static class Builder {
-        private String id;
-        private UserType type;
-        private TextureAtlas.AtlasRegion atlasRegion;
-        private Sprite sprite;
-        private ParticleEffect particleEffect;
-
-        public Builder setId(String id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder setType(UserType type) {
-            this.type = type;
-            return this;
-        }
-
-        public Builder setAtlasRegion(TextureAtlas.AtlasRegion atlasRegion) {
-            this.atlasRegion = atlasRegion;
-            return this;
-        }
-
-        public Builder setSprite(Sprite sprite) {
-            this.sprite = sprite;
-            return this;
-        }
-
-        public Builder setParticleEffect(ParticleEffect particleEffect) {
-            this.particleEffect = particleEffect;
-            return this;
-        }
-
-        public UserData build() {
-            return new UserData(id, type, atlasRegion, sprite, particleEffect);
-        }
     }
 
     public enum UserType {
@@ -71,4 +61,3 @@ public class UserData {
         }
     }
 }
-1
