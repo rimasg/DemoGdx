@@ -51,6 +51,13 @@ public abstract class AbstractScreen implements Screen {
         startTimer();
     }
 
+    @Override
+    public void render(float delta) {
+        Gdx.gl.glClearColor(0.45f, 0.45f, 0.45f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        handleInput();
+    }
+
     private void loadAssets() {
         skin = Assets.inst().getSkin();
     }
@@ -76,13 +83,6 @@ public abstract class AbstractScreen implements Screen {
 
     private void resetVars() {
         secondsTime = 0;
-    }
-
-    @Override
-    public void render(float delta) {
-        Gdx.gl.glClearColor(0.45f, 0.45f, 0.45f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        handleInput();
     }
 
     protected void handleInput() {
