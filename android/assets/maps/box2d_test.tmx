@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="9" height="16" tilewidth="32" tileheight="32" infinite="0" nextobjectid="5">
+ <layer name="Groud" width="9" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo4B8AAACQAAB
+  </data>
+ </layer>
+ <objectgroup name="box2d">
+  <object id="1" type="object" x="64" y="256" width="98" height="62.3333">
+   <properties>
+    <property name="bodyType" value="DynamicBody"/>
+    <property name="density" type="float" value="1"/>
+    <property name="friction" type="float" value="0.2"/>
+    <property name="restitution" type="float" value="0.2"/>
+   </properties>
+  </object>
+  <object id="2" type="object" x="160" y="352" width="64" height="64">
+   <properties>
+    <property name="bodyType" value="DynamicBody"/>
+    <property name="density" type="float" value="1"/>
+    <property name="friction" type="float" value="0.2"/>
+    <property name="restitution" type="float" value="0.2"/>
+    <property name="userData" value=""/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="3" name="border" type="object" x="0" y="512">
+   <polyline points="0,0 0,-512 288,-512 288,0 0,0"/>
+  </object>
+  <object id="4" name="player" type="object" x="81.3333" y="200.667">
+   <properties>
+    <property name="bodyType" value="DynamicBody"/>
+    <property name="density" type="float" value="1"/>
+    <property name="friction" type="float" value="0.2"/>
+    <property name="restitution" type="float" value="0.2"/>
+    <property name="userData" value="player"/>
+   </properties>
+   <polygon points="0,0 -34,-24.6667 -24.6667,-62.6667 14,-52.6667 38.6667,-112 105.333,-115.333 130.667,-62.6667 127.333,-40 75.3333,-47.3333 35.3333,-9.33333"/>
+  </object>
+ </objectgroup>
+</map>

@@ -43,6 +43,7 @@ public class MainMenuScreen extends AbstractScreen {
     Label lblFollowTheWave;
     Label lblAirFight;
     TextButton btnHunterAI;
+    TextButton btnBox2DSpriteDrawTest;
     Image exitBtn;
 
     public MainMenuScreen(DemoGdx game) {
@@ -178,6 +179,16 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
+        btnBox2DSpriteDrawTest = new TextButton("Box2DSpriteDrawTest", skin, "blue");
+        btnBox2DSpriteDrawTest.align(Align.center);
+        btnBox2DSpriteDrawTest.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                game.setScreen(game.getBox2DSpriteDrawTest());
+            }
+        });
+
         lblOverlay = new Label("Overlay Menu", skin, "blue");
         lblOverlay.setAlignment(Align.center);
         lblOverlay.addListener(new ClickListener(){
@@ -228,6 +239,8 @@ public class MainMenuScreen extends AbstractScreen {
         table.add(lblAirFight);
         table.row().pad(2.0f);
         table.add(btnHunterAI);
+        table.row().pad(2.0f);
+        table.add(btnBox2DSpriteDrawTest);
         table.row().pad(2.0f);
         table.add(lblOverlay);
         table.row().pad(10.0f);

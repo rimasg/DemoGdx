@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.sid.demogdx.assets.Assets;
 import com.sid.demogdx.screens.AirFightScreen;
 import com.sid.demogdx.screens.BehaviorTreeScreen;
+import com.sid.demogdx.screens.Box2DSpriteDrawTest;
 import com.sid.demogdx.screens.CircleAroundScreen;
 import com.sid.demogdx.screens.DropStackScreen;
 import com.sid.demogdx.screens.FallingBallScreen;
@@ -34,6 +35,7 @@ public class DemoGdx extends Game {
     private FollowTheWaveScreen followTheWaveScreen;
     private AirFightScreen airFightScreen;
     private HunterAIScreen hunterAIScreen;
+    private Box2DSpriteDrawTest box2DSpriteDrawTest;
 
     @Override
     public void create() {
@@ -52,6 +54,7 @@ public class DemoGdx extends Game {
         followTheWaveScreen = new FollowTheWaveScreen(this);
         airFightScreen = new AirFightScreen(this);
         hunterAIScreen = new HunterAIScreen(this);
+        box2DSpriteDrawTest = new Box2DSpriteDrawTest(this);
         setScreen(loadingScreen);
     }
 
@@ -101,6 +104,10 @@ public class DemoGdx extends Game {
 
     public HunterAIScreen getHunterAIScreen() {
         return hunterAIScreen;
+    }
+
+    public Box2DSpriteDrawTest getBox2DSpriteDrawTest() {
+        return box2DSpriteDrawTest;
     }
 
     @Override
