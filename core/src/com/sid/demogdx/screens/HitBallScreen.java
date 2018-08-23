@@ -178,6 +178,7 @@ public class HitBallScreen extends AbstractBox2dScreen {
 
     @Override
     protected void init() {
+        super.init();
 
     }
 

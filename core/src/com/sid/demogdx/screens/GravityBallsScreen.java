@@ -105,6 +105,7 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
 
     @Override
     protected void init() {
+        super.init();
 
     }
 

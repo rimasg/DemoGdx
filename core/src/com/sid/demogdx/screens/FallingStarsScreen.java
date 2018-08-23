@@ -82,6 +82,7 @@ public class FallingStarsScreen extends AbstractBox2dScreen {
 
     @Override
     protected void init() {
+        super.init();
 
     }
 

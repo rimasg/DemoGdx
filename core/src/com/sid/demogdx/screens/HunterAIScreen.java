@@ -78,7 +78,7 @@ public class HunterAIScreen extends AbstractBox2dScreen {
 
     @Override
     protected void init() {
-
+        super.init();
     }
 
     private void createHud() {
