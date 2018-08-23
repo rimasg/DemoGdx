@@ -14,6 +14,7 @@ public class BehaviorTreeScreen extends AbstractScreen {
     public static final float AI_STEP_DELAY = 1.5f;
     NPC npc;
     TextureRegion badlogic;
+    private float runDelayAccumulator;
 
     public BehaviorTreeScreen(DemoGdx game) {
         super(game);
@@ -25,8 +26,6 @@ public class BehaviorTreeScreen extends AbstractScreen {
         npc = new NPC();
         badlogic = Assets.inst().getRegion(RegionNames.HERO);
     }
-
-    private float runDelayAccumulator;
 
     @Override
     public void render(float delta) {
@@ -40,6 +39,16 @@ public class BehaviorTreeScreen extends AbstractScreen {
                 cam.viewportWidth * 0.6f,
                 cam.viewportHeight * 0.6f);
         game.batch.end();
+    }
+
+    @Override
+    protected void loadAssets() {
+
+    }
+
+    @Override
+    protected void init() {
+
     }
 
     private void updateAI(float delta) {

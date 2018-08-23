@@ -76,6 +76,16 @@ public class CircleAroundScreen extends AbstractScreen {
 
     }
 
+    @Override
+    protected void loadAssets() {
+
+    }
+
+    @Override
+    protected void init() {
+
+    }
+
     private void spawnNewSatellite() {
         satelliteSpawner.spawnSatellite();
     }

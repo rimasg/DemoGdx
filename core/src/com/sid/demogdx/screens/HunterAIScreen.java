@@ -61,6 +61,26 @@ public class HunterAIScreen extends AbstractBox2dScreen {
         entityWorld.create();
     }
 
+    @Override
+    public void render(float delta) {
+        super.render(delta);
+        GdxAI.getTimepiece().update(delta);
+        engine.update(delta);
+        updateHud();
+        stage.act();
+        stage.draw();
+    }
+
+    @Override
+    protected void loadAssets() {
+
+    }
+
+    @Override
+    protected void init() {
+
+    }
+
     private void createHud() {
         final Table table = new Table(skin);
         table.setFillParent(true);
@@ -76,16 +96,6 @@ public class HunterAIScreen extends AbstractBox2dScreen {
     private void updateHud() {
         final int health = entityWorld.getPlayerEntity().getComponent(HealthComponent.class).health;
         lblHealh.setText("Health: " + health);
-    }
-
-    @Override
-    public void render(float delta) {
-        super.render(delta);
-        GdxAI.getTimepiece().update(delta);
-        engine.update(delta);
-        updateHud();
-        stage.act();
-        stage.draw();
     }
 
     @Override

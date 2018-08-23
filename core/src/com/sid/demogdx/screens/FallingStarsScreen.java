@@ -58,6 +58,33 @@ public class FallingStarsScreen extends AbstractBox2dScreen {
         particleEffectPool = new ParticleEffectPool(particleEffect, 20, 100);
     }
 
+    @Override
+    public void render(float delta) {
+        super.render(delta);
+
+        destroyBodiesOutsideWorld();
+
+        cam.update();
+        // TODO: 2016.03.24 uncomment
+//        b2dr.render(world, cam.combined);
+
+        game.batch.setProjectionMatrix(cam.combined);
+        game.batch.begin();
+        drawBodies(delta);
+//        drawRotatingPlatform(game.batch);
+        game.batch.end();
+    }
+
+    @Override
+    protected void loadAssets() {
+
+    }
+
+    @Override
+    protected void init() {
+
+    }
+
     private void createGround() {
         EdgeShape floor = new EdgeShape();
         floor.set(new Vector2(0, 0), new Vector2(Box2DConfig.WWV, 0));
@@ -130,23 +157,6 @@ public class FallingStarsScreen extends AbstractBox2dScreen {
         revoluteJointDef.localAnchorA.set(1.0f, 0.0f);
         revoluteJointDef.localAnchorB.set(0.0f, 1.0f);
         world.createJoint(revoluteJointDef);
-    }
-
-    @Override
-    public void render(float delta) {
-        super.render(delta);
-
-        destroyBodiesOutsideWorld();
-
-        cam.update();
-        // TODO: 2016.03.24 uncomment
-//        b2dr.render(world, cam.combined);
-
-        game.batch.setProjectionMatrix(cam.combined);
-        game.batch.begin();
-        drawBodies(delta);
-//        drawRotatingPlatform(game.batch);
-        game.batch.end();
     }
 
     @Override

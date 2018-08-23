@@ -245,6 +245,16 @@ public class MainMenuScreen extends AbstractScreen {
     }
 
     @Override
+    protected void loadAssets() {
+
+    }
+
+    @Override
+    protected void init() {
+
+    }
+
+    @Override
     public void resize(int width, int height) {
         super.resize(width, height);
     }

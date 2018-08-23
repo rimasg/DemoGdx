@@ -56,6 +56,16 @@ public class HeroScreen extends AbstractScreen {
         stage.draw();
     }
 
+    @Override
+    protected void loadAssets() {
+
+    }
+
+    @Override
+    protected void init() {
+
+    }
+
     private void moveActorToTargetPos(float x, float y) {
         float degreesInRadians = MathUtils.atan2(
                 y - actor.getY() - actor.getOriginY(),

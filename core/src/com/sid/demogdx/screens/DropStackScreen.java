@@ -36,11 +36,36 @@ public class DropStackScreen extends AbstractBox2dScreen {
     public void show() {
         super.show();
         wallsBody = Box2DUtils.createWorldBoundaries(world);
+    }
+
+
+
+    @Override
+    public void render(float delta) {
+        super.render(delta);
+
+        updateSpawnerBodyDirection(delta);
+
+        cam.update();
+        b2dr.render(world, cam.combined);
+
+        game.batch.setProjectionMatrix(cam.combined);
+        game.batch.begin();
+        drawBlocks();
+        game.batch.end();
+    }
+
+    @Override
+    protected void loadAssets() {
+        blockAtlasRegion = Assets.inst().getRegion(RegionNames.HERO);
+    }
+
+    @Override
+    protected void init() {
 //        spawnBlock();
         spawnMovingPlatform();
         createBuoys();
 //        createBuoysTop();
-        loadAssets();
     }
 
     private void spawnMovingPlatform() {
@@ -145,25 +170,6 @@ public class DropStackScreen extends AbstractBox2dScreen {
                 fixtureDef, Shape.Type.Polygon);
         activeBody.setUserData(new Block(width, height));
         polygonShape.dispose();
-    }
-
-    private void loadAssets() {
-        blockAtlasRegion = Assets.inst().getRegion(RegionNames.HERO);
-    }
-
-    @Override
-    public void render(float delta) {
-        super.render(delta);
-
-        updateSpawnerBodyDirection(delta);
-
-        cam.update();
-        b2dr.render(world, cam.combined);
-
-        game.batch.setProjectionMatrix(cam.combined);
-        game.batch.begin();
-        drawBlocks();
-        game.batch.end();
     }
 
     private void updateSpawnerBodyDirection(float delta) {

@@ -79,6 +79,35 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
         Gdx.input.setInputProcessor(inputProcessor);
     }
 
+    @Override
+    public void render(float delta) {
+        super.render(delta);
+
+        removeDeadBodies();
+
+        cam.update();
+        b2dr.render(world, cam.combined);
+
+        game.batch.setProjectionMatrix(cam.combined);
+        game.batch.begin();
+        drawBodies();
+        drawParticles(game.batch, delta);
+        game.batch.end();
+
+        stage.act();
+        stage.draw();
+    }
+
+    @Override
+    protected void loadAssets() {
+        loadBallsRegions();
+    }
+
+    @Override
+    protected void init() {
+
+    }
+
     private void markBodiesForRemoval() {
         final Queue<Body> toExplore = new LinkedList<>();
         final Set<Body> visited = new HashSet<>();
@@ -113,10 +142,6 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
             }
         }
         playCollisionSound();
-    }
-
-    private void loadAssets() {
-        loadBallsRegions();
     }
 
     private void loadBallsRegions() {
@@ -189,25 +214,6 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
         final Table table = new Table(skin);
         table.setFillParent(true);
         stage.addActor(table);
-    }
-
-    @Override
-    public void render(float delta) {
-        super.render(delta);
-
-        removeDeadBodies();
-
-        cam.update();
-        b2dr.render(world, cam.combined);
-
-        game.batch.setProjectionMatrix(cam.combined);
-        game.batch.begin();
-        drawBodies();
-        drawParticles(game.batch, delta);
-        game.batch.end();
-
-        stage.act();
-        stage.draw();
     }
 
     private void removeDeadBodies() {

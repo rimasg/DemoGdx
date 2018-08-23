@@ -88,10 +88,41 @@ public class FallingBallScreen extends AbstractBox2dScreen {
         createHUD();
     }
 
-    private void loadAssets() {
+    @Override
+    public void render(float delta) {
+        super.render(delta);
+
+        particleEffect.update(delta);
+        removedDeadBodies();
+        updateHUD();
+        // Show only visible part of the Tiled Map on Y-axis - MathUtils.clamp()
+        cam.position.set(viewport.getWorldWidth() / 2, MathUtils.clamp(ball.getPosition().y, cam.viewportHeight / 2, cam.viewportHeight * 2), 0);
+        cam.update();
+
+//        b2dr.render(world, cam.combined);
+        mapRenderer.setView(cam);
+        mapRenderer.render();
+
+        game.batch.setProjectionMatrix(cam.combined);
+        game.batch.begin();
+        drawBodies();
+        drawParticles();
+        game.batch.end();
+
+        stage.act();
+        stage.draw();
+    }
+
+    @Override
+    protected void loadAssets() {
         starRegion = Assets.inst().getRegion(RegionNames.STAR);
         circleRainbowRegion = Assets.inst().getRegion(RegionNames.CIRCLE_RAINBOW);
         collisionSound = Assets.inst().getSound(AssetDescriptors.SOUND_COLLISION);
+    }
+
+    @Override
+    protected void init() {
+
     }
 
     private void loadParticles() {
@@ -158,31 +189,6 @@ public class FallingBallScreen extends AbstractBox2dScreen {
             posY = Box2DConfig.WHV * 2;
         }
         return posY;
-    }
-
-    @Override
-    public void render(float delta) {
-        super.render(delta);
-
-        particleEffect.update(delta);
-        removedDeadBodies();
-        updateHUD();
-        // Show only visible part of the Tiled Map on Y-axis - MathUtils.clamp()
-        cam.position.set(viewport.getWorldWidth() / 2, MathUtils.clamp(ball.getPosition().y, cam.viewportHeight / 2, cam.viewportHeight * 2), 0);
-        cam.update();
-
-//        b2dr.render(world, cam.combined);
-        mapRenderer.setView(cam);
-        mapRenderer.render();
-
-        game.batch.setProjectionMatrix(cam.combined);
-        game.batch.begin();
-        drawBodies();
-        drawParticles();
-        game.batch.end();
-
-        stage.act();
-        stage.draw();
     }
 
     private void removedDeadBodies() {

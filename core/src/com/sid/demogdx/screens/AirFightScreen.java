@@ -53,7 +53,6 @@ public class AirFightScreen extends AbstractScreen {
                 .setMaxPredictionTime(0.1f);
         rocket.setSteeringBehavior(pursue);
 
-        createHud();
     }
 
     @Override
@@ -72,6 +71,16 @@ public class AirFightScreen extends AbstractScreen {
 
         stage.act();
         stage.draw();
+    }
+
+    @Override
+    protected void loadAssets() {
+
+    }
+
+    @Override
+    protected void init() {
+        createHud();
     }
 
     private void createHud() {

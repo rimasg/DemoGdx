@@ -47,7 +47,9 @@ public abstract class AbstractScreen implements Screen {
     public void show() {
         Gdx.input.setCatchBackKey(true);
         Gdx.input.setInputProcessor(stage);
+        loadSkin();
         loadAssets();
+        init();
         startTimer();
     }
 
@@ -58,9 +60,21 @@ public abstract class AbstractScreen implements Screen {
         handleInput();
     }
 
-    private void loadAssets() {
+    private void loadSkin() {
         skin = Assets.inst().getSkin();
     }
+
+    /**
+     * Load assets in this method
+     * Gets called by {@link #show()}
+     */
+    protected abstract void loadAssets();
+
+    /**
+     * Initialize other game objects in this method
+     * Gets called by {@link #show()}
+     */
+    protected abstract void init();
 
     private void startTimer() {
         secondsTimer = new Timer().scheduleTask(new Timer.Task() {

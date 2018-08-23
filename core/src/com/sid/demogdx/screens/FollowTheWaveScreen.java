@@ -53,6 +53,48 @@ public class FollowTheWaveScreen extends AbstractScreen {
         CameraHelper.setTarget(runner);
     }
 
+    @Override
+    public void render(float delta) {
+        super.render(delta);
+
+        shapeRenderer.setProjectionMatrix(stage.getCamera().combined);
+        shapeRenderer.setAutoShapeType(true);
+        shapeRenderer.setColor(Color.WHITE);
+        shapeRenderer.begin();
+        drawPath();
+        shapeRenderer.end();
+
+        CameraHelper.update(delta);
+        game.batch.setProjectionMatrix(stage.getCamera().combined);
+        game.batch.begin();
+        if (togglePath) {
+            if (isStarTranslationFinished) {
+                drawStar(delta, points);
+            } else {
+                float place = current * k;
+                translateStar(delta, pointsOther[(int) place], points[(int) place]);
+            }
+        } else {
+            if (isStarTranslationFinished) {
+                drawStar(delta, pointsOther);
+            } else {
+                float place = current * k;
+                translateStar(delta, points[(int) place], pointsOther[(int) place]);
+            }
+        }
+        game.batch.end();
+    }
+
+    @Override
+    protected void loadAssets() {
+
+    }
+
+    @Override
+    protected void init() {
+
+    }
+
     private void initDataSet() {
         dataSet[0] = new Vector2(0.f, 50.f);
         dataSet[1] = new Vector2(40.f, 200.f);
@@ -89,38 +131,6 @@ public class FollowTheWaveScreen extends AbstractScreen {
             spline.valueAt(points[i], ((float) i) / ((float) k - 1));
             splineOther.valueAt(pointsOther[i], ((float) i) / ((float) k - 1));
         }
-    }
-
-    @Override
-    public void render(float delta) {
-        super.render(delta);
-
-        shapeRenderer.setProjectionMatrix(stage.getCamera().combined);
-        shapeRenderer.setAutoShapeType(true);
-        shapeRenderer.setColor(Color.WHITE);
-        shapeRenderer.begin();
-        drawPath();
-        shapeRenderer.end();
-
-        CameraHelper.update(delta);
-        game.batch.setProjectionMatrix(stage.getCamera().combined);
-        game.batch.begin();
-        if (togglePath) {
-            if (isStarTranslationFinished) {
-                drawStar(delta, points);
-            } else {
-                float place = current * k;
-                translateStar(delta, pointsOther[(int) place], points[(int) place]);
-            }
-        } else {
-            if (isStarTranslationFinished) {
-                drawStar(delta, pointsOther);
-            } else {
-                float place = current * k;
-                translateStar(delta, points[(int) place], pointsOther[(int) place]);
-            }
-        }
-        game.batch.end();
     }
 
     private void drawStar(float delta, Vector2[] points) {
