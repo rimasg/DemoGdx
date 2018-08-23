@@ -44,21 +44,6 @@ public class FallingStarsScreen extends AbstractBox2dScreen {
     }
 
     @Override
-    public void show() {
-        super.show();
-        createGround();
-//        createRotatingPlatform();
-//        createJointBodies();
-        spawnContinuousBodies();
-
-        starRegion = Assets.inst().getRegion(RegionNames.STAR);
-        lineDotRegion = Assets.inst().getRegion(RegionNames.LINE_DOT);
-
-        particleEffect = Assets.inst().getParticleEffect(AssetDescriptors.PE_STAR_TRAIL);
-        particleEffectPool = new ParticleEffectPool(particleEffect, 20, 100);
-    }
-
-    @Override
     public void render(float delta) {
         super.render(delta);
 
@@ -77,13 +62,21 @@ public class FallingStarsScreen extends AbstractBox2dScreen {
 
     @Override
     protected void loadAssets() {
+        starRegion = Assets.inst().getRegion(RegionNames.STAR);
+        lineDotRegion = Assets.inst().getRegion(RegionNames.LINE_DOT);
 
+        particleEffect = Assets.inst().getParticleEffect(AssetDescriptors.PE_STAR_TRAIL);
+        particleEffectPool = new ParticleEffectPool(particleEffect, 20, 100);
     }
 
     @Override
     protected void init() {
         super.init();
 
+        createGround();
+//        createRotatingPlatform();
+//        createJointBodies();
+        spawnContinuousBodies();
     }
 
     private void createGround() {

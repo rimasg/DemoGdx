@@ -67,8 +67,50 @@ public class HitBallScreen extends AbstractBox2dScreen {
     }
 
     @Override
-    public void show() {
-        super.show();
+    public void render(float delta) {
+        super.render(delta);
+
+        particleEffect.update(delta);
+        updateHUD();
+        // Show only visible part of the Tiled Map on Y-axis - MathUtils.clamp()
+//        cam.position.set(viewport.getWorldWidth() / 2, MathUtils.clamp(player.getPosition().y, cam.viewportHeight / 2, cam.viewportHeight * 2), 0);
+        cam.update();
+
+        b2dr.render(world, cam.combined);
+        // TODO: 2016.10.03 uncomment when releasing in Prod
+//        mapRenderer.setView(cam);
+//        mapRenderer.render();
+
+        game.batch.setProjectionMatrix(cam.combined);
+        game.batch.begin();
+        // TODO: 2016.10.03 uncomment later
+//        drawBodies();
+//        drawParticles();
+        game.batch.end();
+
+        game.shapeRenderer.setProjectionMatrix(stage.getCamera().combined);
+        game.shapeRenderer.setAutoShapeType(true);
+        game.shapeRenderer.begin();
+        drawProjectile();
+        game.shapeRenderer.end();
+
+        stage.act();
+        stage.draw();
+    }
+
+    @Override
+    protected void loadAssets() {
+        starRegion = Assets.inst().getRegion(RegionNames.STAR);
+        circleRainbowRegion = Assets.inst().getRegion(RegionNames.CIRCLE_RAINBOW);
+        collisionSound = Assets.inst().getSound(AssetDescriptors.SOUND_COLLISION);
+
+        loadParticles();
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+
         map = new TmxMapLoader().load("maps/hit_ball_map.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(map, Box2DConfig.unitScale32, game.batch);
         box2DMapObjectParser = new Box2DMapObjectParser(mapRenderer.getUnitScale());
@@ -93,9 +135,6 @@ public class HitBallScreen extends AbstractBox2dScreen {
                 }
             }
         });
-
-        loadAssets();
-        loadParticles();
 
         createWorld();
         createPlayer();
@@ -135,51 +174,6 @@ public class HitBallScreen extends AbstractBox2dScreen {
                 return false;
             }
         });
-    }
-
-    @Override
-    public void render(float delta) {
-        super.render(delta);
-
-        particleEffect.update(delta);
-        updateHUD();
-        // Show only visible part of the Tiled Map on Y-axis - MathUtils.clamp()
-//        cam.position.set(viewport.getWorldWidth() / 2, MathUtils.clamp(player.getPosition().y, cam.viewportHeight / 2, cam.viewportHeight * 2), 0);
-        cam.update();
-
-        b2dr.render(world, cam.combined);
-        // TODO: 2016.10.03 uncomment when releasing in Prod
-//        mapRenderer.setView(cam);
-//        mapRenderer.render();
-
-        game.batch.setProjectionMatrix(cam.combined);
-        game.batch.begin();
-        // TODO: 2016.10.03 uncomment later
-//        drawBodies();
-//        drawParticles();
-        game.batch.end();
-
-        game.shapeRenderer.setProjectionMatrix(stage.getCamera().combined);
-        game.shapeRenderer.setAutoShapeType(true);
-        game.shapeRenderer.begin();
-        drawProjectile();
-        game.shapeRenderer.end();
-
-        stage.act();
-        stage.draw();
-    }
-
-    @Override
-    protected void loadAssets() {
-        starRegion = Assets.inst().getRegion(RegionNames.STAR);
-        circleRainbowRegion = Assets.inst().getRegion(RegionNames.CIRCLE_RAINBOW);
-        collisionSound = Assets.inst().getSound(AssetDescriptors.SOUND_COLLISION);
-    }
-
-    @Override
-    protected void init() {
-        super.init();
-
     }
 
     private void loadParticles() {

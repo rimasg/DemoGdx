@@ -45,13 +45,35 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
     }
 
     @Override
-    public void show() {
-        super.show();
+    public void render(float delta) {
+        super.render(delta);
+
+        removeDeadBodies();
+
+        cam.update();
+        b2dr.render(world, cam.combined);
+
+        game.batch.setProjectionMatrix(cam.combined);
+        game.batch.begin();
+        drawBodies();
+        drawParticles(game.batch, delta);
+        game.batch.end();
+
+        stage.act();
+        stage.draw();
+    }
+
+    @Override
+    protected void loadAssets() {
+        loadBallsRegions();
+        loadParticles();
+    }
+
+    @Override
+    protected void init() {
+        super.init();
 
         world.setGravity(new Vector2(-2.0f, -30.0f));
-
-        loadAssets();
-        loadParticles();
 
         Box2DUtils.createWorldBoundaries(world);
         createHUD();
@@ -77,36 +99,6 @@ public class GravityBallsScreen extends AbstractBox2dScreen {
         };
 
         Gdx.input.setInputProcessor(inputProcessor);
-    }
-
-    @Override
-    public void render(float delta) {
-        super.render(delta);
-
-        removeDeadBodies();
-
-        cam.update();
-        b2dr.render(world, cam.combined);
-
-        game.batch.setProjectionMatrix(cam.combined);
-        game.batch.begin();
-        drawBodies();
-        drawParticles(game.batch, delta);
-        game.batch.end();
-
-        stage.act();
-        stage.draw();
-    }
-
-    @Override
-    protected void loadAssets() {
-        loadBallsRegions();
-    }
-
-    @Override
-    protected void init() {
-        super.init();
-
     }
 
     private void markBodiesForRemoval() {

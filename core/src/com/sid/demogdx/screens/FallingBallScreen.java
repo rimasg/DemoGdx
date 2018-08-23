@@ -50,45 +50,6 @@ public class FallingBallScreen extends AbstractBox2dScreen {
     }
 
     @Override
-    public void show() {
-        super.show();
-        map = new TmxMapLoader().load("maps/map.tmx");
-        mapRenderer = new OrthogonalTiledMapRenderer(map, Box2DConfig.unitScale32, game.batch);
-        box2DMapObjectParser = new Box2DMapObjectParser(mapRenderer.getUnitScale());
-//        box2DMapObjectParser.setListener(new Box2DMapObjectParserListenerAdapter(box2DMapObjectParser));
-        world.setContactListener(new ListenerClass(){
-            @Override
-            public void beginContact(Contact contact) {
-                super.beginContact(contact);
-                final Body bodyA = contact.getFixtureA().getBody();
-                final Body bodyB = contact.getFixtureB().getBody();
-
-                if ((isPlayer(bodyA) || isPlayer(bodyB))
-                        && ((bodyA.getType() == BodyDef.BodyType.DynamicBody) && bodyB.getType() == BodyDef.BodyType.DynamicBody)) {
-                    if (isPlayer(bodyA)) {
-                        setParticleToStart(bodyB.getPosition().x, bodyB.getPosition().y);
-                        bodiesToRemove.add(bodyB);
-                    } else if (isPlayer(bodyB)) {
-                        setParticleToStart(bodyA.getPosition().x, bodyA.getPosition().y);
-                        bodiesToRemove.add(bodyA);
-                    }
-                    playCollisionSound();
-                }
-                if (isFinish(bodyA) || isFinish(bodyB)) {
-//                    show();
-                }
-            }
-        });
-
-        loadAssets();
-        loadParticles();
-
-        createWorld();
-        createPlayer();
-        createHUD();
-    }
-
-    @Override
     public void render(float delta) {
         super.render(delta);
 
@@ -118,12 +79,45 @@ public class FallingBallScreen extends AbstractBox2dScreen {
         starRegion = Assets.inst().getRegion(RegionNames.STAR);
         circleRainbowRegion = Assets.inst().getRegion(RegionNames.CIRCLE_RAINBOW);
         collisionSound = Assets.inst().getSound(AssetDescriptors.SOUND_COLLISION);
+
+        loadParticles();
     }
 
     @Override
     protected void init() {
         super.init();
 
+        map = new TmxMapLoader().load("maps/map.tmx");
+        mapRenderer = new OrthogonalTiledMapRenderer(map, Box2DConfig.unitScale32, game.batch);
+        box2DMapObjectParser = new Box2DMapObjectParser(mapRenderer.getUnitScale());
+//        box2DMapObjectParser.setListener(new Box2DMapObjectParserListenerAdapter(box2DMapObjectParser));
+        world.setContactListener(new ListenerClass(){
+            @Override
+            public void beginContact(Contact contact) {
+                super.beginContact(contact);
+                final Body bodyA = contact.getFixtureA().getBody();
+                final Body bodyB = contact.getFixtureB().getBody();
+
+                if ((isPlayer(bodyA) || isPlayer(bodyB))
+                        && ((bodyA.getType() == BodyDef.BodyType.DynamicBody) && bodyB.getType() == BodyDef.BodyType.DynamicBody)) {
+                    if (isPlayer(bodyA)) {
+                        setParticleToStart(bodyB.getPosition().x, bodyB.getPosition().y);
+                        bodiesToRemove.add(bodyB);
+                    } else if (isPlayer(bodyB)) {
+                        setParticleToStart(bodyA.getPosition().x, bodyA.getPosition().y);
+                        bodiesToRemove.add(bodyA);
+                    }
+                    playCollisionSound();
+                }
+                if (isFinish(bodyA) || isFinish(bodyB)) {
+//                    show();
+                }
+            }
+        });
+
+        createWorld();
+        createPlayer();
+        createHUD();
     }
 
     private void loadParticles() {

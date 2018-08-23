@@ -37,8 +37,23 @@ public class HunterAIScreen extends AbstractBox2dScreen {
     }
 
     @Override
-    public void show() {
-        super.show();
+    public void render(float delta) {
+        super.render(delta);
+        GdxAI.getTimepiece().update(delta);
+        engine.update(delta);
+        updateHud();
+        stage.act();
+        stage.draw();
+    }
+
+    @Override
+    protected void loadAssets() {
+
+    }
+
+    @Override
+    protected void init() {
+        super.init();
 
         createHud();
 
@@ -59,26 +74,6 @@ public class HunterAIScreen extends AbstractBox2dScreen {
         engine.addSystem(new TiledPathRenderingSystem(game.shapeRenderer, cam));
 
         entityWorld.create();
-    }
-
-    @Override
-    public void render(float delta) {
-        super.render(delta);
-        GdxAI.getTimepiece().update(delta);
-        engine.update(delta);
-        updateHud();
-        stage.act();
-        stage.draw();
-    }
-
-    @Override
-    protected void loadAssets() {
-
-    }
-
-    @Override
-    protected void init() {
-        super.init();
     }
 
     private void createHud() {
