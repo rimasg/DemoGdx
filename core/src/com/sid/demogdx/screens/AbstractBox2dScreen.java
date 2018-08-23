@@ -27,18 +27,18 @@ public abstract class AbstractBox2dScreen extends AbstractScreen {
         super(game);
     }
 
-    @Override
-    public void show() {
-        super.show();
-        Box2D.init();
-        world = new World(new Vector2(0, -9.8f), true);
-        b2dr = new Box2DDebugRenderer();
-    }
 
     @Override
     public void render(float delta) {
         super.render(delta);
         stepWorld(delta);
+    }
+
+    @Override
+    protected void init() {
+        Box2D.init();
+        world = new World(new Vector2(0, -9.8f), true);
+        b2dr = new Box2DDebugRenderer();
     }
 
     private void stepWorld(float delta) {
