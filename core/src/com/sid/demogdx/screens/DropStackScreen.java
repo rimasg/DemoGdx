@@ -33,14 +33,6 @@ public class DropStackScreen extends AbstractBox2dScreen {
     }
 
     @Override
-    public void show() {
-        super.show();
-        wallsBody = Box2DUtils.createWorldBoundaries(world);
-    }
-
-
-
-    @Override
     public void render(float delta) {
         super.render(delta);
 
@@ -63,6 +55,8 @@ public class DropStackScreen extends AbstractBox2dScreen {
     @Override
     protected void init() {
         super.init();
+
+        wallsBody = Box2DUtils.createWorldBoundaries(world);
 //        spawnBlock();
         spawnMovingPlatform();
         createBuoys();
