@@ -113,10 +113,18 @@ public class Box2DSpriteDrawTest extends AbstractBox2dScreen {
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             moveBallOnXAxis(10.0f);
         }
+
+        awakePlayer();
     }
 
     private void moveBallOnXAxis(float x) {
         player.applyForceToCenter(x, 0, true);
+    }
+
+    private void awakePlayer() {
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            player.setAwake(true);
+        }
     }
 
     @Override
