@@ -3,6 +3,7 @@ package com.sid.demogdx.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -45,6 +46,8 @@ public class MainMenuScreen extends AbstractScreen {
     TextButton btnHunterAI;
     TextButton btnBox2DSpriteDrawTest;
     Image exitBtn;
+
+    private ShaderProgram shader;
 
     public MainMenuScreen(DemoGdx game) {
         super(game);
@@ -264,12 +267,18 @@ public class MainMenuScreen extends AbstractScreen {
 
     @Override
     protected void init() {
-
+        ShaderProgram.pedantic = false;
+        shader = new ShaderProgram(Gdx.files.internal("shaders/vignette.vsh"), Gdx.files.internal("shaders/vignette.fsh"));
+        game.batch.setShader(shader);
     }
 
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
+
+        shader.begin();
+        shader.setUniformf("u_resolution", width, height);
+        shader.end();
     }
 
     @Override
