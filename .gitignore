@@ -74,5 +74,8 @@ android/build/
 android/libs/
 android/gen/
 
+# Google Services (e.g. APIs or Firebase)
+google-services.json
+
 ## OS Specific
 .DS_Store

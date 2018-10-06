@@ -65,14 +65,14 @@ public abstract class AbstractScreen implements Screen {
     }
 
     /**
-     * Load assets in this method
-     * Gets called by {@link #show()}
+     * Load assets in this method.
+     * Gets called by {@link #show()}.
      */
     protected abstract void loadAssets();
 
     /**
-     * Initialize other game objects in this method
-     * Gets called by {@link #show()}
+     * Initialize other game objects in this method.
+     * Gets called after {@link #loadAssets()} is finished.
      */
     protected abstract void init();
 

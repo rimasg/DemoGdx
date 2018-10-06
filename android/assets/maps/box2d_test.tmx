@@ -29,6 +29,7 @@
   </object>
   <object id="4" name="player" type="object" x="81.3333" y="200.667">
    <properties>
+    <property name="awake" type="bool" value="false"/>
     <property name="bodyType" value="DynamicBody"/>
     <property name="density" type="float" value="1"/>
     <property name="friction" type="float" value="0.2"/>

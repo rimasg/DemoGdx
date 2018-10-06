@@ -12,10 +12,10 @@ import com.sid.demogdx.DemoGdx;
  * Created by Okis on 2016.03.20 @ 07:43.
  */
 public abstract class AbstractBox2dScreen extends AbstractScreen {
-    static final float TIME_STEP = 1f / 60f;
-    static final int VELOCITY_ITERATIONS = 6;
-    static final int POSITION_ITERATIONS = 2;
-    float accumulator = 0;
+    private static final float TIME_STEP = 1f / 60f;
+    private static final int VELOCITY_ITERATIONS = 6;
+    private static final int POSITION_ITERATIONS = 2;
+    private float accumulator = 0;
 
     World world;
     Box2DDebugRenderer b2dr;
@@ -42,11 +42,12 @@ public abstract class AbstractBox2dScreen extends AbstractScreen {
     }
 
     private void stepWorld(float delta) {
-        accumulator += Math.min(delta, 0.25f);
+        float frameTime = Math.min(delta, 0.25f);
+        accumulator += frameTime;
 
         while (accumulator >= TIME_STEP) {
+                world.step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
             accumulator -= TIME_STEP;
-            world.step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
         }
     }
 

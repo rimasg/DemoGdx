@@ -104,19 +104,34 @@ public class Box2DSpriteDrawTest extends AbstractBox2dScreen {
         }
 
         if (Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer)) {
-            moveBallOnXAxis(-Gdx.input.getAccelerometerX() * 10.f);
+            movePlayerOnXAxis(-Gdx.input.getAccelerometerX() * 10.f);
         }
 
+        movePlayerLeft();
+        movePlayerRight();
+        awakePlayer();
+    }
+
+    private void movePlayerLeft() {
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            moveBallOnXAxis(-10.0f);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            moveBallOnXAxis(10.0f);
+            movePlayerOnXAxis(-10.0f);
         }
     }
 
-    private void moveBallOnXAxis(float x) {
+    private void movePlayerRight() {
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            movePlayerOnXAxis(10.0f);
+        }
+    }
+
+    private void movePlayerOnXAxis(float x) {
         player.applyForceToCenter(x, 0, true);
+    }
+
+    private void awakePlayer() {
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            player.setAwake(true);
+        }
     }
 
     @Override

@@ -102,10 +102,18 @@ public final class Assets {
         return am.get(descriptor);
     }
 
+    /**
+     * @return <code>true</code> when the assets will be loaded.
+     * @see AssetManager#update()
+     */
     public boolean update() {
         return am.update();
     }
 
+    /**
+     * Blocks until all assets are loaded.
+     * @see AssetManager#finishLoading()
+     */
     public void finishLoading() {
         am.finishLoading();
     }
