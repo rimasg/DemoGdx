@@ -41,7 +41,6 @@ public class DemoGdx extends Game {
     public void create() {
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
-        LoadingScreen loadingScreen = new LoadingScreen(this);
         mainMenuScreen = new MainMenuScreen(this);
         heroScreen = new HeroScreen(this);
         fallingStarsScreen = new FallingStarsScreen(this);
@@ -55,6 +54,7 @@ public class DemoGdx extends Game {
         airFightScreen = new AirFightScreen(this);
         hunterAIScreen = new HunterAIScreen(this);
         box2DSpriteDrawTest = new Box2DSpriteDrawTest(this);
+        LoadingScreen loadingScreen = new LoadingScreen(this);
         setScreen(loadingScreen);
     }
 

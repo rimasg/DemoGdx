@@ -267,8 +267,12 @@ public class MainMenuScreen extends AbstractScreen {
 
     @Override
     protected void init() {
+        initShader();
+    }
+
+    private void initShader() {
         ShaderProgram.pedantic = false;
-        shader = new ShaderProgram(Gdx.files.internal("shaders/vignette.vsh"), Gdx.files.internal("shaders/vignette.fsh"));
+        shader = new ShaderProgram(Gdx.files.internal("shaders/vignette.vert"), Gdx.files.internal("shaders/vignette.frag"));
         game.batch.setShader(shader);
     }
 
@@ -276,6 +280,10 @@ public class MainMenuScreen extends AbstractScreen {
     public void resize(int width, int height) {
         super.resize(width, height);
 
+        onResizeShader(width, height);
+    }
+
+    private void onResizeShader(int width, int height) {
         shader.begin();
         shader.setUniformf("u_resolution", width, height);
         shader.end();
