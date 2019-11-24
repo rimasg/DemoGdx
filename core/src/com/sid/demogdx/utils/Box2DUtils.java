@@ -3,6 +3,7 @@ package com.sid.demogdx.utils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -58,7 +59,7 @@ public final class Box2DUtils {
                 ((PolygonShape) shape).setAsBox(0.3f, 0.3f);
                 break;
             case Chain:
-                shape = new EdgeShape();
+                shape = new ChainShape();
                 break;
             case Edge:
                 shape = new EdgeShape();
