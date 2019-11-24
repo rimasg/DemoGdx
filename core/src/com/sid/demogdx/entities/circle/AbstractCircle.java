@@ -50,10 +50,7 @@ public abstract class AbstractCircle {
      * @param degrees angle in degrees
      */
     public void rotateAround(AbstractCircle targetCircle, float degrees) {
-        rotationVec.set(pos.x, pos.y);
-        rotationVec.sub(targetCircle.pos.x, targetCircle.pos.y);
-        rotationVec.rotate(degrees);
-        pos.set(targetCircle.pos.x + rotationVec.x, targetCircle.pos.y + rotationVec.y);
+        pos.rotateAround(targetCircle.pos, degrees);
         updateBoundingCircle();
     }
 
