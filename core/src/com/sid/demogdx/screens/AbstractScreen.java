@@ -45,7 +45,7 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void show() {
-        Gdx.input.setCatchBackKey(true);
+        Gdx.input.setCatchKey(Input.Keys.BACK, true);
         Gdx.input.setInputProcessor(stage);
         loadSkin();
         loadAssets();
