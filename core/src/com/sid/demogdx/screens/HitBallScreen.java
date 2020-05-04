@@ -319,11 +319,7 @@ public class HitBallScreen extends AbstractBox2dScreen {
         @Override
         public boolean reportFixture(Fixture fixture) {
             if (fixture.testPoint(touchPos.x, touchPos.y)) {
-                if (isPlayer(fixture.getBody())) {
-                    touchedPlayer = true;
-                } else {
-                    touchedPlayer = false;
-                }
+                touchedPlayer = isPlayer(fixture.getBody());
             }
             return false;
         }
