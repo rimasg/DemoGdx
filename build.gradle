@@ -1,5 +1,3 @@
-import com.badlogic.gdx.tools.texturepacker.TexturePacker
-
 buildscript {
     repositories {
         google()
