@@ -2,7 +2,7 @@ package com.sid.demogdx.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.ai.steer.behaviors.Evade;
+import com.badlogic.gdx.ai.steer.behaviors.LookWhereYouAreGoing;
 import com.badlogic.gdx.ai.steer.behaviors.Pursue;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -38,21 +38,23 @@ public class AirFightScreen extends AbstractScreen {
         worldW = Box2DConfig.WWP;
         worldH = Box2DConfig.WHP;
         CameraHelper.setCam(stage.getCamera());
-//        CameraHelper.setTarget(); TODO: 2016.11.13 set target
+      // CameraHelper.setTarget(); TODO: 2016.11.13 set target
 
         airplane = new SteerableObject(new Sprite(Assets.inst().getRegion(RegionNames.AIRPLANE)));
         airplane.setPosition(new Vector2(stage.getWidth() / 2, stage.getHeight() / 2));
         airplane.setBounds(stage.getWidth(), stage.getHeight());
+        // final Evade<Vector2> evadeBehaviour = new Evade<>(airplane, rocket);
+        // airplane.setSteeringBehavior(evadeBehaviour);
+        final LookWhereYouAreGoing<Vector2> lookWhereYouAreGoingBehaviour = new LookWhereYouAreGoing<>(airplane);
+        airplane.setSteeringBehavior(lookWhereYouAreGoingBehaviour);
+
         rocket = new SteerableObject(new Sprite(Assets.inst().getRegion(RegionNames.ROCKET)));
         rocket.setPosition(new Vector2(stage.getWidth() / 2, 20.f));
         rocket.setBounds(stage.getWidth(), stage.getHeight());
         rocket.setMaxLinearSpeed(100.f);
-        final Evade<Vector2> evadeBehaviour = new Evade<>(airplane, rocket);
-//        airplane.setSteeringBehavior(evadeBehaviour); // TODO: 2016.11.13 uncomment later
         final Pursue<Vector2> pursue = new Pursue<>(rocket, airplane)
                 .setMaxPredictionTime(0.1f);
         rocket.setSteeringBehavior(pursue);
-
     }
 
     @Override
@@ -99,6 +101,10 @@ public class AirFightScreen extends AbstractScreen {
         if (Gdx.input.isKeyPressed(Input.Keys.BACK) || Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             game.setScreen(game.getMainMenuScreen());
         }
+        steerAirplane();
+    }
+
+    private void steerAirplane() {
         airplane.getLinearVelocity()
                 .set(touchpad.getKnobPercentX() * 200.f, touchpad.getKnobPercentY() * 200.f)
                 .limit(airplane.getMaxLinearSpeed());
