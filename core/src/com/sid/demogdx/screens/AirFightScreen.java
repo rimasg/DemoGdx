@@ -6,6 +6,7 @@ import com.badlogic.gdx.ai.steer.behaviors.LookWhereYouAreGoing;
 import com.badlogic.gdx.ai.steer.behaviors.Pursue;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
@@ -105,9 +106,15 @@ public class AirFightScreen extends AbstractScreen {
     }
 
     private void steerAirplane() {
-        airplane.getLinearVelocity()
-                .set(touchpad.getKnobPercentX() * 200.f, touchpad.getKnobPercentY() * 200.f)
-                .limit(airplane.getMaxLinearSpeed());
+        final float linearVelocity = 200.0f;
+        float directionX = touchpad.getKnobPercentX();
+        float directionY = touchpad.getKnobPercentY();
+
+        if (!MathUtils.isZero(directionX) && !MathUtils.isZero(directionY)) {
+            airplane.getLinearVelocity()
+                    .set(linearVelocity * directionX, linearVelocity * directionY)
+                    .limit(airplane.getMaxLinearSpeed());
+        }
     }
 
     @Override
