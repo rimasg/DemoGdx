@@ -33,7 +33,6 @@ public class FallingStarsScreen extends AbstractBox2dScreen {
 
     private ParticleEffect particleEffect;
     private ParticleEffectPool particleEffectPool;
-    private ParticleEffectPool.PooledEffect pooledEffect;
 
     private TextureAtlas.AtlasRegion starRegion;
     private TextureAtlas.AtlasRegion lineDotRegion;
@@ -210,9 +209,12 @@ public class FallingStarsScreen extends AbstractBox2dScreen {
 
     private void drawParticles(Body body, float delta) {
         if (body.getUserData() instanceof ParticleEffectPool.PooledEffect) {
-            pooledEffect = (ParticleEffectPool.PooledEffect) body.getUserData();
+            final ParticleEffectPool.PooledEffect pooledEffect = (ParticleEffectPool.PooledEffect) body.getUserData();
             pooledEffect.setPosition(body.getPosition().x, body.getPosition().y);
             pooledEffect.draw(game.batch, delta);
+            if (pooledEffect.isComplete()) {
+                pooledEffect.free();
+            }
         }
     }
 
