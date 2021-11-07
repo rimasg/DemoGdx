@@ -8,6 +8,7 @@ public final class RegionNames {
     public static final String HERO = "badlogic";
     public static final String LINE_DOT = "line_dot";
     public static final String STAR = "star";
+    public static final String SNOWFLAKE = "snowflake_clipart";
     public static final String AIRPLANE = "airplane";
     public static final String ROCKET = "rocket";
     public static final String CIRCLE_RAINBOW = "circle_rainbow";

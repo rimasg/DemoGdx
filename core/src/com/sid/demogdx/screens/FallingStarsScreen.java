@@ -61,7 +61,7 @@ public class FallingStarsScreen extends AbstractBox2dScreen {
 
     @Override
     protected void loadAssets() {
-        starRegion = Assets.inst().getRegion(RegionNames.STAR);
+        starRegion = Assets.inst().getRegion(RegionNames.SNOWFLAKE);
         lineDotRegion = Assets.inst().getRegion(RegionNames.LINE_DOT);
 
         particleEffect = Assets.inst().getParticleEffect(AssetDescriptors.PE_STAR_TRAIL);
