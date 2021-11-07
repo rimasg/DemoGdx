@@ -24,7 +24,7 @@ public class SteerableObject implements Steerable<Vector2> {
 
     private boolean tagged;
     private float boundingRadius;
-    private float maxLinearSpeed = 200.f;
+    private float maxLinearSpeed = 500.f;
     private float maxLinearAcceleration = 300.f;
     private float maxAngularSpeed = 5.f;
     private float maxAngularAcceleration = 100.f;

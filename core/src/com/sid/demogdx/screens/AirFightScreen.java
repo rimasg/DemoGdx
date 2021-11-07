@@ -22,6 +22,8 @@ import com.sid.demogdx.utils.CameraHelper;
  */
 
 public class AirFightScreen extends AbstractScreen {
+    private final float defaultLinearVelocity = 400.0f;
+
     private ShapeRenderer shapeRenderer;
     private int worldW, worldH;
     private Touchpad touchpad;
@@ -30,32 +32,6 @@ public class AirFightScreen extends AbstractScreen {
 
     public AirFightScreen(DemoGdx game) {
         super(game);
-    }
-
-    @Override
-    public void show() {
-        super.show();
-        shapeRenderer = new ShapeRenderer();
-        worldW = Box2DConfig.WWP;
-        worldH = Box2DConfig.WHP;
-        CameraHelper.setCam(stage.getCamera());
-      // CameraHelper.setTarget(); TODO: 2016.11.13 set target
-
-        airplane = new SteerableObject(new Sprite(Assets.inst().getRegion(RegionNames.AIRPLANE)));
-        airplane.setPosition(new Vector2(stage.getWidth() / 2, stage.getHeight() / 2));
-        airplane.setBounds(stage.getWidth(), stage.getHeight());
-        // final Evade<Vector2> evadeBehaviour = new Evade<>(airplane, rocket);
-        // airplane.setSteeringBehavior(evadeBehaviour);
-        final LookWhereYouAreGoing<Vector2> lookWhereYouAreGoingBehaviour = new LookWhereYouAreGoing<>(airplane);
-        airplane.setSteeringBehavior(lookWhereYouAreGoingBehaviour);
-
-        rocket = new SteerableObject(new Sprite(Assets.inst().getRegion(RegionNames.ROCKET)));
-        rocket.setPosition(new Vector2(stage.getWidth() / 2, 20.f));
-        rocket.setBounds(stage.getWidth(), stage.getHeight());
-        rocket.setMaxLinearSpeed(100.f);
-        final Pursue<Vector2> pursue = new Pursue<>(rocket, airplane)
-                .setMaxPredictionTime(0.1f);
-        rocket.setSteeringBehavior(pursue);
     }
 
     @Override
@@ -78,12 +54,33 @@ public class AirFightScreen extends AbstractScreen {
 
     @Override
     protected void loadAssets() {
+        shapeRenderer = new ShapeRenderer();
+        worldW = Box2DConfig.WWP;
+        worldH = Box2DConfig.WHP;
+        CameraHelper.setCam(stage.getCamera());
+        // CameraHelper.setTarget(); TODO: 2016.11.13 set target
 
+        airplane = new SteerableObject(new Sprite(Assets.inst().getRegion(RegionNames.AIRPLANE)));
+        airplane.setPosition(new Vector2(stage.getWidth() / 2, stage.getHeight() / 2));
+        airplane.setBounds(stage.getWidth(), stage.getHeight());
+        // final Evade<Vector2> evadeBehaviour = new Evade<>(airplane, rocket);
+        // airplane.setSteeringBehavior(evadeBehaviour);
+        final LookWhereYouAreGoing<Vector2> lookWhereYouAreGoingBehaviour = new LookWhereYouAreGoing<>(airplane);
+        airplane.setSteeringBehavior(lookWhereYouAreGoingBehaviour);
+
+        rocket = new SteerableObject(new Sprite(Assets.inst().getRegion(RegionNames.ROCKET)));
+        rocket.setPosition(new Vector2(stage.getWidth() / 2, 20.f));
+        rocket.setBounds(stage.getWidth(), stage.getHeight());
+        rocket.setMaxLinearSpeed(200.f);
+        final Pursue<Vector2> pursue = new Pursue<>(rocket, airplane)
+                .setMaxPredictionTime(0.1f);
+        rocket.setSteeringBehavior(pursue);
     }
 
     @Override
     protected void init() {
         createHud();
+        setInitialAirplaneSpeedAndDirection();
     }
 
     private void createHud() {
@@ -105,14 +102,19 @@ public class AirFightScreen extends AbstractScreen {
         steerAirplane();
     }
 
+    private void setInitialAirplaneSpeedAndDirection() {
+        airplane.getLinearVelocity()
+                .set(.0f, defaultLinearVelocity)
+                .limit(airplane.getMaxLinearSpeed());
+    }
+
     private void steerAirplane() {
-        final float linearVelocity = 200.0f;
         float directionX = touchpad.getKnobPercentX();
         float directionY = touchpad.getKnobPercentY();
 
         if (!MathUtils.isZero(directionX) && !MathUtils.isZero(directionY)) {
             airplane.getLinearVelocity()
-                    .set(linearVelocity * directionX, linearVelocity * directionY)
+                    .set(defaultLinearVelocity * directionX, defaultLinearVelocity * directionY)
                     .limit(airplane.getMaxLinearSpeed());
         }
     }
