@@ -1,19 +1,19 @@
 
 skin.png
-size: 512, 256
+size: 512, 512
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
 ball
   rotate: false
-  xy: 154, 172
+  xy: 2, 68
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 bg_gold
   rotate: false
-  xy: 352, 156
+  xy: 68, 34
   size: 64, 32
   split: 5, 5, 5, 5
   orig: 64, 32
@@ -21,7 +21,7 @@ bg_gold
   index: -1
 btn_black
   rotate: false
-  xy: 418, 222
+  xy: 134, 100
   size: 64, 32
   split: 6, 6, 3, 3
   orig: 64, 32
@@ -29,7 +29,7 @@ btn_black
   index: -1
 btn_down_blue
   rotate: false
-  xy: 2, 2
+  xy: 264, 164
   size: 34, 34
   split: 9, 9, 9, 9
   orig: 34, 34
@@ -37,7 +37,7 @@ btn_down_blue
   index: -1
 btn_down_red
   rotate: false
-  xy: 38, 2
+  xy: 370, 386
   size: 34, 34
   split: 9, 9, 9, 9
   orig: 34, 34
@@ -45,7 +45,7 @@ btn_down_red
   index: -1
 btn_gold
   rotate: false
-  xy: 418, 188
+  xy: 304, 318
   size: 64, 32
   split: 6, 6, 3, 3
   orig: 64, 32
@@ -53,7 +53,7 @@ btn_gold
   index: -1
 btn_gold_pressed
   rotate: false
-  xy: 352, 122
+  xy: 134, 66
   size: 64, 32
   split: 6, 6, 3, 3
   orig: 64, 32
@@ -61,7 +61,7 @@ btn_gold_pressed
   index: -1
 btn_up_blue
   rotate: false
-  xy: 74, 2
+  xy: 200, 98
   size: 34, 34
   split: 9, 9, 9, 9
   orig: 34, 34
@@ -69,7 +69,7 @@ btn_up_blue
   index: -1
 btn_up_red
   rotate: false
-  xy: 110, 2
+  xy: 304, 282
   size: 34, 34
   split: 9, 9, 9, 9
   orig: 34, 34
@@ -77,21 +77,21 @@ btn_up_red
   index: -1
 exit
   rotate: false
-  xy: 154, 106
+  xy: 132, 134
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 leaderboard
   rotate: false
-  xy: 220, 172
+  xy: 304, 418
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 line_segment
   rotate: false
-  xy: 220, 106
+  xy: 2, 2
   size: 64, 64
   split: 30, 30, 30, 29
   orig: 64, 64
@@ -99,14 +99,14 @@ line_segment
   index: -1
 play
   rotate: false
-  xy: 2, 38
+  xy: 2, 134
   size: 128, 64
   orig: 128, 64
   offset: 0, 0
   index: -1
 popup_bg
   rotate: false
-  xy: 418, 154
+  xy: 370, 352
   size: 32, 32
   split: 3, 3, 3, 3
   orig: 32, 32
@@ -114,50 +114,50 @@ popup_bg
   index: -1
 pre_particle
   rotate: false
-  xy: 418, 120
+  xy: 304, 248
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 racket
   rotate: false
-  xy: 154, 238
+  xy: 304, 484
   size: 128, 16
   orig: 128, 16
   offset: 0, 0
   index: -1
 share
   rotate: false
-  xy: 286, 190
+  xy: 68, 68
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 sound_off
   rotate: false
-  xy: 286, 124
+  xy: 198, 134
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 sound_on
   rotate: false
-  xy: 352, 190
+  xy: 304, 352
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 touch_knob
   rotate: false
-  xy: 452, 156
-  size: 30, 30
-  orig: 30, 30
+  xy: 370, 422
+  size: 60, 60
+  orig: 60, 60
   offset: 0, 0
   index: -1
 touch_pad
   rotate: false
-  xy: 2, 104
-  size: 150, 150
-  orig: 150, 150
+  xy: 2, 200
+  size: 300, 300
+  orig: 300, 300
   offset: 0, 0
   index: -1
