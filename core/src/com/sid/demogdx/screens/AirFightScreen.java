@@ -60,7 +60,9 @@ public class AirFightScreen extends AbstractScreen {
         CameraHelper.setCam(stage.getCamera());
         // CameraHelper.setTarget(); TODO: 2016.11.13 set target
 
-        airplane = new SteerableObject(new Sprite(Assets.inst().getRegion(RegionNames.AIRPLANE)));
+        final Sprite airplaneSprite = new Sprite(Assets.inst().getRegion(RegionNames.AIRPLANE));
+        airplaneSprite.setSize(32.f, 32.f);
+        airplane = new SteerableObject(airplaneSprite);
         airplane.setPosition(new Vector2(stage.getWidth() / 2, stage.getHeight() / 2));
         airplane.setBounds(stage.getWidth(), stage.getHeight());
         // final Evade<Vector2> evadeBehaviour = new Evade<>(airplane, rocket);
@@ -68,7 +70,9 @@ public class AirFightScreen extends AbstractScreen {
         final LookWhereYouAreGoing<Vector2> lookWhereYouAreGoingBehaviour = new LookWhereYouAreGoing<>(airplane);
         airplane.setSteeringBehavior(lookWhereYouAreGoingBehaviour);
 
-        rocket = new SteerableObject(new Sprite(Assets.inst().getRegion(RegionNames.ROCKET)));
+        final Sprite rocketSprite = new Sprite(Assets.inst().getRegion(RegionNames.ROCKET));
+        rocketSprite.setSize(32.f, 64.f);
+        rocket = new SteerableObject(rocketSprite);
         rocket.setPosition(new Vector2(stage.getWidth() / 2, 20.f));
         rocket.setBounds(stage.getWidth(), stage.getHeight());
         rocket.setMaxLinearSpeed(200.f);
