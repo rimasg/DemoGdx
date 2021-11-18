@@ -41,7 +41,7 @@ public class LoadingScreen extends ScreenAdapter {
         game.shapeRenderer.setProjectionMatrix(cam.combined);
         game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         game.shapeRenderer.setColor(Color.BLACK);
-        game.shapeRenderer.rect(0, lineYpos, lineWidth, lineHeight);
+        game.shapeRenderer.rect(0 + 2.f, lineYpos, lineWidth - 2.f, lineHeight);
         game.shapeRenderer.setColor(Color.RED);
         game.shapeRenderer.rect(0, lineYpos, lineWidth * Assets.inst().getProgress(), lineHeight);
         game.shapeRenderer.end();
