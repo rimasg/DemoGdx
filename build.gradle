@@ -7,8 +7,8 @@ buildscript {
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.2.0-rc01'
-        classpath 'com.badlogicgames.gdx:gdx-tools:1.10.0'
+        classpath 'com.android.tools.build:gradle:7.2.1'
+        classpath 'com.badlogicgames.gdx:gdx-tools:1.11.0'
     }
 }
 
@@ -18,7 +18,7 @@ allprojects {
     version = '1.0'
     ext {
         appName = "DemoGdx"
-        gdxVersion = '1.10.0'
+        gdxVersion = '1.11.0'
         roboVMVersion = '2.3.8'
         box2DLightsVersion = '1.4'
         ashleyVersion = '1.7.4'
