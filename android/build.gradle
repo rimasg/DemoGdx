@@ -1,5 +1,7 @@
 android {
-    buildToolsVersion "33.0.1"
+    namespace 'com.sid.demogdx'
+
+    buildToolsVersion "33.0.2"
     compileSdkVersion 33
 
     defaultConfig {
@@ -27,6 +29,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             proguardFiles 'proguard-project.txt'
         }
+    }
+    buildFeatures {
+        renderScript true
+        aidl true
     }
 }
 
