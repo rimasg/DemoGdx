@@ -179,6 +179,7 @@ public class SteerableObject implements Steerable<Vector2> {
             wrapAround(position, width, height);
         } else {
             position.mulAdd(linearVelocity, delta);
+            wrapAround(position, width, height);
         }
         sprite.setPosition(position.x, position.y);
     }

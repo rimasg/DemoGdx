@@ -31,7 +31,6 @@ public class FallingStarsScreen extends AbstractBox2dScreen {
     private static final float SPAWN_BODIES_INTERVAL_SECONDS = 0.4f;
     private static final Vector2 defaultBodyPos = new Vector2(Box2DConfig.WWV / 2, 20);
 
-    private ParticleEffect particleEffect;
     private ParticleEffectPool particleEffectPool;
 
     private TextureAtlas.AtlasRegion starRegion;
@@ -64,7 +63,8 @@ public class FallingStarsScreen extends AbstractBox2dScreen {
         starRegion = Assets.inst().getRegion(RegionNames.SNOWFLAKE);
         lineDotRegion = Assets.inst().getRegion(RegionNames.LINE_DOT);
 
-        particleEffect = Assets.inst().getParticleEffect(AssetDescriptors.PE_STAR_TRAIL);
+        ParticleEffect particleEffect = Assets.inst()
+                                              .getParticleEffect(AssetDescriptors.PE_STAR_TRAIL);
         particleEffectPool = new ParticleEffectPool(particleEffect, 20, 100);
     }
 

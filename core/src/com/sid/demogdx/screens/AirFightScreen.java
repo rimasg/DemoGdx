@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.sid.demogdx.DemoGdx;
 import com.sid.demogdx.assets.Assets;
 import com.sid.demogdx.assets.RegionNames;
+import com.sid.demogdx.entities.SteerableLocation;
 import com.sid.demogdx.entities.SteerableObject;
 import com.sid.demogdx.utils.Box2DConfig;
 import com.sid.demogdx.utils.CameraHelper;
@@ -29,6 +30,8 @@ public class AirFightScreen extends AbstractScreen {
     private Touchpad touchpad;
     private SteerableObject airplane;
     private SteerableObject rocket;
+    private final SteerableLocation steerableLocation = new SteerableLocation();
+    private Vector2 airplaneDirection = new Vector2();
 
     public AirFightScreen(DemoGdx game) {
         super(game);
@@ -66,9 +69,10 @@ public class AirFightScreen extends AbstractScreen {
         airplane.setPosition(new Vector2(stage.getWidth() / 2, stage.getHeight() / 2));
         airplane.setBounds(stage.getWidth(), stage.getHeight());
         // final Evade<Vector2> evadeBehaviour = new Evade<>(airplane, rocket);
-        // airplane.setSteeringBehavior(evadeBehaviour);
         final LookWhereYouAreGoing<Vector2> lookWhereYouAreGoingBehaviour = new LookWhereYouAreGoing<>(airplane);
-        airplane.setSteeringBehavior(lookWhereYouAreGoingBehaviour);
+        // steerableLocation.setPosition(new Vector2(250.f, 700.f));
+        // final Seek<Vector2> seekBehaviour = new Seek<>(airplane, steerableLocation);
+        // airplane.setSteeringBehavior(lookWhereYouAreGoingBehaviour);
 
         final Sprite rocketSprite = new Sprite(Assets.inst().getRegion(RegionNames.ROCKET));
         rocketSprite.setSize(32.f, 64.f);
@@ -113,13 +117,24 @@ public class AirFightScreen extends AbstractScreen {
     }
 
     private void steerAirplane() {
-        float directionX = touchpad.getKnobPercentX();
-        float directionY = touchpad.getKnobPercentY();
+        float directionX = Math.signum(touchpad.getKnobPercentX());
+        float directionY = Math.signum(touchpad.getKnobPercentY());
+        // Gdx.app.log(TAG, String.format("X: %s | Y: %s", directionX, directionY));
+
+/*
+        airplaneDirection
+                .set(directionX, directionY)
+                .scl(defaultLinearVelocity);
+*/
 
         if (!MathUtils.isZero(directionX) && !MathUtils.isZero(directionY)) {
             airplane.getLinearVelocity()
-                    .set(defaultLinearVelocity * directionX, defaultLinearVelocity * directionY)
+                    .scl(directionX, directionY);
+/*
+            airplane.getLinearVelocity()
+                    .set(airplaneDirection)
                     .limit(airplane.getMaxLinearSpeed());
+*/
         }
     }
 
