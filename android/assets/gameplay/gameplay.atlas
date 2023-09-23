@@ -82,18 +82,18 @@ particle
   orig: 32, 32
   offset: 0, 0
   index: -1
-particle-star
-  rotate: false
-  xy: 412, 380
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
 particle_dark
   rotate: false
   xy: 220, 154
   size: 32, 32
   orig: 32, 32
+  offset: 0, 0
+  index: -1
+particle_star
+  rotate: false
+  xy: 412, 380
+  size: 64, 64
+  orig: 64, 64
   offset: 0, 0
   index: -1
 red_ball_border
