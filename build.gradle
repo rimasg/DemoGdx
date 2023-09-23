@@ -78,7 +78,9 @@ project(":core") {
         api "net.dermetfan.libgdx-utils:libgdx-utils-box2d:$gdxUtilsVersion"
     }
 
-    task packGamePlayTextures {
+    tasks.register('packGamePlayTextures') {
+        dependsOn ':android:mergeDebugAssets', ':android:mergeReleaseAssets', ':desktop:processResources'
+
         def inputDir = "$rootDir/desktop/assets-raw/gameplay"
         def outputDir = "$rootDir/android/assets/gameplay"
 
@@ -97,7 +99,9 @@ project(":core") {
         }
     }
 
-    task packUiTextures {
+    tasks.register('packUiTextures') {
+        dependsOn ':android:mergeDebugAssets', ':android:mergeReleaseAssets', ':desktop:processResources'
+
         def inputDir = "$rootDir/desktop/assets-raw/ui"
         def outputDir = "$rootDir/android/assets/ui"
 
