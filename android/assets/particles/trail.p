@@ -1,13 +1,13 @@
 stars
 - Delay -
 active: false
-- Duration - 
+- Duration -
 lowMin: 1.0
 lowMax: 1.0
-- Count - 
+- Count -
 min: 0
 max: 1000
-- Emission - 
+- Emission -
 lowMin: 0.0
 lowMax: 0.0
 highMin: 200.0
@@ -17,7 +17,7 @@ scalingCount: 1
 scaling0: 1.0
 timelineCount: 1
 timeline0: 0.0
-- Life - 
+- Life -
 lowMin: 0.0
 lowMax: 0.0
 highMin: 1000.0
@@ -27,15 +27,15 @@ scalingCount: 1
 scaling0: 1.0
 timelineCount: 1
 timeline0: 0.0
-- Life Offset - 
+- Life Offset -
 active: false
-- X Offset - 
+- X Offset -
 active: false
-- Y Offset - 
+- Y Offset -
 active: false
-- Spawn Shape - 
+- Spawn Shape -
 shape: point
-- Spawn Width - 
+- Spawn Width -
 lowMin: 0.0
 lowMax: 0.0
 highMin: 0.0
@@ -45,7 +45,7 @@ scalingCount: 1
 scaling0: 1.0
 timelineCount: 1
 timeline0: 0.0
-- Spawn Height - 
+- Spawn Height -
 lowMin: 0.0
 lowMax: 0.0
 highMin: 0.0
@@ -55,7 +55,7 @@ scalingCount: 1
 scaling0: 1.0
 timelineCount: 1
 timeline0: 0.0
-- Scale - 
+- Scale -
 lowMin: 0.0
 lowMax: 0.0
 highMin: 1.0
@@ -67,17 +67,17 @@ scaling1: 0.0
 timelineCount: 2
 timeline0: 0.0
 timeline1: 1.0
-- Velocity - 
+- Velocity -
 active: false
-- Angle - 
+- Angle -
 active: false
-- Rotation - 
+- Rotation -
 active: false
-- Wind - 
+- Wind -
 active: false
-- Gravity - 
+- Gravity -
 active: false
-- Tint - 
+- Tint -
 colorsCount: 9
 colors0: 0.0
 colors1: 0.0
@@ -92,7 +92,7 @@ timelineCount: 3
 timeline0: 0.0
 timeline1: 0.63705105
 timeline2: 1.0
-- Transparency - 
+- Transparency -
 lowMin: 0.0
 lowMax: 0.0
 highMin: 1.0
@@ -108,7 +108,7 @@ timeline0: 0.0
 timeline1: 0.29452056
 timeline2: 0.6917808
 timeline3: 1.0
-- Options - 
+- Options -
 attached: false
 continuous: true
 aligned: false
@@ -116,4 +116,4 @@ additive: true
 behind: false
 premultipliedAlpha: false
 - Image Path -
-/C:/Users/Okis/AndroidStudioProjects/DemoGdx/android/assets/img/particle-star.png
+/C:/Users/Okis/AndroidStudioProjects/DemoGdx/android/assets/img/particle_star.png
