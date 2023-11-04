@@ -7,6 +7,7 @@ import com.sid.demogdx.assets.Assets;
 import com.sid.demogdx.screens.AirFightScreen;
 import com.sid.demogdx.screens.BehaviorTreeScreen;
 import com.sid.demogdx.screens.Box2DSpriteDrawTest;
+import com.sid.demogdx.screens.Box2dSampleScreen;
 import com.sid.demogdx.screens.CircleAroundScreen;
 import com.sid.demogdx.screens.DropStackScreen;
 import com.sid.demogdx.screens.FallingBallScreen;
@@ -26,6 +27,7 @@ public class DemoGdx extends Game {
     private MainMenuScreen mainMenuScreen;
     private HeroScreen heroScreen;
     private FallingStarsScreen fallingStarsScreen;
+    private Box2dSampleScreen box2dSampleScreen;
     private FallingBallScreen fallingBallScreen;
     private BehaviorTreeScreen behaviorTreeScreen;
     private GravityBallsScreen gravityBallsScreen;
@@ -44,6 +46,7 @@ public class DemoGdx extends Game {
         mainMenuScreen = new MainMenuScreen(this);
         heroScreen = new HeroScreen(this);
         fallingStarsScreen = new FallingStarsScreen(this);
+        box2dSampleScreen = new Box2dSampleScreen(this);
         fallingBallScreen = new FallingBallScreen(this);
         gravityBallsScreen = new GravityBallsScreen(this);
         behaviorTreeScreen = new BehaviorTreeScreen(this);
@@ -68,6 +71,10 @@ public class DemoGdx extends Game {
 
     public FallingStarsScreen getFallingStarsScreen() {
         return fallingStarsScreen;
+    }
+
+    public Box2dSampleScreen getbox2dSampleScreen() {
+        return box2dSampleScreen;
     }
 
     public FallingBallScreen getFallingBallScreen() {

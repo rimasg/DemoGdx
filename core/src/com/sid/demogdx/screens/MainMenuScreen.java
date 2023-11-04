@@ -1,5 +1,11 @@
 package com.sid.demogdx.screens;
 
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.delay;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveBy;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveTo;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveToAligned;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -21,12 +27,6 @@ import com.sid.demogdx.assets.RegionNames;
 import com.sid.demogdx.screens.actors.OverlayMenuActor;
 import com.sid.demogdx.utils.Box2DConfig;
 
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.delay;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveBy;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveTo;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveToAligned;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
-
 /**
  * Created by SID on 2016-03-03 @ 18:09.
  */
@@ -35,6 +35,7 @@ public class MainMenuScreen extends AbstractScreen {
     Label lblOverlay;
     Label lblGoToTarget;
     Label lblFallingStars;
+    Label lblBox2dSample;
     Label lblFallingBall;
     Label lblGravityBalls;
     Label lblBTree;
@@ -89,6 +90,16 @@ public class MainMenuScreen extends AbstractScreen {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 game.setScreen(game.getFallingStarsScreen());
+            }
+        });
+
+        lblBox2dSample = new Label("Box2D Sample", skin, "blue");
+        lblBox2dSample.setAlignment(Align.center);
+        lblBox2dSample.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                game.setScreen(game.getbox2dSampleScreen());
             }
         });
 
@@ -224,6 +235,8 @@ public class MainMenuScreen extends AbstractScreen {
         table.add(lblGoToTarget);
         table.row().pad(2.0f);
         table.add(lblFallingStars);
+        table.row().pad(2.0f);
+        table.add(lblBox2dSample);
         table.row().pad(2.0f);
         table.add(lblFallingBall);
         table.row().pad(2.0f);
