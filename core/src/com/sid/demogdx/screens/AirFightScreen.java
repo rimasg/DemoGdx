@@ -2,11 +2,10 @@ package com.sid.demogdx.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.ai.steer.behaviors.LookWhereYouAreGoing;
 import com.badlogic.gdx.ai.steer.behaviors.Pursue;
+import com.badlogic.gdx.ai.steer.behaviors.Seek;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
@@ -23,15 +22,14 @@ import com.sid.demogdx.utils.CameraHelper;
  */
 
 public class AirFightScreen extends AbstractScreen {
-    private final float defaultLinearVelocity = 400.0f;
 
     private ShapeRenderer shapeRenderer;
     private int worldW, worldH;
     private Touchpad touchpad;
     private SteerableObject airplane;
     private SteerableObject rocket;
-    private final SteerableLocation steerableLocation = new SteerableLocation();
-    private Vector2 airplaneDirection = new Vector2();
+    private static final SteerableLocation targetLocation = new SteerableLocation();
+
 
     public AirFightScreen(DemoGdx game) {
         super(game);
@@ -68,11 +66,11 @@ public class AirFightScreen extends AbstractScreen {
         airplane = new SteerableObject(airplaneSprite);
         airplane.setPosition(new Vector2(stage.getWidth() / 2, stage.getHeight() / 2));
         airplane.setBounds(stage.getWidth(), stage.getHeight());
-        // final Evade<Vector2> evadeBehaviour = new Evade<>(airplane, rocket);
-        final LookWhereYouAreGoing<Vector2> lookWhereYouAreGoingBehaviour = new LookWhereYouAreGoing<>(airplane);
-        // steerableLocation.setPosition(new Vector2(250.f, 700.f));
-        // final Seek<Vector2> seekBehaviour = new Seek<>(airplane, steerableLocation);
-        // airplane.setSteeringBehavior(lookWhereYouAreGoingBehaviour);
+        airplane.setMaxLinearSpeed(150f);
+        airplane.setMaxAngularSpeed(0.2f);
+        final Seek<Vector2> airplaneBehavior = new Seek<>(airplane);
+        airplaneBehavior.setTarget(targetLocation);
+        airplane.setSteeringBehavior(airplaneBehavior);
 
         final Sprite rocketSprite = new Sprite(Assets.inst().getRegion(RegionNames.ROCKET));
         rocketSprite.setSize(32.f, 64.f);
@@ -88,7 +86,6 @@ public class AirFightScreen extends AbstractScreen {
     @Override
     protected void init() {
         createHud();
-        setInitialAirplaneSpeedAndDirection();
     }
 
     private void createHud() {
@@ -96,8 +93,8 @@ public class AirFightScreen extends AbstractScreen {
         table.setFillParent(true);
         stage.addActor(table);
 
-        touchpad = new Touchpad(20, skin);
-        touchpad.setSize(20.f, 20.f);
+        touchpad = new Touchpad(2, skin);
+        touchpad.setSize(10.f, 10.f);
         table.add(touchpad).expand().bottom();
     }
 
@@ -110,32 +107,18 @@ public class AirFightScreen extends AbstractScreen {
         steerAirplane();
     }
 
-    private void setInitialAirplaneSpeedAndDirection() {
-        airplane.getLinearVelocity()
-                .set(.0f, defaultLinearVelocity)
-                .limit(airplane.getMaxLinearSpeed());
-    }
-
+    private static final Vector2 targetDirection = new Vector2();
     private void steerAirplane() {
-        float directionX = Math.signum(touchpad.getKnobPercentX());
-        float directionY = Math.signum(touchpad.getKnobPercentY());
-        // Gdx.app.log(TAG, String.format("X: %s | Y: %s", directionX, directionY));
+        float directionX = touchpad.getKnobPercentX();
+        float directionY = touchpad.getKnobPercentY();
 
-/*
-        airplaneDirection
-                .set(directionX, directionY)
-                .scl(defaultLinearVelocity);
-*/
-
-        if (!MathUtils.isZero(directionX) && !MathUtils.isZero(directionY)) {
-            airplane.getLinearVelocity()
-                    .scl(directionX, directionY);
-/*
-            airplane.getLinearVelocity()
-                    .set(airplaneDirection)
-                    .limit(airplane.getMaxLinearSpeed());
-*/
+        if ((directionX <= 0.2f && directionX >= -0.2f) || directionY <= 0.2f && directionY >= -0.2f) {
+            return;
         }
+
+        // TODO: 12/11/2023 Requires additional steering improvements for smooth steering
+        targetDirection.set(directionX, directionY).scl(1000f).add(airplane.getPosition());
+        targetLocation.setPosition(targetDirection);
     }
 
     @Override
