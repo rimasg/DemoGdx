@@ -41,6 +41,7 @@ public class MainMenuScreen extends AbstractScreen {
     Label lblBTree;
     Label lblCircleAround;
     Label lblDropStack;
+    Label lblStackTower;
     Label lblHitBall;
     Label lblFollowTheWave;
     Label lblAirFight;
@@ -153,6 +154,16 @@ public class MainMenuScreen extends AbstractScreen {
             }
         });
 
+        lblStackTower = new Label("Stack Tower", skin, "blue");
+        lblStackTower.setAlignment(Align.center);
+        lblStackTower.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                game.setScreen(game.getStackTowerScreen());
+            }
+        });
+
         lblHitBall = new Label("Hit a Ball", skin, "blue");
         lblHitBall.setAlignment(Align.center);
         lblHitBall.addListener(new ClickListener(){
@@ -247,6 +258,8 @@ public class MainMenuScreen extends AbstractScreen {
         table.add(lblCircleAround);
         table.row().pad(2.0f);
         table.add(lblDropStack);
+        table.row().pad(2.0f);
+        table.add(lblStackTower);
         table.row().pad(2.0f);
         table.add(lblHitBall);
         table.row().pad(2.0f);

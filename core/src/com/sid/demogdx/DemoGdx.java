@@ -19,6 +19,7 @@ import com.sid.demogdx.screens.HitBallScreen;
 import com.sid.demogdx.screens.HunterAIScreen;
 import com.sid.demogdx.screens.LoadingScreen;
 import com.sid.demogdx.screens.MainMenuScreen;
+import com.sid.demogdx.screens.StackTowerScreen;
 
 public class DemoGdx extends Game {
 
@@ -33,6 +34,7 @@ public class DemoGdx extends Game {
     private GravityBallsScreen gravityBallsScreen;
     private CircleAroundScreen circleAroundScreen;
     private DropStackScreen dropStackScreen;
+    private StackTowerScreen stackTowerScreen;
     private HitBallScreen hitBallScreen;
     private FollowTheWaveScreen followTheWaveScreen;
     private AirFightScreen airFightScreen;
@@ -52,6 +54,7 @@ public class DemoGdx extends Game {
         behaviorTreeScreen = new BehaviorTreeScreen(this);
         circleAroundScreen = new CircleAroundScreen(this);
         dropStackScreen = new DropStackScreen(this);
+        stackTowerScreen = new StackTowerScreen(this);
         hitBallScreen = new HitBallScreen(this);
         followTheWaveScreen = new FollowTheWaveScreen(this);
         airFightScreen = new AirFightScreen(this);
@@ -95,6 +98,10 @@ public class DemoGdx extends Game {
 
     public DropStackScreen getDropStackScreen() {
         return dropStackScreen;
+    }
+
+    public StackTowerScreen getStackTowerScreen() {
+        return stackTowerScreen;
     }
 
     public HitBallScreen getHitBallScreen() {

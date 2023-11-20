@@ -25,7 +25,6 @@ public final class Box2DUtils {
     }
 
     public static Body createBox2dBody(World world, float posX, float posY, FixtureDef fixtureDef, Shape.Type shapeType) {
-        Body body = world.createBody(createBodyDef(posX, posY));
         Shape shape = createShape(shapeType);
         FixtureDef localFixtureDef;
         if (fixtureDef != null) {
@@ -35,6 +34,7 @@ public final class Box2DUtils {
             localFixtureDef.shape = shape;
         }
 
+        Body body = world.createBody(createBodyDef(posX, posY));
         body.createFixture(localFixtureDef);
         shape.dispose();
         return body;
