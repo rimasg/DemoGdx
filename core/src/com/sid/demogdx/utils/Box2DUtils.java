@@ -24,6 +24,17 @@ public final class Box2DUtils {
         return createBox2dBody(world, posX, posY, null, Shape.Type.Polygon);
     }
 
+    public static Body createBox2dBoxBody(World world, float posX, float posY, float width, float height) {
+        Shape shape = createBoxShape(width, height);
+        FixtureDef fd = createFixture();
+        fd.shape = shape;
+
+        Body body = world.createBody(createBodyDef(posX, posY));
+        body.createFixture(fd);
+        shape.dispose();
+        return body;
+    }
+
     public static Body createBox2dBody(World world, float posX, float posY, FixtureDef fixtureDef, Shape.Type shapeType) {
         Shape shape = createShape(shapeType);
         FixtureDef localFixtureDef;
@@ -56,7 +67,7 @@ public final class Box2DUtils {
                 break;
             case Polygon:
                 shape = new PolygonShape();
-                ((PolygonShape) shape).setAsBox(0.3f, 0.3f);
+                ((PolygonShape) shape).setAsBox(1.0f, 0.5f);
                 break;
             case Chain:
                 shape = new ChainShape();
@@ -65,6 +76,12 @@ public final class Box2DUtils {
                 shape = new EdgeShape();
                 break;
         }
+        return shape;
+    }
+
+    private static PolygonShape createBoxShape(float width, float height) {
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(width / 2.0f, height / 2.0f);
         return shape;
     }
 
