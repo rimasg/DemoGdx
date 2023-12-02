@@ -25,11 +25,11 @@ public class StackTowerScreen extends AbstractBox2dScreen {
     private Body upperBox;
     private Body lowerBox;
 
-    private final float defaultBoxWidth = 2.0f;
+    private final float defaultBoxWidth = 4.0f;
     private final float defaultBoxHeight = 0.5f;
     private boolean isCollision = false;
 
-    private ContactListener contactListener = new ContactListener() {
+    private final ContactListener contactListener = new ContactListener() {
         @Override
         public void beginContact(Contact contact) {
             final UserData userDataA = (UserData) contact.getFixtureA().getBody().getUserData();
@@ -123,24 +123,24 @@ public class StackTowerScreen extends AbstractBox2dScreen {
         final Vector2 upperBoxPos = upperBox.getPosition();
         final Vector2 lowerBoxPos = lowerBox.getPosition();
         final float deltaXPos = upperBoxPos.x - lowerBoxPos.x;
-        final float shiftRatio = Math.abs(deltaXPos) / defaultBoxWidth;
+        final float deltaXPosAbs = Math.abs(deltaXPos);
+        final float shiftRatio = deltaXPosAbs / defaultBoxWidth;
 
         float box1StartXPos;
         float box1Width;
         float box2StartXPos;
         float box2Width;
 
-        // TODO: 27/11/2023 implement correct body split
         if (deltaXPos < 0) {
-            box1StartXPos = upperBoxPos.x - Math.abs(deltaXPos);
             box1Width = defaultBoxWidth * shiftRatio;
-            box2StartXPos = upperBoxPos.x + Math.abs(deltaXPos);
+            box1StartXPos = lowerBoxPos.x - defaultBoxWidth / 2f - box1Width / 2f;
             box2Width = defaultBoxWidth * (1f - shiftRatio);
+            box2StartXPos = lowerBoxPos.x - defaultBoxWidth / 2f + box2Width / 2f;
         } else {
-            box1StartXPos = upperBoxPos.x - Math.abs(deltaXPos);
             box1Width = defaultBoxWidth * (1f - shiftRatio);
-            box2StartXPos = upperBoxPos.x + Math.abs(deltaXPos);
+            box1StartXPos = lowerBoxPos.x + defaultBoxWidth / 2f - box1Width / 2f;
             box2Width = defaultBoxWidth * shiftRatio;
+            box2StartXPos = lowerBoxPos.x + defaultBoxWidth / 2f + box2Width / 2f;
         }
 
         world.destroyBody(upperBox);
