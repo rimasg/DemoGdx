@@ -35,7 +35,8 @@ public class StackTowerScreen extends AbstractBox2dScreen {
     private float lastBoxWidth = defaultBoxWidth;
     private final float defaultBoxHeight = 0.5f;
     private boolean isCollision = false;
-    private final Color[] colors = {Color.CORAL, Color.GOLDENROD, Color.BLUE, Color.ORANGE, Color.MAGENTA, Color.GOLD};
+    private final Color[] colors = {Color.CORAL, Color.GOLDENROD, Color.BROWN, Color.ORANGE, Color.MAGENTA,
+            Color.GOLD, Color.MAROON, Color.OLIVE};
 
     private final ContactListener contactListener = new ContactListener() {
         // NOTE: You cannot create/destroy Box2D entities inside these callbacks. See: https://box2d.org/documentation/classb2_contact_listener.html
@@ -81,7 +82,7 @@ public class StackTowerScreen extends AbstractBox2dScreen {
         // b2dr.render(world, cam.combined);
 
         game.shapeRenderer.setProjectionMatrix(cam.combined);
-        game.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         renderBodyShapes();
         game.shapeRenderer.end();
 
@@ -178,7 +179,7 @@ public class StackTowerScreen extends AbstractBox2dScreen {
         Gdx.app.log("", "Box width: " + lastBoxWidth);
 
         upperBox = Box2DUtils.createBox2dBoxBody(world,
-                Box2DConfig.WWV / 2.0f + MathUtils.random(-0.4f * lastBoxWidth, 0.4f * lastBoxWidth),
+                Box2DConfig.WWV / 2.0f + MathUtils.random(-0.2f * lastBoxWidth, 0.2f * lastBoxWidth),
                 dropPosY + defaultBoxHeight * 4f,
                 lastBoxWidth, defaultBoxHeight);
         addBoxBodyToList(upperBox, lastBoxWidth, defaultBoxHeight);
