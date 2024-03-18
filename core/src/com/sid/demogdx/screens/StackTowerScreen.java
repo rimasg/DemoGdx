@@ -13,10 +13,13 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.sid.demogdx.DemoGdx;
+import com.sid.demogdx.entities.stacktower.Block;
 import com.sid.demogdx.utils.Box2DConfig;
 import com.sid.demogdx.utils.Box2DUtils;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class StackTowerScreen extends AbstractBox2dScreen {
 
@@ -26,11 +29,13 @@ public class StackTowerScreen extends AbstractBox2dScreen {
 
     private Body upperBox;
     private Body lowerBox;
+    private final HashMap<Body, Block> boxBodies = new HashMap<>();
     private final float defaultBoxWidth = 4.0f;
     private final float minBoxWidth = 0.12f;
     private float lastBoxWidth = defaultBoxWidth;
     private final float defaultBoxHeight = 0.5f;
     private boolean isCollision = false;
+    private final Color[] colors = {Color.CORAL, Color.GOLDENROD, Color.BLUE, Color.ORANGE, Color.MAGENTA, Color.GOLD};
 
     private final ContactListener contactListener = new ContactListener() {
         // NOTE: You cannot create/destroy Box2D entities inside these callbacks. See: https://box2d.org/documentation/classb2_contact_listener.html
@@ -73,7 +78,7 @@ public class StackTowerScreen extends AbstractBox2dScreen {
         splitBox();
 
         cam.update();
-        b2dr.render(world, cam.combined);
+        // b2dr.render(world, cam.combined);
 
         game.shapeRenderer.setProjectionMatrix(cam.combined);
         game.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
@@ -96,6 +101,18 @@ public class StackTowerScreen extends AbstractBox2dScreen {
         if (lowerBox != null) {
             game.shapeRenderer.setColor(Color.GREEN);
             game.shapeRenderer.circle(lowerBox.getPosition().x, lowerBox.getPosition().y, 0.2f);
+        }
+        for (Map.Entry<Body, Block> entry : boxBodies.entrySet()) {
+            final Body body = entry.getKey();
+            final Vector2 pos = body.getPosition();
+            final Block block = entry.getValue();
+            final float width = block.width;
+            final float height = block.height;
+
+            game.shapeRenderer.setColor(block.color);
+            game.shapeRenderer.rect(pos.x - width, pos.y - height, width, height, width * 2f, height * 2f, 1f,
+                    1f,
+                    body.getAngle() * MathUtils.radDeg);
         }
     }
 
@@ -164,6 +181,7 @@ public class StackTowerScreen extends AbstractBox2dScreen {
                 Box2DConfig.WWV / 2.0f + MathUtils.random(-0.4f * lastBoxWidth, 0.4f * lastBoxWidth),
                 dropPosY + defaultBoxHeight * 4f,
                 lastBoxWidth, defaultBoxHeight);
+        addBoxBodyToList(upperBox, lastBoxWidth, defaultBoxHeight);
     }
 
     private void splitBox() {
@@ -203,20 +221,43 @@ public class StackTowerScreen extends AbstractBox2dScreen {
             lastBoxWidth = box1Width;
         }
 
-        // TODO: 13/03/2024 Not sure if we need to set upperBox to null.
+        final Block block = getBoxBodyBlockFromList(upperBox); // we need to assign the same color to split boxes
+        removeBoxBodyToList(upperBox);
         world.destroyBody(upperBox);
+        // TODO: 13/03/2024 Not sure if we need to set upperBox to null.
         upperBox = null;
 
         final Body box1Body = Box2DUtils.createBox2dBoxBody(world, box1StartPosX, upperBoxPos.y, box1Width,
                 defaultBoxHeight);
+        addBoxBodyToList(box1Body, box1Width, defaultBoxHeight, block.color);
         final Body box2Body = Box2DUtils.createBox2dBoxBody(world, box2StartPosX, upperBoxPos.y, box2Width,
                 defaultBoxHeight);
+        addBoxBodyToList(box2Body, box2Width, defaultBoxHeight, block.color);
 
         if (deltaPosX < 0) {
             lowerBox = box2Body;
         } else {
             lowerBox = box1Body;
         }
+    }
+
+    private void addBoxBodyToList(Body body, float width, float height) {
+        Color randomColor = colors[MathUtils.random(colors.length - 1)];
+        Block block = new Block(width / 2.0f, height / 2.0f, randomColor);
+        boxBodies.put(body, block);
+    }
+
+    private void addBoxBodyToList(Body body, float width, float height, Color color) {
+        Block block = new Block(width / 2.0f, height / 2.0f, color);
+        boxBodies.put(body, block);
+    }
+
+    private Block getBoxBodyBlockFromList(Body body) {
+        return boxBodies.get(body);
+    }
+
+    private void removeBoxBodyToList(Body body) {
+        boxBodies.remove(body);
     }
 
     private String getTimestamp() {
@@ -231,5 +272,6 @@ public class StackTowerScreen extends AbstractBox2dScreen {
         upperBox = null;
         lowerBox = null;
         lastBoxWidth = defaultBoxWidth;
+        boxBodies.clear();
     }
 }
